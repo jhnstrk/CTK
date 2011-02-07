@@ -64,9 +64,7 @@ QString ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* me
     mafEvent *mesbEvent = new mafEvent(topic, mafEventTypeLocal, mafSignatureTypeCallback, const_cast<QObject *>(subscriber), member);
     m_MafEventBusManager->addEventProperty(*mesbEvent);
 
-	// to be changed!!!!!!
-	return QString();
-  // TODO check for duplicates
+    return QString();
 
   /*ctkEventHandlerWrapper* wrapper = new ctkEventHandlerWrapper(subscriber, member, properties);
   if (wrapper->init())
@@ -78,28 +76,20 @@ QString ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* me
   return QString();*/
 }
 
-void ctkEventBusImpl::updateProperties(const QString& subscriptionId, const ctkDictionary& properties)
+void ctkEventBusImpl::unsubscribeSlot(const QString& topic) {
+      // @@@@to be implemented
+}
+
+bool ctkEventBusImpl::updateProperties(const QString& topic, const ctkDictionary& properties)
 {
-  Q_UNUSED(subscriptionId)
+  Q_UNUSED(topic)
   Q_UNUSED(properties)
+  // @@@@to be implemented
 }
 
 void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
 {
   Q_UNUSED(isAsync)
-
-
-
-  /*QString topic = event.topic();
-
-  QSet<ctkEventHandlerWrapper*> eventHandlers = this->handlers(topic);
-  if (eventHandlers.empty()) return;
-
-  QSetIterator<ctkEventHandlerWrapper*> iter(eventHandlers);
-  while (iter.hasNext())
-  {
-    iter.next()->handleEvent(event);
-  }*/
 
   QString topic = event.getTopic(); //may contains widlcards
 
@@ -109,7 +99,6 @@ void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
   //mebEvent->setEventFilter(NULL);
   //need to think about the arguments inside the event
 
-
   typedef QList<QGenericArgument> ctkEventArgumentList;
 
   ctkEventArgumentList list;
@@ -118,7 +107,6 @@ void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
 
   m_MafEventBusManager->notifyEvent(topic, mafEventTypeRemote, &list);
   m_MafEventBusManager->notifyEvent(*mebEvent);
-
 }
 
 void ctkEventBusImpl::bucket(ctkEventHandlerWrapper* wrapper)

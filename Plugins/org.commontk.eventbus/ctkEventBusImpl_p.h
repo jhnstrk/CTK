@@ -22,7 +22,7 @@
 #ifndef CTKEVENTBUSIMPL_H
 #define CTKEVENTBUSIMPL_H
 
-#include <service/event/ctkEventBus.h>
+#include <service/event/ctkEventAdmin.h>
 
 #include "mafEventBus/mafEventBusManager.h"
 
@@ -35,10 +35,10 @@ class ctkEventHandlerWrapper;
 
 
 class ctkEventBusImpl : public QObject,
-                     public ctkEventBus
+                     public ctkEventAdmin
 {
   Q_OBJECT
-  Q_INTERFACES(ctkEventBus)
+  Q_INTERFACES(ctkEventAdmin)
 
 public:
 
@@ -52,16 +52,18 @@ public:
 
   QString subscribeSlot(const QObject* subscriber, const char* member, const QString& topic,const ctkDictionary& properties);
 
-  void updateProperties(const QString& subscriptionId, const ctkDictionary& properties);
+  virtual void unsubscribeSlot(const QString& topic);
+
+  virtual bool updateProperties(const QString& topic, const ctkDictionary& properties);
   
   /// Create the server for remote communication according to the given protocol and listen port.
-  bool createServer(const QString &communication_protocol, unsigned int listen_port);
+  virtual bool createServer(const QString &communication_protocol, unsigned int listen_port);
 
     /// Allow to start server listening.
-  void startListen();
+  virtual void startListen();
 
     /// Create the client for remote communication according to the given protocol, server host and port.
-  bool createClient(const QString &communication_protocol, const QString &server_host, unsigned int port);
+  virtual bool createClient(const QString &communication_protocol, const QString &server_host, unsigned int port);
 
 protected:
 

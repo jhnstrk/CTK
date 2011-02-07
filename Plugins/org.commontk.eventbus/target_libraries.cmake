@@ -6,4 +6,7 @@
 
 SET(target_libraries
   CTKPluginFramework
+  QT_LIBRARIES
+  QTSOAP_LIBRARY
+  qxmlrpc_LIBRARY
   )

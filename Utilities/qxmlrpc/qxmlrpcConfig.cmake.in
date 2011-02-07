@@ -1,0 +1,15 @@
+FIND_LIBRARY(qxmlrpc_LIBRARY_RELEASE qxmlrpc "@_qxmlrpc_lib_dir@")
+FIND_LIBRARY(qxmlrpc_LIBRARY_DEBUG qxmlrpc_debug "@_qxmlrpc_lib_dir@")
+
+IF(qxmlrpc_LIBRARY_DEBUG AND qxmlrpc_LIBRARY_RELEASE)
+  SET(qxmlrpc_LIBRARY "debug;${qxmlrpc_LIBRARY_DEBUG};optimized;${qxmlrpc_LIBRARY_RELEASE}")
+ELSEIF(qxmlrpc_LIBRARY_DEBUG)
+  SET(qxmlrpc_LIBRARY "${qxmlrpc_LIBRARY_DEBUG}")
+ELSEIF(qxmlrpc_LIBRARY_RELEASE)
+  SET(qxmlrpc_LIBRARY "${qxmlrpc_LIBRARY_RELEASE}")
+ELSE()
+  MESSAGE(FATAL_ERROR "No debug or release version of qxmlrpc found.")
+ENDIF()
+
+SET(qxmlrpc_INCLUDE_DIR "@_qxmlrpc_include_dir@")
+

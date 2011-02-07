@@ -68,7 +68,7 @@ void ctkEAScenario1EventConsumer::runTest()
     /* assert that service is available */
     QVERIFY2(eventAdmin, "Should be able to get instance to ctkEventAdmin object");
 
-    slotId = eventAdmin->subscribeSlot(this, SLOT(handleEvent(ctkEvent)), props);
+    //slotId = eventAdmin->subscribeSlot(this, SLOT(handleEvent(ctkEvent)), props);
   }
   else
   {
@@ -220,8 +220,8 @@ void ctkEAScenario1EventPublisher::runTest()
 
   if (useSignalSlot)
   {
-    eventAdmin->publishSignal(this, SIGNAL(syncSignalEvent(ctkEvent)), Qt::DirectConnection);
-    eventAdmin->publishSignal(this, SIGNAL(asyncSignalEvent(ctkEvent)), Qt::QueuedConnection);
+    //eventAdmin->publishSignal(this, SIGNAL(syncSignalEvent(ctkEvent)), Qt::DirectConnection);
+    //eventAdmin->publishSignal(this, SIGNAL(asyncSignalEvent(ctkEvent)), Qt::QueuedConnection);
   }
 
   /* start the delivery thread */

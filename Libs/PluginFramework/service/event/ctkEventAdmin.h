@@ -69,8 +69,12 @@ struct ctkEventAdmin
    * @param type Qt::QueuedConnection for asynchronous delivery and
    *        Qt::DirectConnection for synchronous delivery.
    */
+  //virtual void publishSignal(const QObject* publisher, const char* signal,
+  //                           Qt::ConnectionType type = Qt::QueuedConnection) = 0;
+
   virtual void publishSignal(const QObject* publisher, const char* signal,
-                             Qt::ConnectionType type = Qt::QueuedConnection) = 0;
+                             const QString& signal_topic, Qt::ConnectionType type = Qt::QueuedConnection) = 0;
+
 
   /**
    * Subsribe for (observe) events. The slot is called whenever an event is sent
@@ -106,7 +110,9 @@ struct ctkEventAdmin
    *
    * @see unsubscribeSlot(qlonglong)
    */
-  virtual qlonglong subscribeSlot(const QObject* subscriber, const char* member, const ctkDictionary& properties) = 0;
+  //virtual qlonglong subscribeSlot(const QObject* subscriber, const char* member, const ctkDictionary& properties) = 0;
+
+  virtual QString subscribeSlot(const QObject* subscriber, const char* member, const QString& topic,const ctkDictionary& properties) = 0;
 
   /**
    * Unsubscribe a previously subscribed slot. Use this method to allow the EventAdmin

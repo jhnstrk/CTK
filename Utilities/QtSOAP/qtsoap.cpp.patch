@@ -1,0 +1,56 @@
+*** qtsoap.cpp	2010-09-13 14:16:53.000000000 +0200
+--- /QtSOAP/src/qtsoap.cpp	2010-08-12 17:46:06.000000000 +0200
+***************
+*** 2386,2391 ****
+--- 2386,2393 ----
+      QtSoapNamespaces::instance().registerNamespace("SOAP-ENC", SOAPv11_ENCODING);
+      QtSoapNamespaces::instance().registerNamespace("xsi", XML_SCHEMA_INSTANCE);
+      QtSoapNamespaces::instance().registerNamespace("xsd", XML_SCHEMA);
++     m_ExternalNamespacePrefix = "";
++     m_ExternalNamespaceURI = "";
+  }
+  
+  /*!
+***************
+*** 2551,2556 ****
+--- 2553,2567 ----
+  }
+  
+  /*!
++     register an external namespace and set as current one
++ */
++ void QtSoapMessage::useNamespace(QString prefix, QString namespaceURI) {
++     //QtSoapNamespaces::instance().registerNamespace(prefix.toAscii(), namespaceURI.toAscii());
++     m_ExternalNamespacePrefix = prefix;
++     m_ExternalNamespaceURI = namespaceURI;
++ }
++ 
++ /*!
+      Returns the XML representation of the SOAP message as a QString,
+      optionally indenting using \a indent spaces.
+  */
+***************
+*** 2571,2576 ****
+--- 2582,2593 ----
+      env.setAttribute("xmlns:" + QtSoapNamespaces::instance().prefixFor(XML_SCHEMA),
+  		     XML_SCHEMA);
+  
++     if(m_ExternalNamespacePrefix != "") {
++         env.setAttribute("xmlns:" + m_ExternalNamespacePrefix, m_ExternalNamespaceURI);
++     }
++ 
++ 
++ 
+      return doc.toString(indent);
+  }
+  
+***************
+*** 3158,3163 ****
+--- 3175,3181 ----
+      QNetworkRequest networkReq;
+      networkReq.setHeader(QNetworkRequest::ContentTypeHeader, QLatin1String("text/xml;charset=utf-8"));
+      networkReq.setRawHeader("SOAPAction", soapAction.toAscii());
++     
+      url.setPath(path);
+      networkReq.setUrl(url);
+  

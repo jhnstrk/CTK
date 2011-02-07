@@ -37,7 +37,7 @@ void mafNetworkConnectorQtSoap::initializeForEventBus() {
 }
 
 
-void mafNetworkConnectorQtSoap::registerServerMethod(QString methodName, mafList<mafVariant::Type> types) {
+void mafNetworkConnectorQtSoap::registerServerMethod(QString methodName, QList<QVariant::Type> types) {
    m_RegisterMethodsMap.insert(methodName, types);
 }
 
@@ -48,13 +48,13 @@ void mafNetworkConnectorQtSoap::createClient(const QString hostName, const unsig
     }
 
     //maf3 service registration
-    mafList<mafVariant::Type> parametersForRegisterteredFunction;
-    parametersForRegisterteredFunction.append(mafVariant::String); //return argument
-    parametersForRegisterteredFunction.append(mafVariant::List); //parameters to send, event control parameters
-    parametersForRegisterteredFunction.append(mafVariant::List); //parameters to send, data parameters
+    QList<QVariant::Type> parametersForRegisterteredFunction;
+    parametersForRegisterteredFunction.append(QVariant::String); //return argument
+    parametersForRegisterteredFunction.append(QVariant::List); //parameters to send, event control parameters
+    parametersForRegisterteredFunction.append(QVariant::List); //parameters to send, data parameters
 
     //registration of the method REMOTE_COMMUNICATION_SOAP at Soap level
-    // this method need to reflect the name of the action of the service while mafVariant::List are list of
+    // this method need to reflect the name of the action of the service while QVariant::List are list of
     // strings, in  which each string represent the correct name of the parameter in the sevice function.
     registerServerMethod("testArray", parametersForRegisterteredFunction);
 
@@ -125,50 +125,50 @@ void mafNetworkConnectorQtSoap::startListen() {
     qDebug() << tr("QtSoap doesn't support server side implementation.").toAscii();
 }
 
-QtSoapType *mafNetworkConnectorQtSoap::marshall(const QString name, const mafVariant &parameter) {
+QtSoapType *mafNetworkConnectorQtSoap::marshall(const QString name, const QVariant &parameter) {
     QtSoapType *returnValue = NULL;
     switch( parameter.type() ){
-        case mafVariant::Int:
+        case QVariant::Int:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), QString::number(parameter.toInt()));
                 break;
-        case mafVariant::UInt:
+        case QVariant::UInt:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), QString::number(parameter.toUInt()));
                 break;
-        case mafVariant::LongLong:
+        case QVariant::LongLong:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), QString::number(parameter.toLongLong()));
                 break;
-        case mafVariant::ULongLong:
+        case QVariant::ULongLong:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), QString::number(parameter.toULongLong()));
                 break;
-        case mafVariant::Double:
+        case QVariant::Double:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), QString::number(parameter.toDouble()));
                 break;
-        case mafVariant::Bool:
+        case QVariant::Bool:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), parameter.toBool()?"True":"False");
                 break;
-        case mafVariant::Date:
+        case QVariant::Date:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), parameter.toDate().toString());
                 break;
-        case mafVariant::DateTime:
+        case QVariant::DateTime:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), parameter.toDateTime().toString());
                 break;
-        case mafVariant::Time:
+        case QVariant::Time:
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), parameter.toTime().toString());
                 break;
-        case mafVariant::StringList:
-        case mafVariant::List: {
+        case QVariant::StringList:
+        case QVariant::List: {
                 QtSoapArray *arr = new QtSoapArray(QtSoapQName(name, ""), QtSoapType::String, parameter.toList().size());
                 int index = 0;
-                foreach( mafVariant item, parameter.toList() ) {
+                foreach( QVariant item, parameter.toList() ) {
                     arr->insert(index, marshall(QString("Elem_").append(QString::number(index)), item ));
                     index++;
                     }
                 returnValue = arr;
                 break;
         }
-        case mafVariant::Map: {
-            QMap<QString, mafVariant> map = parameter.toMap();
-            QMap<QString, mafVariant>::ConstIterator iter = map.begin();
+        case QVariant::Map: {
+            QMap<QString, QVariant> map = parameter.toMap();
+            QMap<QString, QVariant>::ConstIterator iter = map.begin();
             QtSoapArray *arr = new QtSoapArray(QtSoapQName(name, ""), QtSoapType::String, parameter.toMap().size());
             int index = 0;
             while( iter != map.end() ) {
@@ -179,9 +179,9 @@ QtSoapType *mafNetworkConnectorQtSoap::marshall(const QString name, const mafVar
             returnValue = arr;
             break;
         }
-        case mafVariant::Hash: {
-            QHash<QString, mafVariant> hash = parameter.toHash();
-            QHash<QString, mafVariant>::ConstIterator iter = hash.begin();
+        case QVariant::Hash: {
+            QHash<QString, QVariant> hash = parameter.toHash();
+            QHash<QString, QVariant>::ConstIterator iter = hash.begin();
             QtSoapArray *arr = new QtSoapArray(QtSoapQName(name, ""), QtSoapType::String, parameter.toHash().size());
             int index = 0;
             while( iter != hash.end() ) {
@@ -192,12 +192,12 @@ QtSoapType *mafNetworkConnectorQtSoap::marshall(const QString name, const mafVar
             returnValue = arr;
             break;
         }
-        case mafVariant::ByteArray: {
+        case QVariant::ByteArray: {
             returnValue = new QtSoapSimpleType(QtSoapQName(name), parameter.toByteArray().data());
             break;
         }
         default: {
-            if( parameter.canConvert(mafVariant::String) ) {
+            if( parameter.canConvert(QVariant::String) ) {
                 returnValue = new QtSoapSimpleType(QtSoapQName(name), parameter.toString());
             }
             else {
@@ -213,7 +213,7 @@ QtSoapType *mafNetworkConnectorQtSoap::marshall(const QString name, const mafVar
 
 void mafNetworkConnectorQtSoap::send(const QString methodName, mafEventArgumentsList *argList) {
     //REQUIRE(!params->at(0).isNull());
-    //REQUIRE(params->at(0).canConvert(mafVariant::Hash) == true);
+    //REQUIRE(params->at(0).canConvert(QVariant::Hash) == true);
 
     QString type = argList->at(0).name();
     if(argList == NULL || type != "mafEventHash") {
@@ -297,10 +297,10 @@ void mafNetworkConnectorQtSoap::processRequest( int requestId, QString methodNam
     int size = parameters.count();
 
     mafEventArgumentsList *argList = NULL;
-    mafList<mafVariant> *p = & (parameters.at(1).value< mafList<mafVariant> >());
+    mafList<QVariant> *p = & (parameters.at(1).value< mafList<QVariant> >());
     if(size > 1 && p->count() != 0) {
         argList = new mafEventArgumentsList();
-        argList->push_back(Q_ARG(mafList<mafVariant>, *p));
+        argList->push_back(Q_ARG(mafList<QVariant>, *p));
     }
 
     if ( mafEventBusManager::instance()->isLocalSignalPresent(id_name) ) {

@@ -23,7 +23,7 @@ mafEvent::mafEvent(QString topic, mafEventType event_type, mafSignatureType sign
     entries()->insert(TOPIC, topic);
     entries()->insert(TYPE, static_cast<int>(event_type));
     entries()->insert(SIGTYPE, static_cast<int>(signature_type));
-    mafVariant var;
+    QVariant var;
     var.setValue(objectPointer);
     entries()->insert(OBJECT, var);
     entries()->insert(SIGNATURE, signature);
@@ -42,7 +42,7 @@ mafEventHash *mafEvent::entries() const {
     return m_EventHash;
 }
 
-mafVariant &mafEvent::operator[](QString key) const{
+QVariant &mafEvent::operator[](QString key) const{
     return (*m_EventHash)[key];
 }
 

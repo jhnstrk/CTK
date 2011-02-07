@@ -61,7 +61,7 @@ public:
     /*virtual*/ void send(const QString methodName, mafEventArgumentsList *argList);
 
     /// Marshalling of the datatypes
-    QtSoapType *marshall(const QString name, const mafVariant &parameter);
+    QtSoapType *marshall(const QString name, const QVariant &parameter);
 
     /// return the response retrieved from the service
     QtSoapType *response();
@@ -78,7 +78,7 @@ signals:
 
 public slots:
     /// register methods on the server
-    void registerServerMethod(QString methodName, mafList<mafVariant::Type> types);
+    void registerServerMethod(QString methodName, QList<QVariant::Type> types);
 
 private slots:
     /// retrieve response from the service

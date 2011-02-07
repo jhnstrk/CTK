@@ -59,7 +59,7 @@ public:
     mafEventHash *entries() const;
 
     /// Overload operator for rapid access to mafDictionaryEntries
-    mafVariant &operator[](QString key) const;
+    QVariant &operator[](QString key) const;
 
 private:
     mafEventHash *m_EventHash;

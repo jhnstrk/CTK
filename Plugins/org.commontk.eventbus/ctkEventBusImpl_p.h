@@ -30,9 +30,6 @@
 #include <QHash>
 #include <QSet>
 
-#define mafList QList
-#define mafVariant QVariant
-
 //class forward
 class ctkEventHandlerWrapper;
 

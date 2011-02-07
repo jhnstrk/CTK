@@ -113,11 +113,8 @@ void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
   typedef QList<QGenericArgument> ctkEventArgumentList;
 
   ctkEventArgumentList list;
-  mafList<mafVariant> le(event.getProperty("localEvent").toList());
-  mafList<mafVariant> ld(event.getProperty("localData").toList());
-
-  list.append(Q_ARG(mafList<mafVariant>,le));
-  list.append(Q_ARG(mafList<mafVariant>,ld));
+  list.append(Q_ARG(QVariantList,event.getProperty("localEvent").toList()));
+  list.append(Q_ARG(QVariantList,event.getProperty("localData").toList()));
 
   m_MafEventBusManager->notifyEvent(topic, mafEventTypeRemote, &list);
   m_MafEventBusManager->notifyEvent(*mebEvent);

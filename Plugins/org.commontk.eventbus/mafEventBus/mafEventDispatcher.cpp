@@ -51,7 +51,7 @@ void mafEventDispatcher::initializeGlobalEvents() {
     (*remote_done)[TOPIC] = eventId;
     (*remote_done)[TYPE] = mafEventTypeLocal;
     (*remote_done)[SIGTYPE] = mafSignatureTypeSignal;
-    mafVariant var;
+    QVariant var;
     var.setValue((QObject*)this);
     (*remote_done)[OBJECT] = var;
     (*remote_done)[SIGNATURE] = "remoteCommunicationDone()";
@@ -159,7 +159,7 @@ bool mafEventDispatcher::addObserver(const mafEvent &props) {
         return false;
     }
 
-    mafVariant sigVariant = props[SIGNATURE];
+    QVariant sigVariant = props[SIGNATURE];
     QString sig = sigVariant.toString();
 
     QObject *objSlot = props[OBJECT].value<QObject *>();
@@ -322,7 +322,7 @@ bool mafEventDispatcher::registerSignal(const mafEvent &props) {
     }
 
     QObject *objSignal = props[OBJECT].value<QObject *>();
-    mafVariant sigVariant = props[SIGNATURE];
+    QVariant sigVariant = props[SIGNATURE];
     QString sig = sigVariant.toString();
 
     mafEvent *currentEvent;

@@ -39,7 +39,7 @@ void mafEventDispatcherRemote::initializeGlobalEvents() {
     QString topic = "maf.remote.eventBus.globalUpdate";
     (*properties)[TOPIC] = topic;
     (*properties)[TYPE] = mafEventTypeRemote;
-    mafVariant var;
+    QVariant var;
     var.setValue((QObject*)this);
     (*properties)[OBJECT] = var;
     (*properties)[SIGTYPE] = mafSignatureTypeSignal;

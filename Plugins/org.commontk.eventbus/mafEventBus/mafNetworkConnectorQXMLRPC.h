@@ -82,7 +82,7 @@ protected:
 
 private:
     /// send a request from the client to the network.
-    void xmlrpcSend(const QString &methodName, mafList<xmlrpc::Variant> parameters);
+    void xmlrpcSend(const QString &methodName, QList<xmlrpc::Variant> parameters);
 
     /// stop and destroy the server instance.
     void stopServer();

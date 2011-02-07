@@ -28,9 +28,6 @@
 #include "mafEventBus_global.h"
 
 //defines
-#define mafList QList
-#define mafVariant QVariant
-#define mafVariantList QVariantList
 
 #define TOPIC "EventTopic"
 #define TYPE "EventType"
@@ -87,7 +84,7 @@ class mafNetworkConnector;
 typedef QHash<QString, mafNetworkConnector *> mafNetworkConnectorHash;
 
 /// typedef that represents dictionary entries ( key  , value )
-typedef QHash<QString, mafVariant> mafEventHash;
+typedef QHash<QString, QVariant> mafEventHash;
 
 ///< Enum that identify the mafEventType's type: Local or Remote.
 typedef enum {
@@ -117,7 +114,7 @@ typedef QHash<QString, mafEvent *> mafEventsHashType;
 typedef QList<mafEvent *> mafEventItemListType;
 
 /// map which represent list of function to be registered in the server, with parameters
-typedef QMap<QString, mafList<mafVariant::Type> >  mafRegisterMethodsMap;
+typedef QMap<QString, QList<QVariant::Type> >  mafRegisterMethodsMap;
 
 } // namespace mafEventBus
 

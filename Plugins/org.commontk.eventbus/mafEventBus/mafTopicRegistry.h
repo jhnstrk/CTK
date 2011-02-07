@@ -9,7 +9,6 @@
  *
  */
 
-
 #ifndef MAFTOPICREGISTRY_H
 #define MAFTOPICREGISTRY_H
 

@@ -24,7 +24,7 @@ void mafEventDispatcherLocal::initializeGlobalEvents() {
     (*properties)[TOPIC] =  topic;
     (*properties)[TYPE] = mafEventTypeLocal;
     (*properties)[SIGTYPE] = mafSignatureTypeSignal;
-    mafVariant var;
+    QVariant var;
     var.setValue((QObject*)this);
     (*properties)[OBJECT] = var;
     (*properties)[SIGNATURE] = "notifyDefaultEvent()";

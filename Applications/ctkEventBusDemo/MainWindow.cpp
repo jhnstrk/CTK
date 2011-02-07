@@ -32,8 +32,8 @@ void MainWindow::connectEvents() {
     connect(handler, SIGNAL(updateMessageSignal(QString)), this, SLOT(updateMessage(QString)));
     connect(ui->connectButton, SIGNAL(released()), this, SLOT(connectClient()));
 
-    m_EventBus->publishSignal(handler, "receiveEventSignal(mafList<mafVariant>)", "maf.remote.eventBus.comunication.receive.xmlrpc");
-    m_EventBus->subscribeSlot(handler, "receiveEvent(mafList<mafVariant>)", "maf.remote.eventBus.comunication.receive.xmlrpc", ctkDictionary());
+    m_EventBus->publishSignal(handler, "receiveEventSignal(QVariantList)", "maf.remote.eventBus.comunication.receive.xmlrpc");
+    m_EventBus->subscribeSlot(handler, "receiveEvent(QVariantList)", "maf.remote.eventBus.comunication.receive.xmlrpc", ctkDictionary());
 }
 
 void MainWindow::sendEvent() {
@@ -44,10 +44,10 @@ void MainWindow::sendEvent() {
 
     // event bus starts here
 
-    QList<QVariant> localEventList;
+    QVariantList localEventList;
     localEventList.append("maf.remote.eventBus.comunication.receive.xmlrpc");
 
-    QList<QVariant> dataList;
+    QVariantList dataList;
     dataList.append("myUser");
     dataList.append(ui->txtParameter->property("plainText").toString());
 
@@ -94,7 +94,7 @@ void MainWindow::connectClient() {
     }
 }
 
-void ctkEventDemo::receiveEvent(mafList<mafVariant> l) {
+void ctkEventDemo::receiveEvent(QVariantList l) {
     QString value;
     value.append(l.at(0).toString());
     value.append(": ");

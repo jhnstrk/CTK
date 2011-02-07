@@ -4,9 +4,6 @@
 #include <QMainWindow>
 #include <QVariant>
 
-#define mafList QList
-#define mafVariant QVariant
-
 class ctkEventBus;
 
 namespace Ui {
@@ -17,11 +14,11 @@ class ctkEventDemo : public QObject {
     Q_OBJECT
 
 signals:
-    void receiveEventSignal(mafList<mafVariant> l);
+    void receiveEventSignal(QVariantList l);
     void updateMessageSignal(QString message);
 
 public slots:
-    void receiveEvent(mafList<mafVariant> l);
+    void receiveEvent(QVariantList l);
 };
 
 class MainWindow : public QMainWindow {

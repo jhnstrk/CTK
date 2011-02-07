@@ -98,8 +98,6 @@ SET(KIT_SRCS
   service/event/ctkEvent.cpp
   service/event/ctkEventAdmin.h
   
-  service/event/ctkEventBus.h
-  
   service/event/ctkEventConstants.cpp
   service/event/ctkEventHandler.h
 

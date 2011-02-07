@@ -1,8 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include <service/event/ctkEventBus.h>
-
+#include <service/event/ctkEventAdmin.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-MainWindow::MainWindow(ctkEventBus *bus, QWidget *parent):
+MainWindow::MainWindow(ctkEventAdmin *bus, QWidget *parent):
     QMainWindow(parent), m_EventBus(bus),
     ui(new Ui::MainWindow)
 {
@@ -32,6 +31,7 @@ void MainWindow::connectEvents() {
     connect(handler, SIGNAL(updateMessageSignal(QString)), this, SLOT(updateMessage(QString)));
     connect(ui->connectButton, SIGNAL(released()), this, SLOT(connectClient()));
 
+    qDebug() << "connectEvents";
     m_EventBus->publishSignal(handler, "receiveEventSignal(QVariantList)", "maf.remote.eventBus.comunication.receive.xmlrpc");
     m_EventBus->subscribeSlot(handler, "receiveEvent(QVariantList)", "maf.remote.eventBus.comunication.receive.xmlrpc", ctkDictionary());
 }
@@ -80,9 +80,11 @@ void MainWindow::updateMessage(QString message) {
 
 void MainWindow::connectClient() {
     bool result, resultClient, resultServer;
+    qDebug() << "QUI";
     resultClient = m_EventBus->createServer("XMLRPC", ui->portLineEdit->text().toInt());
     m_EventBus->startListen();
     resultServer = m_EventBus->createClient("XMLRPC", ui->hostLineEdit->text(), ui->portLineEdit->text().toInt());
+    qDebug() << "QUI";
     result = resultClient && resultServer;
     if(result) {
         ui->hostLineEdit->setEnabled(false);

@@ -122,7 +122,7 @@ struct ctkEventAdmin
    *
    * @see subscribeSlot()
    */
-  virtual void unsubscribeSlot(qlonglong subscriptionId) = 0;
+  virtual void unsubscribeSlot(const QString& topic) = 0;
 
   /**
    * Updates the properties of a previously registered slot. This can be used
@@ -134,7 +134,18 @@ struct ctkEventAdmin
    * @return <code>true</code> if a slot was registered under this subscriptionId and its
    *         properties where changed, <code>false</code> otherwise.
    */
-  virtual bool updateProperties(qlonglong subscriptionId, const ctkDictionary& properties) = 0;
+  virtual bool updateProperties(const QString& topic, const ctkDictionary& properties) = 0;
+
+
+  /// @@@ WRITE DOC!
+  virtual bool createServer(const QString &communication_protocol, unsigned int listen_port) {return true;};
+
+  /// @@@ WRITE DOC!
+  virtual void startListen() {};
+
+  /// @@@ WRITE DOC!
+  virtual bool createClient(const QString &communication_protocol, const QString &server_host, unsigned int port) {return true;};
+
 
 };
 

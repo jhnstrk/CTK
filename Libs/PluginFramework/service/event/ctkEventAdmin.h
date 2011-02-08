@@ -69,9 +69,21 @@ struct ctkEventAdmin
    * @param type Qt::QueuedConnection for asynchronous delivery and
    *        Qt::DirectConnection for synchronous delivery.
    */
-  //virtual void publishSignal(const QObject* publisher, const char* signal,
-  //                           Qt::ConnectionType type = Qt::QueuedConnection) = 0;
+  virtual void publishSignal(const QObject* publisher, const char* signal,
+                             Qt::ConnectionType type = Qt::QueuedConnection) = 0;
 
+  /**
+   * Publish (register) a Qt signal for event delivery. Emitting the signal
+   * has the same effect as calling postEvent() if <code>type</code> is
+   * Qt::QueuedConnection and as sendEvent() if <code>type</code> is
+   * Qt::DirectConnection.
+   *
+   * @param publisher The owner of the signal.
+   * @param signal The signal in normalized form.
+   * @param signal_topic The topic string for the events this signal is emitting.
+   * @param type Qt::QueuedConnection for asynchronous delivery and
+   *        Qt::DirectConnection for synchronous delivery.
+   */
   virtual void publishSignal(const QObject* publisher, const char* signal,
                              const QString& signal_topic, Qt::ConnectionType type = Qt::QueuedConnection) = 0;
 

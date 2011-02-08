@@ -59,6 +59,11 @@ void ctkEventBusImpl::publishSignal(const QObject* publisher, const char* signal
     m_EventBusManager->addEventProperty(*mesbEvent);
 }
 
+void ctkEventBusImpl::publishSignal(const QObject* publisher, const char* signal, Qt::ConnectionType type)
+{
+    qDebug() << "Not implemented in this class";
+}
+
 QString ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* member, const QString& topic, const ctkDictionary& properties)
 {
     mafEvent *mesbEvent = new mafEvent(topic, mafEventTypeLocal, mafSignatureTypeCallback, const_cast<QObject *>(subscriber), member);

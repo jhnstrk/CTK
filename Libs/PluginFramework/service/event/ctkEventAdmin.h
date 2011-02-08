@@ -148,17 +148,6 @@ struct ctkEventAdmin
    */
   virtual bool updateProperties(const QString& topic, const ctkDictionary& properties) = 0;
 
-
-  /// @@@ WRITE DOC!
-  virtual bool createServer(const QString &communication_protocol, unsigned int listen_port) {return true;};
-
-  /// @@@ WRITE DOC!
-  virtual void startListen() {};
-
-  /// @@@ WRITE DOC!
-  virtual bool createClient(const QString &communication_protocol, const QString &server_host, unsigned int port) {return true;};
-
-
 };
 
 

@@ -43,7 +43,7 @@ void ctkEventBusPlugin::start(ctkPluginContext* context)
   qDebug() << "ctkEventBus Plugin starting";
   m_Bus = new ctkEventBusImpl;
   qDebug() << "ctkEventBus created";
-  context->registerService(QStringList("ctkEventAdmin"),m_Bus);
+  context->registerService(QStringList("ctkEventAdminBus"),m_Bus);
   qDebug() << "ctkEventBus Plugin started";
 }
 

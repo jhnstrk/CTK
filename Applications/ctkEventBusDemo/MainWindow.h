@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QVariant>
 
-class ctkEventAdmin;
+class ctkEventAdminBus;
 
 namespace Ui {
     class MainWindow;
@@ -25,7 +25,7 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow(QWidget *parent = 0);
-    MainWindow(ctkEventAdmin *bus, QWidget *parent = 0);
+    MainWindow(ctkEventAdminBus *bus, QWidget *parent = 0);
     ~MainWindow();
 
 public slots:
@@ -39,7 +39,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    ctkEventAdmin *m_EventBus;
+    ctkEventAdminBus *m_EventBus;
 
     ctkEventDemo *handler;
 };

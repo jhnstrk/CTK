@@ -24,7 +24,7 @@
 #include <ctkPluginContext.h>
 #include <ctkServiceReference.h>
 
-#include <service/event/ctkEventAdmin.h>
+#include "ctkEventAdminBus.h"
 
 #include <QApplication>
 #include <QString>
@@ -100,8 +100,8 @@ int main(int argv, char** argc) {
       plugin->start(ctkPlugin::START_TRANSIENT);
   }
 
-  ctkServiceReference ebr = framework->getPluginContext()->getServiceReference("ctkEventAdmin");
-  ctkEventAdmin *eb = framework->getPluginContext()->getService<ctkEventAdmin>(ebr);
+  ctkServiceReference ebr = framework->getPluginContext()->getServiceReference("ctkEventAdminBus");
+  ctkEventAdminBus *eb = framework->getPluginContext()->getService<ctkEventAdminBus>(ebr);
 
   MainWindow win(eb);
   win.show();

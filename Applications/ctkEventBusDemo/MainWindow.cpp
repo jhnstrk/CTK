@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include <service/event/ctkEventAdmin.h>
+#include "ctkEventAdminBus.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-MainWindow::MainWindow(ctkEventAdmin *bus, QWidget *parent):
+MainWindow::MainWindow(ctkEventAdminBus *bus, QWidget *parent):
     QMainWindow(parent), m_EventBus(bus),
     ui(new Ui::MainWindow)
 {

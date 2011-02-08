@@ -22,7 +22,7 @@
 #ifndef CTKEVENTBUSIMPL_H
 #define CTKEVENTBUSIMPL_H
 
-#include <service/event/ctkEventAdmin.h>
+#include "ctkEventAdminBus.h"
 
 #include "mafEventBus/mafEventBusManager.h"
 
@@ -35,10 +35,10 @@ class ctkEventHandlerWrapper;
 
 
 class ctkEventBusImpl : public QObject,
-                     public ctkEventAdmin
+                     public ctkEventAdminBus
 {
   Q_OBJECT
-  Q_INTERFACES(ctkEventAdmin)
+  Q_INTERFACES(ctkEventAdminBus)
 
 public:
 

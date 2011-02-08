@@ -101,8 +101,8 @@ private:
     /// Object destructor.
     ~mafEventBusManager();
 
-    mafEventDispatcherLocal *m_LocalDispatcher; ///< Dispatcher class which dispatches events locally to the application.
-    mafEventDispatcherRemote *m_RemoteDispatcher; ///< Dispatcher class dispatches events remotely to another applications or via network.
+    ctkEventDispatcherLocal *m_LocalDispatcher; ///< Dispatcher class which dispatches events locally to the application.
+    ctkEventDispatcherRemote *m_RemoteDispatcher; ///< Dispatcher class dispatches events remotely to another applications or via network.
 
     bool m_EnableEventLogging; ///< Flag to enable/disable logging for event sent.
     QString m_LogEventTopic; ///< Store the current Event_Id to track through the logger.

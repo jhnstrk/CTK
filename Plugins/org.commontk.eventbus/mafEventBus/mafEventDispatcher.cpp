@@ -1,5 +1,5 @@
 /*
- *  mafEventDispatcher.cpp
+ *  ctkEventDispatcher.cpp
  *  mafEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
@@ -18,19 +18,19 @@
 
 using namespace mafEventBus;
 
-mafEventDispatcher::mafEventDispatcher() {
+ctkEventDispatcher::ctkEventDispatcher() {
 
 }
 
-mafEventDispatcher::~mafEventDispatcher() {
+ctkEventDispatcher::~ctkEventDispatcher() {
 
 }
 
-bool mafEventDispatcher::isLocalSignalPresent(const QString topic) const {
+bool ctkEventDispatcher::isLocalSignalPresent(const QString topic) const {
     return m_SignalsHash.values(topic).size() != 0;
 }
 
-void mafEventDispatcher::resetHashes() {
+void ctkEventDispatcher::resetHashes() {
     // delete all lists present into the hash.
     QHash<QString, mafEvent *>::iterator i;
     for (i = m_CallbacksHash.begin(); i != m_CallbacksHash.end(); ++i) {
@@ -44,7 +44,7 @@ void mafEventDispatcher::resetHashes() {
     m_SignalsHash.clear();
 }
 
-void mafEventDispatcher::initializeGlobalEvents() {
+void ctkEventDispatcher::initializeGlobalEvents() {
     mafEvent *remote_done = new mafEvent();
     QString eventId = "maf.local.eventBus.remoteCommunicationDone";
 
@@ -67,7 +67,7 @@ void mafEventDispatcher::initializeGlobalEvents() {
     this->registerSignal(*remote_failed);
 }
 
-bool mafEventDispatcher::isSignaturePresent(const mafEvent &props) const {
+bool ctkEventDispatcher::isSignaturePresent(const mafEvent &props) const {
     QString topic = props[TOPIC].toString();
     mafEventItemListType itemEventPropList;
     mafEvent *itemEventProp;
@@ -87,7 +87,7 @@ bool mafEventDispatcher::isSignaturePresent(const mafEvent &props) const {
     return false;
 }
 
-bool mafEventDispatcher::disconnectSignal(const mafEvent &props) {
+bool ctkEventDispatcher::disconnectSignal(const mafEvent &props) {
     QObject *obj_signal = props[OBJECT].value<QObject*>();
     QString sig = props[SIGNATURE].toString();
     QString event_sig = SIGNAL_SIGNATURE;
@@ -96,7 +96,7 @@ bool mafEventDispatcher::disconnectSignal(const mafEvent &props) {
     return result;
 }
 
-bool mafEventDispatcher::disconnectCallback(const mafEvent &props) {
+bool ctkEventDispatcher::disconnectCallback(const mafEvent &props) {
     //need to disconnect observer from the signal
     QString observer_sig = CALLBACK_SIGNATURE;
     observer_sig.append(props[SIGNATURE].toString());
@@ -111,7 +111,7 @@ bool mafEventDispatcher::disconnectCallback(const mafEvent &props) {
     return disconnect(objSignal, event_sig.toAscii(), objSlot, observer_sig.toAscii());
 }
 
-bool mafEventDispatcher::removeEventItem(const mafEvent &props) {
+bool ctkEventDispatcher::removeEventItem(const mafEvent &props) {
     bool isDisconnected = false;
     bool isPresent = isSignaturePresent(props);
     if(isPresent == true) {
@@ -152,7 +152,7 @@ bool mafEventDispatcher::removeEventItem(const mafEvent &props) {
     return isDisconnected;
 }
 
-bool mafEventDispatcher::addObserver(const mafEvent &props) {
+bool ctkEventDispatcher::addObserver(const mafEvent &props) {
     QString topic = props[TOPIC].toString();
     // check if the object has been already registered with the same signature to avoid duplicates.
     if(m_CallbacksHash.contains(topic) && this->isSignaturePresent(props) == true) {
@@ -199,7 +199,7 @@ bool mafEventDispatcher::addObserver(const mafEvent &props) {
     return false;
 }
 
-bool mafEventDispatcher::removeObserver(const QObject *obj, const QString topic, bool qt_disconnect) {
+bool ctkEventDispatcher::removeObserver(const QObject *obj, const QString topic, bool qt_disconnect) {
     if(obj == NULL) {
         return false;
     }
@@ -207,7 +207,7 @@ bool mafEventDispatcher::removeObserver(const QObject *obj, const QString topic,
     return removeFromHash(&m_CallbacksHash, obj, topic, qt_disconnect);
 }
 
-bool mafEventDispatcher::removeSignal(const QObject *obj, const QString topic, bool qt_disconnect) {
+bool ctkEventDispatcher::removeSignal(const QObject *obj, const QString topic, bool qt_disconnect) {
     if(obj == NULL) {
         return false;
     }
@@ -215,7 +215,7 @@ bool mafEventDispatcher::removeSignal(const QObject *obj, const QString topic, b
     return removeFromHash(&m_SignalsHash, obj, topic, qt_disconnect);
 }
 
-bool mafEventDispatcher::removeFromHash(mafEventsHashType *hash, const QObject *obj, const QString topic, bool qt_disconnect) {
+bool ctkEventDispatcher::removeFromHash(mafEventsHashType *hash, const QObject *obj, const QString topic, bool qt_disconnect) {
     bool disconnectItem = true;
     if(topic.length() > 0 && hash->contains(topic)) {
         // Remove the observer from the given topic.
@@ -283,11 +283,11 @@ bool mafEventDispatcher::removeFromHash(mafEventsHashType *hash, const QObject *
     return false; //need to enter in one of the conditions
 }
 
-bool mafEventDispatcher::removeObserver(const mafEvent &props) {
+bool ctkEventDispatcher::removeObserver(const mafEvent &props) {
     return removeEventItem(props);
 }
 
-bool mafEventDispatcher::registerSignal(const mafEvent &props) {
+bool ctkEventDispatcher::registerSignal(const mafEvent &props) {
     // check if the object has been already registered with the same signature to avoid duplicates.
     if(props["Signature"].toString().length() == 0) {
         QVariant var;
@@ -346,11 +346,11 @@ bool mafEventDispatcher::registerSignal(const mafEvent &props) {
     return cumulativeConnect;
 }
 
-bool mafEventDispatcher::removeSignal(const mafEvent &props) {
+bool ctkEventDispatcher::removeSignal(const mafEvent &props) {
     return removeEventItem(props);
 }
 
-void mafEventDispatcher::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcher::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     Q_UNUSED(event_dictionary);
     Q_UNUSED(argList);
     Q_UNUSED(returnArg);

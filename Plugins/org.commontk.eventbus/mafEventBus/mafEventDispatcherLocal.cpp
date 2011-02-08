@@ -1,5 +1,5 @@
 /*
- *  mafEventDispatcherLocal.cpp
+ *  ctkEventDispatcherLocal.cpp
  *  mafEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
@@ -14,11 +14,11 @@
 
 using namespace mafEventBus;
 
-mafEventDispatcherLocal::mafEventDispatcherLocal() : mafEventDispatcher() {
+ctkEventDispatcherLocal::ctkEventDispatcherLocal() : ctkEventDispatcher() {
     this->initializeGlobalEvents();
 }
 
-void mafEventDispatcherLocal::initializeGlobalEvents() {
+void ctkEventDispatcherLocal::initializeGlobalEvents() {
     mafEvent *properties = new mafEvent();
     QString topic = "maf.local.eventBus.globalUpdate";
     (*properties)[TOPIC] =  topic;
@@ -30,10 +30,10 @@ void mafEventDispatcherLocal::initializeGlobalEvents() {
     (*properties)[SIGNATURE] = "notifyDefaultEvent()";
     registerSignal(*properties);
 
-    mafEventDispatcher::initializeGlobalEvents();
+    ctkEventDispatcher::initializeGlobalEvents();
 }
 
-void mafEventDispatcherLocal::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcherLocal::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     QString topic = event_dictionary[TOPIC].toString();
     mafEventItemListType items = signalItemProperty(topic);
     mafEvent *itemEventProp;

@@ -1,5 +1,5 @@
 /*
- *  mafEventDispatcher.h
+ *  ctkEventDispatcher.h
  *  mafEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
@@ -17,18 +17,18 @@
 namespace mafEventBus {
 
 /**
- Class name: mafEventDispatcher
+ Class name: ctkEventDispatcher
  This allows dispatching events coming from local application to attached observers.
  */
-class MAFEVENTBUSSHARED_EXPORT mafEventDispatcher : public QObject {
+class MAFEVENTBUSSHARED_EXPORT ctkEventDispatcher : public QObject {
     Q_OBJECT
 
 public:
     /// object constructor.
-    mafEventDispatcher();
+    ctkEventDispatcher();
 
     /// object destructor.
-    virtual ~mafEventDispatcher();
+    virtual ~ctkEventDispatcher();
 
     /// Add the observer to the events.
     /** Return true if observer has beed added correctly, false otherwise.
@@ -104,7 +104,7 @@ private:
 // Inline methods
 /////////////////////////////////////////////////////////////
 
-inline mafEventItemListType mafEventDispatcher::signalItemProperty(const QString topic) const {
+inline mafEventItemListType ctkEventDispatcher::signalItemProperty(const QString topic) const {
     return m_SignalsHash.values(topic);
 }
 

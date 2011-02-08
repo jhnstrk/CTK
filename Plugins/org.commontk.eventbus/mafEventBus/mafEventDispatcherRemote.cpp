@@ -1,5 +1,5 @@
 /*
- *  mafEventDispatcherRemote.cpp
+ *  ctkEventDispatcherRemote.cpp
  *  mafEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
@@ -15,26 +15,26 @@
 
 using namespace mafEventBus;
 
-mafEventDispatcherRemote::mafEventDispatcherRemote() : mafEventDispatcher(), m_NetworkConnectorServer(NULL), m_NetworkConnectorClient(NULL) {
+ctkEventDispatcherRemote::ctkEventDispatcherRemote() : ctkEventDispatcher(), m_NetworkConnectorServer(NULL), m_NetworkConnectorClient(NULL) {
     this->initializeGlobalEvents();
 }
 
-mafEventDispatcherRemote::~mafEventDispatcherRemote() {
+ctkEventDispatcherRemote::~ctkEventDispatcherRemote() {
     if(m_NetworkConnectorServer) delete m_NetworkConnectorServer;
     m_NetworkConnectorServer = NULL;
     if(m_NetworkConnectorClient) delete m_NetworkConnectorClient;
     m_NetworkConnectorClient = NULL;
 }
 
-ctkNetworkConnector *mafEventDispatcherRemote::networkConnectorServer() {
+ctkNetworkConnector *ctkEventDispatcherRemote::networkConnectorServer() {
     return m_NetworkConnectorServer;
 }
 
-ctkNetworkConnector *mafEventDispatcherRemote::networkConnectorClient() {
+ctkNetworkConnector *ctkEventDispatcherRemote::networkConnectorClient() {
     return m_NetworkConnectorClient;
 }
 
-void mafEventDispatcherRemote::initializeGlobalEvents() {
+void ctkEventDispatcherRemote::initializeGlobalEvents() {
     mafEvent *properties = new mafEvent();
     QString topic = "maf.remote.eventBus.globalUpdate";
     (*properties)[TOPIC] = topic;
@@ -51,7 +51,7 @@ void mafEventDispatcherRemote::initializeGlobalEvents() {
     // through the event bus manager while the remote notification (mafEventTypeRemote) uses the network connector.
 }
 
-void mafEventDispatcherRemote::setNetworkConnectorServer(ctkNetworkConnector *connector) {
+void ctkEventDispatcherRemote::setNetworkConnectorServer(ctkNetworkConnector *connector) {
     if(m_NetworkConnectorServer == NULL) {
         m_NetworkConnectorServer = connector->clone();
         m_NetworkConnectorServer->initializeForEventBus();
@@ -64,7 +64,7 @@ void mafEventDispatcherRemote::setNetworkConnectorServer(ctkNetworkConnector *co
    }
 }
 
-void mafEventDispatcherRemote::setNetworkConnectorClient(ctkNetworkConnector *connector) {
+void ctkEventDispatcherRemote::setNetworkConnectorClient(ctkNetworkConnector *connector) {
      if(m_NetworkConnectorClient == NULL) {
          m_NetworkConnectorClient = connector->clone();
          m_NetworkConnectorClient->initializeForEventBus();
@@ -77,7 +77,7 @@ void mafEventDispatcherRemote::setNetworkConnectorClient(ctkNetworkConnector *co
     }
 }
 
-void mafEventDispatcherRemote::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcherRemote::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     //Q_UNUSED(event_dictionary);
     //Q_UNUSED(argList);
     Q_UNUSED(returnArg);

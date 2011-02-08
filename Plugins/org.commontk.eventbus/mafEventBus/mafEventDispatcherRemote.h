@@ -1,5 +1,5 @@
 /*
- *  mafEventDispatcherRemote.h
+ *  ctkEventDispatcherRemote.h
  *  mafEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
@@ -21,18 +21,18 @@ namespace mafEventBus {
 class ctkNetworkConnector;
 
 /**
- Class name: mafEventDispatcherRemote
+ Class name: ctkEventDispatcherRemote
  This allows dispatching events coming from local application to attached observers.
  */
-class MAFEVENTBUSSHARED_EXPORT mafEventDispatcherRemote : public mafEventDispatcher {
+class MAFEVENTBUSSHARED_EXPORT ctkEventDispatcherRemote : public ctkEventDispatcher {
     Q_OBJECT
 
 public:
     /// object constructor.
-    mafEventDispatcherRemote();
+    ctkEventDispatcherRemote();
 
     /// object destructor.
-    /*virtual*/ ~mafEventDispatcherRemote();
+    /*virtual*/ ~ctkEventDispatcherRemote();
 
     /// Emit event corresponding to the given id (present into the event_dictionary) locally to the application.
     /*virtual*/ void notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;

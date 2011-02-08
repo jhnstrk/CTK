@@ -19,11 +19,11 @@ using namespace mafEventBus;
 
 mafEventBusManager::mafEventBusManager() : m_EnableEventLogging(false), m_LogEventTopic("*"), m_SkipDetach(false) {
     // Create local event dispatcher.
-    m_LocalDispatcher = new mafEventDispatcherLocal();
+    m_LocalDispatcher = new ctkEventDispatcherLocal();
     m_LocalDispatcher->setObjectName("Local Event Dispatcher");
 
     // Create the remote event dispatcher.
-    m_RemoteDispatcher = new mafEventDispatcherRemote();
+    m_RemoteDispatcher = new ctkEventDispatcherRemote();
     m_RemoteDispatcher->setObjectName("Remote Event Dispatcher");
 }
 

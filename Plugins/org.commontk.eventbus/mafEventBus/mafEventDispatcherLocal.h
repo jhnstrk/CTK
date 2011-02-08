@@ -1,5 +1,5 @@
 /*
- *  mafEventDispatcherLocal.h
+ *  ctkEventDispatcherLocal.h
  *  mafEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
@@ -18,15 +18,15 @@
 namespace mafEventBus {
 
 /**
- Class name: mafEventDispatcherLocal
+ Class name: ctkEventDispatcherLocal
  This allows dispatching events coming from local application to attached observers.
  */
-class MAFEVENTBUSSHARED_EXPORT mafEventDispatcherLocal : public mafEventDispatcher {
+class MAFEVENTBUSSHARED_EXPORT ctkEventDispatcherLocal : public ctkEventDispatcher {
     Q_OBJECT
 
 public:
     /// object constructor.
-    mafEventDispatcherLocal();
+    ctkEventDispatcherLocal();
 
     /// Emit event corresponding to the given id locally to the application.
     virtual void notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;

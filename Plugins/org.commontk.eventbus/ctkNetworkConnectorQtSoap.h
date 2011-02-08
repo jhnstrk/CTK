@@ -13,7 +13,7 @@
 #define CTKNETWORKCONNECTORQTSOAP_H
 
 // include list
-#include "mafNetworkConnector.h"
+#include "ctkNetworkConnector.h"
 
 // Foundation Library include list
 #include <qtsoap.h>

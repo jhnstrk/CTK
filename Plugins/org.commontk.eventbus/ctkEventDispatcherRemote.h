@@ -13,8 +13,8 @@
 #define CTKEVENTDISPATCHERREMOTE_H
 
 //include list
-#include "mafEventDefinitions.h"
-#include "mafEventDispatcher.h"
+#include "ctkEventDefinitions.h"
+#include "ctkEventDispatcher.h"
 
 namespace ctkEventBus {
 

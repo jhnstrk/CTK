@@ -13,7 +13,7 @@
 #define CTKNETWORKCONNECTOR_H
 
 //include list
-#include "mafEventDefinitions.h"
+#include "ctkEventDefinitions.h"
 
 namespace ctkEventBus {
 

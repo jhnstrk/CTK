@@ -9,10 +9,10 @@
  *
  */
 
-#include "mafNetworkConnectorQtSoap.h"
-#include "mafEventBusManager.h"
+#include "ctkNetworkConnectorQtSoap.h"
+#include "ctkEventBusManager.h"
 
-#include "mafEvent.h"
+#include "ctkEventEB.h"
 
 using namespace ctkEventBus;
 

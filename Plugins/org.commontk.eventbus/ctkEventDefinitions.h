@@ -25,7 +25,7 @@
 #include <QObject>
 #include <QDebug>
 
-#include "mafEventBus_global.h"
+#include "ctkEventBus_global.h"
 
 //defines
 

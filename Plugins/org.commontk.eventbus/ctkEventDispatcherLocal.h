@@ -12,8 +12,8 @@
 #ifndef CTKEVENTDISPATCHERLOCAL_H
 #define CTKEVENTDISPATCHERLOCAL_H
 
-#include "mafEventDefinitions.h"
-#include "mafEventDispatcher.h"
+#include "ctkEventDefinitions.h"
+#include "ctkEventDispatcher.h"
 
 namespace ctkEventBus {
 

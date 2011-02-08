@@ -12,7 +12,7 @@
 #ifndef CTKEVENTHEADER_H
 #define CTKEVENTHEADER_H
 
-#include "mafEventDefinitions.h"
+#include "ctkEventDefinitions.h"
 
 namespace ctkEventBus {
 

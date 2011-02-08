@@ -9,9 +9,9 @@
  *
  */
 
-#include "mafEventDispatcherRemote.h"
-#include "mafEvent.h"
-#include "mafNetworkConnector.h"
+#include "ctkEventDispatcherRemote.h"
+#include "ctkEventEB.h"
+#include "ctkNetworkConnector.h"
 
 using namespace ctkEventBus;
 

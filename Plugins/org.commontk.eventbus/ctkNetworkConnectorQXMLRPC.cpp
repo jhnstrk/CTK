@@ -9,10 +9,10 @@
  *
  */
 
-#include "mafNetworkConnectorQXMLRPC.h"
-#include "mafEventBusManager.h"
+#include "ctkNetworkConnectorQXMLRPC.h"
+#include "ctkEventBusManager.h"
 
-#include "mafEvent.h"
+#include "ctkEventEB.h"
 
 using namespace ctkEventBus;
 

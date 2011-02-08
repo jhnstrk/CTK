@@ -9,7 +9,7 @@
  *
  */
 
-#include "mafTopicRegistry.h"
+#include "ctkTopicRegistry.h"
 
 using namespace ctkEventBus;
 

@@ -9,7 +9,7 @@
  *
  */
 
-#include "mafEvent.h"
+#include "ctkEventEB.h"
 
 using namespace ctkEventBus;
 

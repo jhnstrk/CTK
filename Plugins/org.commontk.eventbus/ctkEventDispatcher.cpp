@@ -10,8 +10,8 @@
  */
 
 
-#include "mafEventDispatcher.h"
-#include "mafEvent.h"
+#include "ctkEventDispatcher.h"
+#include "ctkEventEB.h"
 
 #define CALLBACK_SIGNATURE "1"
 #define SIGNAL_SIGNATURE   "2"

@@ -13,7 +13,7 @@
 #define CTKTOPICREGISTRY_H
 
 // Includes list
-#include "mafEventDefinitions.h"
+#include "ctkEventDefinitions.h"
 
 namespace ctkEventBus {
 

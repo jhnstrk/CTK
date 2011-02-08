@@ -12,7 +12,7 @@
 #ifndef CTKEVENTDISPATCHER_H
 #define CTKEVENTDISPATCHER_H
 
-#include "mafEventDefinitions.h"
+#include "ctkEventDefinitions.h"
 
 namespace ctkEventBus {
 

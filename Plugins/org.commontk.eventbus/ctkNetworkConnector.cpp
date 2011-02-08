@@ -9,7 +9,7 @@
  *
  */
 
-#include "mafNetworkConnector.h"
+#include "ctkNetworkConnector.h"
 
 using namespace ctkEventBus;
 

@@ -9,8 +9,8 @@
  *
  */
 
-#include "mafEventDispatcherLocal.h"
-#include "mafEvent.h"
+#include "ctkEventDispatcherLocal.h"
+#include "ctkEventEB.h"
 
 using namespace ctkEventBus;
 

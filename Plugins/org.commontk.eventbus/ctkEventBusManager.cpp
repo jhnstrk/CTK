@@ -8,10 +8,10 @@
  *
  */
 
-#include "mafEventBusManager.h"
-#include "mafTopicRegistry.h"
-#include "mafNetworkConnectorQtSoap.h"
-#include "mafNetworkConnectorQXMLRPC.h"
+#include "ctkEventBusManager.h"
+#include "ctkTopicRegistry.h"
+#include "ctkNetworkConnectorQtSoap.h"
+#include "ctkNetworkConnectorQXMLRPC.h"
 
 using namespace ctkEventBus;
 

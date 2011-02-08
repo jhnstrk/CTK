@@ -33,10 +33,10 @@ public:
     /// Add the observer to the events.
     /** Return true if observer has beed added correctly, false otherwise.
     This method check before adding a new observer that it has not already been inserted into the events' Hash with the same id and callback signature.*/
-    bool addObserver(const ctkEvent &props);
+    bool addObserver(ctkEvent &props);
 
     /// remove the callback from the observer's hash.
-    bool removeObserver(const ctkEvent &props);
+    bool removeObserver(ctkEvent &props);
 
     /// remove the callback from the observer's hash.
     bool removeObserver(const QObject *obj, const QString topic, bool qt_disconnect = true);
@@ -48,10 +48,10 @@ public:
     /** Return true if signal has beed added correctly, false otherwise.
     This method check before adding a new signal that it has not already been inserted into the events' Hash with the same id and signal signature.
     WARNING: due to Qt limitation you cannot use the same signal in different Topics.*/
-    bool registerSignal(const ctkEvent &props);
+    bool registerSignal(ctkEvent &props);
 
     /// Remove the signal from the signal's hash.
-    bool removeSignal(const ctkEvent &props);
+    bool removeSignal(ctkEvent &props);
 
     /// method used to check if the given signal has been already registered for the given id.
     bool isLocalSignalPresent(const QString topic) const;
@@ -77,21 +77,21 @@ protected:
     virtual void initializeGlobalEvents();
 
     /// Interanl method used to remove the given event property.
-    bool removeEventItem(const ctkEvent &props);
+    bool removeEventItem(ctkEvent &props);
 
     /// Return the signal item property associated to the given ID.
     ctkEventItemListType signalItemProperty(const QString topic) const;
 
 private:
     /// method used to check if the given object has been already registered for the given id and signature.
-    bool isSignaturePresent(const ctkEvent &props) const;
+    bool isSignaturePresent(ctkEvent &props) const;
 
     /// disconnection signal/observer.
     /** This function disconnects the signal and all the observers. */
-    bool disconnectSignal(const ctkEvent &props);
+    bool disconnectSignal(ctkEvent &props);
 
     /// This function disconnects observer from signal.
-    bool disconnectCallback(const ctkEvent &props);
+    bool disconnectCallback(ctkEvent &props);
 
     /// Remove the given object from the has passed as argument
     bool removeFromHash(ctkEventsHashType *hash, const QObject *obj, const QString topic, bool qt_disconnect = true);

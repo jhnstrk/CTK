@@ -10,7 +10,7 @@
  */
 
 #include "ctkEventDispatcherRemote.h"
-#include "ctkEventEB.h"
+#include <service/event/ctkEvent.h>
 #include "ctkNetworkConnector.h"
 
 using namespace ctkEventBus;
@@ -35,15 +35,7 @@ ctkNetworkConnector *ctkEventDispatcherRemote::networkConnectorClient() {
 }
 
 void ctkEventDispatcherRemote::initializeGlobalEvents() {
-    ctkEvent *properties = new ctkEvent();
-    QString topic = "maf.remote.eventBus.globalUpdate";
-    (*properties)[TOPIC] = topic;
-    (*properties)[TYPE] = ctkEventTypeRemote;
-    QVariant var;
-    var.setValue((QObject*)this);
-    (*properties)[OBJECT] = var;
-    (*properties)[SIGTYPE] = mafSignatureTypeSignal;
-    (*properties)[SIGNATURE] = "notifyDefaultEvent()";
+    ctkEvent *properties = new ctkEvent("maf.remote.eventBus.globalUpdate",ctkEventTypeRemote,mafSignatureTypeSignal,this,"notifyDefaultEvent()");
     this->registerSignal(*properties);
 
     // events like remoteCommunicationDone or failed represents th bridge events between a remote communication
@@ -77,7 +69,7 @@ void ctkEventDispatcherRemote::setNetworkConnectorClient(ctkNetworkConnector *co
     }
 }
 
-void ctkEventDispatcherRemote::notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcherRemote::notifyEvent(ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     //Q_UNUSED(event_dictionary);
     //Q_UNUSED(argList);
     Q_UNUSED(returnArg);

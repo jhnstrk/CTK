@@ -10,7 +10,7 @@
  */
 
 #include "ctkEventDispatcherLocal.h"
-#include "ctkEventEB.h"
+#include <service/event/ctkEvent.h>
 
 using namespace ctkEventBus;
 
@@ -19,8 +19,8 @@ ctkEventDispatcherLocal::ctkEventDispatcherLocal() : ctkEventDispatcher() {
 }
 
 void ctkEventDispatcherLocal::initializeGlobalEvents() {
-    ctkEvent *properties = new ctkEvent();
-    QString topic = "maf.local.eventBus.globalUpdate";
+    ctkEvent *properties = new ctkEvent("maf.local.eventBus.globalUpdate",ctkEventTypeLocal,mafSignatureTypeSignal, this, "notifyDefaultEvent()");
+    /*QString topic = "maf.local.eventBus.globalUpdate";
     (*properties)[TOPIC] =  topic;
     (*properties)[TYPE] = ctkEventTypeLocal;
     (*properties)[SIGTYPE] = mafSignatureTypeSignal;
@@ -28,12 +28,12 @@ void ctkEventDispatcherLocal::initializeGlobalEvents() {
     var.setValue((QObject*)this);
     (*properties)[OBJECT] = var;
     (*properties)[SIGNATURE] = "notifyDefaultEvent()";
-    registerSignal(*properties);
+    registerSignal(*properties);*/
 
     ctkEventDispatcher::initializeGlobalEvents();
 }
 
-void ctkEventDispatcherLocal::notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcherLocal::notifyEvent(ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     QString topic = event_dictionary[TOPIC].toString();
     ctkEventItemListType items = signalItemProperty(topic);
     ctkEvent *itemEventProp;

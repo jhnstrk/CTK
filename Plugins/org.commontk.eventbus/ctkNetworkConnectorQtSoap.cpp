@@ -12,7 +12,7 @@
 #include "ctkNetworkConnectorQtSoap.h"
 #include "ctkEventBusManager.h"
 
-#include "ctkEventEB.h"
+#include <service/event/ctkEvent.h>
 
 using namespace ctkEventBus;
 

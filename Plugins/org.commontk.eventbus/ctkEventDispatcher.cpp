@@ -11,7 +11,7 @@
 
 
 #include "ctkEventDispatcher.h"
-#include "ctkEventEB.h"
+#include <service/event/ctkEvent.h>
 
 #define CALLBACK_SIGNATURE "1"
 #define SIGNAL_SIGNATURE   "2"
@@ -45,8 +45,8 @@ void ctkEventDispatcher::resetHashes() {
 }
 
 void ctkEventDispatcher::initializeGlobalEvents() {
-    ctkEvent *remote_done = new ctkEvent();
-    QString eventId = "maf.local.eventBus.remoteCommunicationDone";
+    ctkEvent *remote_done = new ctkEvent("maf.local.eventBus.remoteCommunicationDone",ctkEventTypeLocal,mafSignatureTypeSignal,this,"remoteCommunicationDone()");
+    /*QString eventId = "maf.local.eventBus.remoteCommunicationDone";
 
     (*remote_done)[TOPIC] = eventId;
     (*remote_done)[TYPE] = ctkEventTypeLocal;
@@ -54,20 +54,20 @@ void ctkEventDispatcher::initializeGlobalEvents() {
     QVariant var;
     var.setValue((QObject*)this);
     (*remote_done)[OBJECT] = var;
-    (*remote_done)[SIGNATURE] = "remoteCommunicationDone()";
+    (*remote_done)[SIGNATURE] = "remoteCommunicationDone()";*/
     this->registerSignal(*remote_done);
 
-    ctkEvent *remote_failed = new ctkEvent();
-    (*remote_failed)[TOPIC] = "maf.local.eventBus.remoteCommunicationFailed";
+    ctkEvent *remote_failed = new ctkEvent("maf.local.eventBus.remoteCommunicationFailed",ctkEventTypeLocal,mafSignatureTypeSignal,this, "remoteCommunicationFailed()");
+    /*(*remote_failed)[TOPIC] = "maf.local.eventBus.remoteCommunicationFailed";
     (*remote_failed)[TYPE] = ctkEventTypeLocal;
     (*remote_failed)[SIGTYPE] = mafSignatureTypeSignal;
     var.setValue((QObject*)this);
     (*remote_failed)[OBJECT] = var;
-    (*remote_failed)[SIGNATURE] = "remoteCommunicationFailed()";
+    (*remote_failed)[SIGNATURE] = "remoteCommunicationFailed()";*/
     this->registerSignal(*remote_failed);
 }
 
-bool ctkEventDispatcher::isSignaturePresent(const ctkEvent &props) const {
+bool ctkEventDispatcher::isSignaturePresent(ctkEvent &props) const {
     QString topic = props[TOPIC].toString();
     ctkEventItemListType itemEventPropList;
     ctkEvent *itemEventProp;
@@ -87,7 +87,7 @@ bool ctkEventDispatcher::isSignaturePresent(const ctkEvent &props) const {
     return false;
 }
 
-bool ctkEventDispatcher::disconnectSignal(const ctkEvent &props) {
+bool ctkEventDispatcher::disconnectSignal(ctkEvent &props) {
     QObject *obj_signal = props[OBJECT].value<QObject*>();
     QString sig = props[SIGNATURE].toString();
     QString event_sig = SIGNAL_SIGNATURE;
@@ -96,7 +96,7 @@ bool ctkEventDispatcher::disconnectSignal(const ctkEvent &props) {
     return result;
 }
 
-bool ctkEventDispatcher::disconnectCallback(const ctkEvent &props) {
+bool ctkEventDispatcher::disconnectCallback(ctkEvent &props) {
     //need to disconnect observer from the signal
     QString observer_sig = CALLBACK_SIGNATURE;
     observer_sig.append(props[SIGNATURE].toString());
@@ -111,7 +111,7 @@ bool ctkEventDispatcher::disconnectCallback(const ctkEvent &props) {
     return disconnect(objSignal, event_sig.toAscii(), objSlot, observer_sig.toAscii());
 }
 
-bool ctkEventDispatcher::removeEventItem(const ctkEvent &props) {
+bool ctkEventDispatcher::removeEventItem(ctkEvent &props) {
     bool isDisconnected = false;
     bool isPresent = isSignaturePresent(props);
     if(isPresent == true) {
@@ -152,7 +152,7 @@ bool ctkEventDispatcher::removeEventItem(const ctkEvent &props) {
     return isDisconnected;
 }
 
-bool ctkEventDispatcher::addObserver(const ctkEvent &props) {
+bool ctkEventDispatcher::addObserver(ctkEvent &props) {
     QString topic = props[TOPIC].toString();
     // check if the object has been already registered with the same signature to avoid duplicates.
     if(m_CallbacksHash.contains(topic) && this->isSignaturePresent(props) == true) {
@@ -283,13 +283,14 @@ bool ctkEventDispatcher::removeFromHash(ctkEventsHashType *hash, const QObject *
     return false; //need to enter in one of the conditions
 }
 
-bool ctkEventDispatcher::removeObserver(const ctkEvent &props) {
+bool ctkEventDispatcher::removeObserver(ctkEvent &props) {
     return removeEventItem(props);
 }
 
-bool ctkEventDispatcher::registerSignal(const ctkEvent &props) {
+bool ctkEventDispatcher::registerSignal(ctkEvent &props) {
     // check if the object has been already registered with the same signature to avoid duplicates.
     if(props["Signature"].toString().length() == 0) {
+
         QVariant var;
         var.setValue((QObject *)this);
         props[OBJECT] = var;
@@ -346,7 +347,7 @@ bool ctkEventDispatcher::registerSignal(const ctkEvent &props) {
     return cumulativeConnect;
 }
 
-bool ctkEventDispatcher::removeSignal(const ctkEvent &props) {
+bool ctkEventDispatcher::removeSignal(ctkEvent &props) {
     return removeEventItem(props);
 }
 

@@ -12,7 +12,7 @@
 #include "ctkNetworkConnectorQXMLRPC.h"
 #include "ctkEventBusManager.h"
 
-#include "ctkEventEB.h"
+#include <service/event/ctkEvent.h>
 
 using namespace ctkEventBus;
 
@@ -255,9 +255,9 @@ void ctkNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodNa
     }
 
     if ( ctkEventBusManager::instance()->isLocalSignalPresent(id_name) ) {
-        ctkEvent dictionary;
-        dictionary.setEventTopic(id_name);
-        dictionary.setEventType(ctkEventTypeLocal);
+        ctkEvent dictionary(id_name,ctkEventTypeLocal,0,NULL,"");
+        /*dictionary.setEventTopic(id_name);
+        dictionary.setEventType(ctkEventTypeLocal);*/
         ctkEventBusManager::instance()->notifyEvent(dictionary, argList);
         m_Server->sendReturnValue( requestId, QString("OK") );
     } else {

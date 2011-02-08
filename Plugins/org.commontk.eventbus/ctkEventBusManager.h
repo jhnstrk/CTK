@@ -16,7 +16,7 @@
 #include "ctkEventDefinitions.h"
 #include "ctkEventDispatcherLocal.h"
 #include "ctkEventDispatcherRemote.h"
-#include "ctkEventEB.h"
+#include <service/event/ctkEvent.h>
 
 namespace ctkEventBus {
 
@@ -37,10 +37,10 @@ public:
     /// Add a new event property (observer or event) to the event bus hash.
     /** Return true if observer has beed added correctly, false otherwise.
     This method check before adding a new observer that it has not already been inserted into the events' Hash with the same id and callback signature.*/
-    bool addEventProperty(const ctkEvent &props) const;
+    bool addEventProperty(ctkEvent &props) const;
 
     /// Remove the event property from the event bus hash.
-    bool removeEventProperty(const ctkEvent &props) const;
+    bool removeEventProperty(ctkEvent &props) const;
 
     /// Remove the object passed as argument from the observer's hash.
     /** This method allows to remove from the observer's hash the object
@@ -55,7 +55,7 @@ public:
     void removeSignal(const QObject *obj, QString topic = "", bool qt_disconnect = true);
 
     /// Notify events associated to the given id locally to the application.
-    void notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    void notifyEvent(ctkEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
 
     /// Notify event associated to the given id locally to the application.
     void notifyEvent(const QString topic, ctkEventType ev_type = ctkEventTypeLocal, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;

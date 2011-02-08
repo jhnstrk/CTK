@@ -37,6 +37,18 @@ public:
     this->properties.insert(ctkEventConstants::EVENT_TOPIC, topic);
   }
 
+  ctkEventData(QString topic, int event_type, int signature_type, QObject *objectPointer, QString signature)
+    : topic(topic)
+  {
+      properties.insert("EventTopic", topic);
+      properties.insert("EventType", static_cast<int>(event_type));
+      properties.insert("SignatureType", static_cast<int>(signature_type));
+      QVariant var;
+      var.setValue(objectPointer);
+      properties.insert("ObjectPointer", var);
+      properties.insert("Signature", signature);
+  }
+
   static void validateTopicName(const QString& topic)
   {
     if (topic.isEmpty())
@@ -85,8 +97,14 @@ ctkEvent::ctkEvent(const QString& topic, const ctkDictionary& properties)
 
 }
 
-//----------------------------------------------------------------------------
-// This is fast thanks to implicit sharing
+ctkEvent::ctkEvent(QString topic, int event_type, int signature_type, QObject *objectPointer, QString signature)
+: d(new ctkEventData(topic, event_type, signature_type, objectPointer, signature)) {
+
+}
+
+/*
+ * This is fast thanks to implicit sharing
+ */
 ctkEvent::ctkEvent(const ctkEvent &event)
   : d(event.d)
 {
@@ -161,4 +179,29 @@ const QString& ctkEvent::getTopic() const
 bool ctkEvent::matches(const ctkLDAPSearchFilter& filter) const
 {
   return filter.matchCase(d->properties);
+}
+
+QVariant &ctkEvent::operator[](QString key) {
+    return (d->properties)[key];
+}
+
+int ctkEvent::eventType() const {
+    return static_cast<int>((d->properties).value("EventType").toInt());
+}
+
+QString ctkEvent::eventTopic() const {
+    return (d->properties).value("EventTopic").toString();
+}
+
+bool ctkEvent::isEventLocal() const {
+    int et = (d->properties).value("EventType").toInt();
+    return et == 0; //is local
+}
+
+void ctkEvent::setEventType(int et) {
+    (d->properties).insert("EventType", static_cast<int>(et));
+}
+
+void ctkEvent::setEventTopic(QString topic) {
+    (d->properties).insert("EventTopic", topic);
 }

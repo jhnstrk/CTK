@@ -55,7 +55,7 @@ void ctkEventBusImpl::sendEvent(const ::ctkEvent& event)
 void ctkEventBusImpl::publishSignal(const QObject* publisher, const char* signal, const QString& topic,
                                     Qt::ConnectionType type)
 {
-    ctkEventBus::ctkEvent *mesbEvent = new ctkEventBus::ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeSignal, const_cast<QObject *>(publisher), signal);
+    ctkEvent *mesbEvent = new ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeSignal, const_cast<QObject *>(publisher), signal);
     m_EventBusManager->addEventProperty(*mesbEvent);
 }
 
@@ -66,7 +66,7 @@ void ctkEventBusImpl::publishSignal(const QObject* publisher, const char* signal
 
 QString ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* member, const QString& topic, const ctkDictionary& properties)
 {
-    ctkEventBus::ctkEvent *mesbEvent = new ctkEventBus::ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeCallback, const_cast<QObject *>(subscriber), member);
+    ctkEvent *mesbEvent = new ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeCallback, const_cast<QObject *>(subscriber), member);
     m_EventBusManager->addEventProperty(*mesbEvent);
 
     return QString();
@@ -98,7 +98,7 @@ void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
 
   QString topic = event.getTopic(); //may contains widlcards
 
-  ctkEventBus::ctkEvent *mebEvent = new ctkEventBus::ctkEvent();
+  ctkEvent *mebEvent = new ctkEvent(topic,ctkEventBus::ctkEventTypeLocal,ctkEventBus::mafSignatureTypeSignal, this, "no");
   mebEvent->setEventTopic(topic);
   mebEvent->setEventType(ctkEventBus::ctkEventTypeLocal);
   //mebEvent->setEventFilter(NULL);

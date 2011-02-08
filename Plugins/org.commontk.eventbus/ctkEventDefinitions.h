@@ -35,9 +35,11 @@
 #define OBJECT "ObjectPointer"
 #define SIGNATURE "Signature"
 
+class ctkEvent;
+
 #define mafRegisterLocalSignal(topic, sender, signature) \
     {\
-        ctkEventBus::ctkEvent *properties = new ctkEventBus::ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
+        ctkEvent *properties = new ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
         bool ok = ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the signal registration with ID '%1'.").arg(topic).toAscii().data());\
@@ -47,7 +49,7 @@
 
 #define mafRegisterRemoteSignal(topic, sender, signature) \
     {\
-        ctkEventBus::ctkEvent *properties = new ctkEventBus::ctkEvent(topic, ctkEventBus::ctkEventTypeRemote, ctkEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
+        ctkEvent *properties = new ctkEvent(topic, ctkEventBus::ctkEventTypeRemote, ctkEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
         bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the signal registration with ID '%1'.").arg(topic).toAscii().data());\
@@ -57,7 +59,7 @@
 
 #define mafRegisterLocalCallback(topic, observer, signature) \
     {\
-        ctkEventBus::ctkEvent *properties = new ctkEventBus::ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeCallback, static_cast<QObject*>(observer), signature); \
+        ctkEvent *properties = new ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeCallback, static_cast<QObject*>(observer), signature); \
         bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the callback registration with ID '%1'.").arg(topic).toAscii().data());\
@@ -67,7 +69,7 @@
 
 #define mafRegisterRemoteCallback(topic, sender, signature) \
     {\
-        ctkEventBus::ctkEvent *properties = new ctkEventBus::ctkEvent(topic, ctkEventBus::ctkEventTypeRemote, ctkEventBus::mafSignatureTypeCallback, static_cast<QObject*>(sender), signature); \
+        ctkEvent *properties = new ctkEvent(topic, ctkEventBus::ctkEventTypeRemote, ctkEventBus::mafSignatureTypeCallback, static_cast<QObject*>(sender), signature); \
         bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the callback registration with ID '%1'.").arg(topic).toAscii().data());\
@@ -105,7 +107,6 @@ typedef ctkEventArgumentsList * ctkEventArgumentsListPointer;
 #define mafGenericReturnArgument QGenericReturnArgument
 #define ctkEventReturnArgument(type, data) QReturnArgument<type >(#type, data)
 
-class ctkEvent;
 
 /// Types definitions for events' hash (to be more readable).
 typedef QHash<QString, ctkEvent *> ctkEventsHashType;

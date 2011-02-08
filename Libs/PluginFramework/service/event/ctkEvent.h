@@ -73,6 +73,8 @@ public:
    */
   ctkEvent(const QString& topic, const ctkDictionary& properties = ctkDictionary());
   ctkEvent(const ctkEvent& event);
+  ctkEvent(QString topic, int event_type, int signature_type, QObject *objectPointer, QString signature);
+
 
   ctkEvent& operator=(const ctkEvent& other);
 
@@ -134,6 +136,25 @@ public:
    */
   bool matches(const ctkLDAPSearchFilter& filter) const;
 
+
+  ///extends api of event
+  /// Allow to assign the event type: ctkEventTypeLocal or ctkEventTypeRemote.
+  void setEventType(int et);
+
+  /// Return the type of the event: ctkEventTypeLocal or ctkEventTypeRemote.
+  int eventType() const;
+
+  /// Check if the event is local or not.
+  bool isEventLocal() const;
+
+  /// Allow to set or modify the event ID
+  void setEventTopic(QString topic);
+
+  /// Return the Id associated with the event.
+  QString eventTopic() const;
+
+  /// Overload operator for rapid access to mafDictionaryEntries
+  QVariant &operator[](QString key);
 };
 
 #endif // CTKEVENT_H

@@ -1,5 +1,5 @@
 /*
- *  mafEventBusManager.h
+ *  ctkEventBusManager.h
  *  mafEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
@@ -23,16 +23,16 @@ namespace mafEventBus {
 // Class forwarding list
 
 /**
- Class name: mafEventBusManager
+ Class name: ctkEventBusManager
  This singletone provides the access point of the Communication Bus for MAF3 framework.
- mafEventBusManager defines also the mafId maf.local.eventBus.globalUpdate to be used as generic update notification mechanism that the event bus can send to all the observers.
+ ctkEventBusManager defines also the mafId maf.local.eventBus.globalUpdate to be used as generic update notification mechanism that the event bus can send to all the observers.
  */
-class MAFEVENTBUSSHARED_EXPORT mafEventBusManager : public QObject {
+class MAFEVENTBUSSHARED_EXPORT ctkEventBusManager : public QObject {
     Q_OBJECT
 
 public:
     /// Return an instance of the event bus.
-    static mafEventBusManager *instance();
+    static ctkEventBusManager *instance();
 
     /// Add a new event property (observer or event) to the event bus hash.
     /** Return true if observer has beed added correctly, false otherwise.
@@ -96,10 +96,10 @@ public slots:
 
 private:
     /// Object constructor.
-    mafEventBusManager();
+    ctkEventBusManager();
 
     /// Object destructor.
-    ~mafEventBusManager();
+    ~ctkEventBusManager();
 
     ctkEventDispatcherLocal *m_LocalDispatcher; ///< Dispatcher class which dispatches events locally to the application.
     ctkEventDispatcherRemote *m_RemoteDispatcher; ///< Dispatcher class dispatches events remotely to another applications or via network.

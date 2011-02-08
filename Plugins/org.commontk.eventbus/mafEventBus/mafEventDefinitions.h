@@ -38,7 +38,7 @@
 #define mafRegisterLocalSignal(topic, sender, signature) \
     {\
         mafEventBus::mafEvent *properties = new mafEventBus::mafEvent(topic, mafEventBus::mafEventTypeLocal, mafEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
-        bool ok = mafEventBus::mafEventBusManager::instance()->addEventProperty(*properties);\
+        bool ok = mafEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the signal registration with ID '%1'.").arg(topic).toAscii().data());\
             if(properties) {delete properties; properties = NULL;} \
@@ -48,7 +48,7 @@
 #define mafRegisterRemoteSignal(topic, sender, signature) \
     {\
         mafEventBus::mafEvent *properties = new mafEventBus::mafEvent(topic, mafEventBus::mafEventTypeRemote, mafEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
-        bool ok =  mafEventBus::mafEventBusManager::instance()->addEventProperty(*properties);\
+        bool ok =  mafEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the signal registration with ID '%1'.").arg(topic).toAscii().data());\
             if(properties) {delete properties; properties = NULL;} \
@@ -58,7 +58,7 @@
 #define mafRegisterLocalCallback(topic, observer, signature) \
     {\
         mafEventBus::mafEvent *properties = new mafEventBus::mafEvent(topic, mafEventBus::mafEventTypeLocal, mafEventBus::mafSignatureTypeCallback, static_cast<QObject*>(observer), signature); \
-        bool ok =  mafEventBus::mafEventBusManager::instance()->addEventProperty(*properties);\
+        bool ok =  mafEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the callback registration with ID '%1'.").arg(topic).toAscii().data());\
             if(properties) {delete properties; properties = NULL;} \
@@ -68,7 +68,7 @@
 #define mafRegisterRemoteCallback(topic, sender, signature) \
     {\
         mafEventBus::mafEvent *properties = new mafEventBus::mafEvent(topic, mafEventBus::mafEventTypeRemote, mafEventBus::mafSignatureTypeCallback, static_cast<QObject*>(sender), signature); \
-        bool ok =  mafEventBus::mafEventBusManager::instance()->addEventProperty(*properties);\
+        bool ok =  mafEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the callback registration with ID '%1'.").arg(topic).toAscii().data());\
             if(properties) {delete properties; properties = NULL;} \

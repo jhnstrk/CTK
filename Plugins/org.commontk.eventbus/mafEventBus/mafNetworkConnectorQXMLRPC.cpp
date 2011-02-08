@@ -101,7 +101,7 @@ void ctkNetworkConnectorQXMLRPC::stopServer() {
         props[TOPIC] = old_id_name;
         props[TYPE] = mafEventTypeRemote;
         props[SIGNATURE] = "registerMethodsServer(mafRegisterMethodsMap)";
-        mafEventBusManager::instance()->removeEventProperty(props);*/
+        ctkEventBusManager::instance()->removeEventProperty(props);*/
         // Delete (and stop) the previous instance of the server.
         if(m_Server) {
             delete m_Server;
@@ -210,13 +210,13 @@ void ctkNetworkConnectorQXMLRPC::processReturnValue( int requestId, QVariant val
     Q_UNUSED( requestId );
     Q_ASSERT( value.canConvert( QVariant::String ) );
     qDebug("%s", value.toString().toAscii().data());
-    mafEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", mafEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", mafEventTypeLocal);
 }
 
 void ctkNetworkConnectorQXMLRPC::processFault( int requestId, int errorCode, QString errorString ) {
     // Log the error.
     qDebug("%s", tr("Process Fault for requestID %1 with error %2 - %3").arg(QString::number(requestId), QString::number(errorCode), errorString).toAscii().data());
-    mafEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", mafEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", mafEventTypeLocal);
 }
 
 void ctkNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodName, QList<xmlrpc::Variant> parameters ) {
@@ -254,11 +254,11 @@ void ctkNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodNa
         argList->push_back(Q_ARG(QVariantList, p));
     }
 
-    if ( mafEventBusManager::instance()->isLocalSignalPresent(id_name) ) {
+    if ( ctkEventBusManager::instance()->isLocalSignalPresent(id_name) ) {
         mafEvent dictionary;
         dictionary.setEventTopic(id_name);
         dictionary.setEventType(mafEventTypeLocal);
-        mafEventBusManager::instance()->notifyEvent(dictionary, argList);
+        ctkEventBusManager::instance()->notifyEvent(dictionary, argList);
         m_Server->sendReturnValue( requestId, QString("OK") );
     } else {
         m_Server->sendReturnValue( requestId, QString("FAIL") );

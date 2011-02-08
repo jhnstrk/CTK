@@ -1,9 +1,8 @@
 /*
- *  mafEventBusManager.cpp
+ *  ctkEventBusManager.cpp
  *  mafEventBus
  *
- *  Created by Paolo Quadrani on 27/03/09.
- *  Copyright 2010 B3C. All rights reserved.
+ *  Created by Paolo Quadrani on 27/03/09.ctkEventBusManager *  Copyright 2010 B3C. All rights reserved.
  *
  *  See Licence at: http://tiny.cc/QXJ4D
  *
@@ -17,7 +16,7 @@
 using namespace mafEventBus;
 
 
-mafEventBusManager::mafEventBusManager() : m_EnableEventLogging(false), m_LogEventTopic("*"), m_SkipDetach(false) {
+ctkEventBusManager::ctkEventBusManager() : m_EnableEventLogging(false), m_LogEventTopic("*"), m_SkipDetach(false) {
     // Create local event dispatcher.
     m_LocalDispatcher = new ctkEventDispatcherLocal();
     m_LocalDispatcher->setObjectName("Local Event Dispatcher");
@@ -27,7 +26,7 @@ mafEventBusManager::mafEventBusManager() : m_EnableEventLogging(false), m_LogEve
     m_RemoteDispatcher->setObjectName("Remote Event Dispatcher");
 }
 
-mafEventBusManager::~mafEventBusManager() {
+ctkEventBusManager::~ctkEventBusManager() {
     ctkNetworkConnectorHash::iterator i = m_NetworkConnectorHash.begin();
     while(i != m_NetworkConnectorHash.end()) {
         delete i.value();
@@ -48,29 +47,29 @@ mafEventBusManager::~mafEventBusManager() {
     }
 }
 
-void mafEventBusManager::plugNetworkConnector(const QString &protocol, ctkNetworkConnector *connector) {
+void ctkEventBusManager::plugNetworkConnector(const QString &protocol, ctkNetworkConnector *connector) {
     m_NetworkConnectorHash.insert(protocol, connector);
 }
 
-bool mafEventBusManager::isLocalSignalPresent(const QString topic) const {
+bool ctkEventBusManager::isLocalSignalPresent(const QString topic) const {
     return m_LocalDispatcher->isLocalSignalPresent(topic);
 }
 
-mafEventBusManager* mafEventBusManager::instance() {
-    static mafEventBusManager instanceEventBus;
+ctkEventBusManager* ctkEventBusManager::instance() {
+    static ctkEventBusManager instanceEventBus;
     return &instanceEventBus;
 }
 
-void mafEventBusManager::shutdown() {
+void ctkEventBusManager::shutdown() {
     mafEventBus::ctkTopicRegistry::instance()->shutdown();
 }
 
-void mafEventBusManager::initializeNetworkConnectors() {
+void ctkEventBusManager::initializeNetworkConnectors() {
     plugNetworkConnector("SOAP", new ctkNetworkConnectorQtSoap());
     plugNetworkConnector("XMLRPC", new ctkNetworkConnectorQXMLRPC());
 }
 
-bool mafEventBusManager::addEventProperty(const mafEvent &props) const {
+bool ctkEventBusManager::addEventProperty(const mafEvent &props) const {
     bool result(false);
     QString topic = props[TOPIC].toString();
     QObject *obj = props[OBJECT].value<QObject*>();
@@ -105,7 +104,7 @@ bool mafEventBusManager::addEventProperty(const mafEvent &props) const {
     return result;
 }
 
-void mafEventBusManager::detachObjectFromBus() {
+void ctkEventBusManager::detachObjectFromBus() {
     if(m_SkipDetach) {
         return;
     }
@@ -115,7 +114,7 @@ void mafEventBusManager::detachObjectFromBus() {
     removeSignal(obj, "", false);
 }
 
-void mafEventBusManager::removeObserver(const QObject *obj, const QString topic, bool qt_disconnect) {
+void ctkEventBusManager::removeObserver(const QObject *obj, const QString topic, bool qt_disconnect) {
     if(obj == NULL) {
         return;
     }
@@ -123,7 +122,7 @@ void mafEventBusManager::removeObserver(const QObject *obj, const QString topic,
     m_RemoteDispatcher->removeObserver(obj, topic, qt_disconnect);
 }
 
-void mafEventBusManager::removeSignal(const QObject *obj, QString topic, bool qt_disconnect) {
+void ctkEventBusManager::removeSignal(const QObject *obj, QString topic, bool qt_disconnect) {
     if(obj == NULL) {
         return;
     }
@@ -137,7 +136,7 @@ void mafEventBusManager::removeSignal(const QObject *obj, QString topic, bool qt
     m_RemoteDispatcher->removeSignal(obj, topic, qt_disconnect);
 }
 
-bool mafEventBusManager::removeEventProperty(const mafEvent &props) const {
+bool ctkEventBusManager::removeEventProperty(const mafEvent &props) const {
     if(props.eventType() == mafEventTypeLocal) {
         // Local event dispatching.
         if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
@@ -156,7 +155,7 @@ bool mafEventBusManager::removeEventProperty(const mafEvent &props) const {
     return false;
 }
 
-void mafEventBusManager::notifyEvent(const QString topic, mafEventType ev_type, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventBusManager::notifyEvent(const QString topic, mafEventType ev_type, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     if(m_EnableEventLogging) {
         if(m_LogEventTopic == "*" || m_LogEventTopic == topic) {
             qDebug() << tr("Event notification for TOPIC: %1").arg(topic);
@@ -171,7 +170,7 @@ void mafEventBusManager::notifyEvent(const QString topic, mafEventType ev_type, 
     delete event_dic;
 }
 
-void mafEventBusManager::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventBusManager::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     //event dispatched in remote channel
     if(event_dictionary[TYPE].toInt() == mafEventTypeLocal) {
         m_LocalDispatcher->notifyEvent(event_dictionary, argList, returnArg);
@@ -180,19 +179,19 @@ void mafEventBusManager::notifyEvent(const mafEvent &event_dictionary, mafEventA
     }
 }
 
-void mafEventBusManager::enableEventLogging(bool enable) {
+void ctkEventBusManager::enableEventLogging(bool enable) {
     m_EnableEventLogging = enable;
 }
 
-void mafEventBusManager::logEventTopic(const QString topic) {
+void ctkEventBusManager::logEventTopic(const QString topic) {
     m_LogEventTopic = topic;
 }
 
-void mafEventBusManager::logAllEvents() {
+void ctkEventBusManager::logAllEvents() {
     m_LogEventTopic = "*";
 }
 
-bool mafEventBusManager::createServer(const QString &communication_protocol, unsigned int listen_port) {
+bool ctkEventBusManager::createServer(const QString &communication_protocol, unsigned int listen_port) {
     if(m_NetworkConnectorHash.count() == 0) {
         initializeNetworkConnectors();
     }
@@ -210,7 +209,7 @@ bool mafEventBusManager::createServer(const QString &communication_protocol, uns
     return res;
 }
 
-void mafEventBusManager::startListen() {
+void ctkEventBusManager::startListen() {
     ctkNetworkConnector *connector = m_RemoteDispatcher->networkConnectorServer();
     if(connector) {
         connector->startListen();
@@ -219,7 +218,7 @@ void mafEventBusManager::startListen() {
     }
 }
 
-bool mafEventBusManager::createClient(const QString &communication_protocol, const QString &server_host, unsigned int port) {
+bool ctkEventBusManager::createClient(const QString &communication_protocol, const QString &server_host, unsigned int port) {
     if(m_NetworkConnectorHash.count() == 0) {
         initializeNetworkConnectors();
     }

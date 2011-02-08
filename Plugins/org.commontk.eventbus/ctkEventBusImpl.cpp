@@ -39,7 +39,7 @@ using namespace mafEventBus;
 
 ctkEventBusImpl::ctkEventBusImpl()
 {
-    m_MafEventBusManager = mafEventBusManager::instance();
+    m_EventBusManager = ctkEventBusManager::instance();
 }
 
 void ctkEventBusImpl::postEvent(const ctkEvent& event)
@@ -56,13 +56,13 @@ void ctkEventBusImpl::publishSignal(const QObject* publisher, const char* signal
                                     Qt::ConnectionType type)
 {
     mafEvent *mesbEvent = new mafEvent(topic, mafEventTypeLocal, mafSignatureTypeSignal, const_cast<QObject *>(publisher), signal);
-    m_MafEventBusManager->addEventProperty(*mesbEvent);
+    m_EventBusManager->addEventProperty(*mesbEvent);
 }
 
 QString ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* member, const QString& topic, const ctkDictionary& properties)
 {
     mafEvent *mesbEvent = new mafEvent(topic, mafEventTypeLocal, mafSignatureTypeCallback, const_cast<QObject *>(subscriber), member);
-    m_MafEventBusManager->addEventProperty(*mesbEvent);
+    m_EventBusManager->addEventProperty(*mesbEvent);
 
     return QString();
 
@@ -105,8 +105,8 @@ void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
   list.append(Q_ARG(QVariantList,event.getProperty("localEvent").toList()));
   list.append(Q_ARG(QVariantList,event.getProperty("localData").toList()));
 
-  m_MafEventBusManager->notifyEvent(topic, mafEventTypeRemote, &list);
-  m_MafEventBusManager->notifyEvent(*mebEvent);
+  m_EventBusManager->notifyEvent(topic, mafEventTypeRemote, &list);
+  m_EventBusManager->notifyEvent(*mebEvent);
 }
 
 void ctkEventBusImpl::bucket(ctkEventHandlerWrapper* wrapper)
@@ -124,13 +124,13 @@ QSet<ctkEventHandlerWrapper*> ctkEventBusImpl::handlers(const QString& topic)
 }
 
 bool ctkEventBusImpl::createServer(const QString &communication_protocol, unsigned int listen_port) {
-        return m_MafEventBusManager->createServer(communication_protocol,listen_port);
+        return m_EventBusManager->createServer(communication_protocol,listen_port);
 }
 
 void ctkEventBusImpl::startListen() {
-	m_MafEventBusManager->startListen();
+        m_EventBusManager->startListen();
 }
 
 bool ctkEventBusImpl::createClient(const QString &communication_protocol, const QString &server_host, unsigned int port) {
-        return m_MafEventBusManager->createClient(communication_protocol,server_host,port);
+        return m_EventBusManager->createClient(communication_protocol,server_host,port);
 }

@@ -1,10 +1,10 @@
 PROJECT(org_commontk_eventbus)
 
 SET(PLUGIN_export_directive "org_commontk_eventbus_EXPORT")
-FILE(GLOB include_mafEventBus_file_list "${PROJECT_SOURCE_DIR}/mafEventBus/*.h")
-FILE(GLOB implementation_mafEventBus_file_list "${PROJECT_SOURCE_DIR}/mafEventBus/*.cpp")
-FILE(GLOB templete_mafEventBus_file_list1 "${PROJECT_SOURCE_DIR}/mafEventBus/*.txx")
-FILE(GLOB templete_mafEventBus_file_list2 "${PROJECT_SOURCE_DIR}/mafEventBus/*.tpp")
+FILE(GLOB include_ctkEventBus_file_list "${PROJECT_SOURCE_DIR}/*.h")
+FILE(GLOB implementation_ctkEventBus_file_list "${PROJECT_SOURCE_DIR}/*.cpp")
+FILE(GLOB templete_ctkEventBus_file_list1 "${PROJECT_SOURCE_DIR}/*.txx")
+FILE(GLOB templete_ctkEventBus_file_list2 "${PROJECT_SOURCE_DIR}/*.tpp")
 
 FIND_PACKAGE(QtSOAP)
 IF(NOT QtSOAP_FOUND)
@@ -29,9 +29,9 @@ SET(PLUGIN_include_directories
 SET(PLUGIN_SRCS
   ctkEventBusImpl.cpp
   
-  ${implementation_mafEventBus_file_list}
-  ${templete_mafEventBus_file_list1}
-  ${templete_mafEventBus_file_list2}
+  ${implementation_ctkEventBus_file_list}
+  ${templete_ctkEventBus_file_list1}
+  ${templete_ctkEventBus_file_list2}
   ctkEventBusPlugin.cpp
 )
 
@@ -39,7 +39,7 @@ SET(PLUGIN_MOC_SRCS
   ctkEventBusImpl_p.h
   ctkEventBusPlugin_p.h
   
-  ${include_mafEventBus_file_list}
+  ${include_ctkEventBus_file_list}
   ctkEventHandlerWrapper_p.h
 )
 SET(PLUGIN_UI_FORMS

@@ -1,5 +1,5 @@
 /*
- *  mafNetworkConnectorQXMLRPC.h
+ *  ctkNetworkConnectorQXMLRPC.h
  *  mafEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef mafNetworkConnectorQXMLRPC_H
-#define mafNetworkConnectorQXMLRPC_H
+#ifndef ctkNetworkConnectorQXMLRPC_H
+#define ctkNetworkConnectorQXMLRPC_H
 
 // include list
 #include "mafNetworkConnector.h"
@@ -22,22 +22,22 @@
 namespace mafEventBus {
 
 /**
- Class name: mafNetworkConnectorQXMLRPC
+ Class name: ctkNetworkConnectorQXMLRPC
  This class is the implementation class for client/server objects that works over network
  with xml-rpc protocol. The server side part also create a new ID named REGISTER_SERVER_METHODS_XXX
  (where the XXX is the port on which run the server) that allows you to register your own remote
  callbacks. The library used is qxmlrpc.
  */
-class MAFEVENTBUSSHARED_EXPORT mafNetworkConnectorQXMLRPC : public mafNetworkConnector {
+class MAFEVENTBUSSHARED_EXPORT ctkNetworkConnectorQXMLRPC : public ctkNetworkConnector {
     Q_OBJECT
 
 
 public:
     /// object constructor.
-    mafNetworkConnectorQXMLRPC();
+    ctkNetworkConnectorQXMLRPC();
 
     /// object destructor.
-    /*virtual*/ ~mafNetworkConnectorQXMLRPC();
+    /*virtual*/ ~ctkNetworkConnectorQXMLRPC();
 
     /// create the unique instance of the client.
     /*virtual*/ void createClient(const QString hostName, const unsigned int port);
@@ -49,7 +49,7 @@ public:
     /*virtual*/ void startListen();
 
     //retrieve an instance of the object
-    /*virtual*/ mafNetworkConnector *clone();
+    /*virtual*/ ctkNetworkConnector *clone();
 
     /// register all the signals and slots
     /*virtual*/ void initializeForEventBus();
@@ -95,4 +95,4 @@ private:
 Q_DECLARE_METATYPE(xmlrpc::Variant);
 
 
-#endif // mafNetworkConnectorQXMLRPC_H
+#endif // ctkNetworkConnectorQXMLRPC_H

@@ -28,7 +28,7 @@ mafEventBusManager::mafEventBusManager() : m_EnableEventLogging(false), m_LogEve
 }
 
 mafEventBusManager::~mafEventBusManager() {
-    mafNetworkConnectorHash::iterator i = m_NetworkConnectorHash.begin();
+    ctkNetworkConnectorHash::iterator i = m_NetworkConnectorHash.begin();
     while(i != m_NetworkConnectorHash.end()) {
         delete i.value();
         ++i;
@@ -48,7 +48,7 @@ mafEventBusManager::~mafEventBusManager() {
     }
 }
 
-void mafEventBusManager::plugNetworkConnector(const QString &protocol, mafNetworkConnector *connector) {
+void mafEventBusManager::plugNetworkConnector(const QString &protocol, ctkNetworkConnector *connector) {
     m_NetworkConnectorHash.insert(protocol, connector);
 }
 
@@ -66,8 +66,8 @@ void mafEventBusManager::shutdown() {
 }
 
 void mafEventBusManager::initializeNetworkConnectors() {
-    plugNetworkConnector("SOAP", new mafNetworkConnectorQtSoap());
-    plugNetworkConnector("XMLRPC", new mafNetworkConnectorQXMLRPC());
+    plugNetworkConnector("SOAP", new ctkNetworkConnectorQtSoap());
+    plugNetworkConnector("XMLRPC", new ctkNetworkConnectorQXMLRPC());
 }
 
 bool mafEventBusManager::addEventProperty(const mafEvent &props) const {
@@ -199,9 +199,9 @@ bool mafEventBusManager::createServer(const QString &communication_protocol, uns
 
     bool res(m_NetworkConnectorHash.contains(communication_protocol));
     if(res) {
-        mafNetworkConnector *connector = m_NetworkConnectorHash.value(communication_protocol);
+        ctkNetworkConnector *connector = m_NetworkConnectorHash.value(communication_protocol);
         m_RemoteDispatcher->setNetworkConnectorServer(connector);
-        //mafNetworkConnector *connector = m_RemoteDispatcher->networkConnectorServer();
+        //ctkNetworkConnector *connector = m_RemoteDispatcher->networkConnectorServer();
         res = connector != NULL;
         if(res) {
             m_RemoteDispatcher->networkConnectorServer()->createServer(listen_port);
@@ -211,7 +211,7 @@ bool mafEventBusManager::createServer(const QString &communication_protocol, uns
 }
 
 void mafEventBusManager::startListen() {
-    mafNetworkConnector *connector = m_RemoteDispatcher->networkConnectorServer();
+    ctkNetworkConnector *connector = m_RemoteDispatcher->networkConnectorServer();
     if(connector) {
         connector->startListen();
     } else {
@@ -227,7 +227,7 @@ bool mafEventBusManager::createClient(const QString &communication_protocol, con
     bool res(m_NetworkConnectorHash.contains(communication_protocol));
     if(res) {
         m_RemoteDispatcher->setNetworkConnectorClient(m_NetworkConnectorHash.value(communication_protocol));
-        mafNetworkConnector *connector = m_RemoteDispatcher->networkConnectorClient();
+        ctkNetworkConnector *connector = m_RemoteDispatcher->networkConnectorClient();
         res = connector != NULL;
         if(res) {
             m_RemoteDispatcher->networkConnectorClient()->createClient(server_host, port);

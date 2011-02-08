@@ -1,5 +1,5 @@
 /*
- *  mafNetworkConnector.cpp
+ *  ctkNetworkConnector.cpp
  *  mafEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
@@ -13,10 +13,10 @@
 
 using namespace mafEventBus;
 
-mafNetworkConnector::mafNetworkConnector() {
+ctkNetworkConnector::ctkNetworkConnector() {
 
 }
 
-QString mafNetworkConnector::protocol() {
+QString ctkNetworkConnector::protocol() {
     return m_Protocol;
 }

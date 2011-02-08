@@ -78,10 +78,10 @@
 
 namespace mafEventBus {
 //forward classes
-class mafNetworkConnector;
+class ctkNetworkConnector;
 
-/// Hash table that associate the communication protocol with the corresponding network connector class (Eg. XMLRPC, mafEventBus::mafNetworkConnectorQXMLRPC)
-typedef QHash<QString, mafNetworkConnector *> mafNetworkConnectorHash;
+/// Hash table that associate the communication protocol with the corresponding network connector class (Eg. XMLRPC, mafEventBus::ctkNetworkConnectorQXMLRPC)
+typedef QHash<QString, ctkNetworkConnector *> ctkNetworkConnectorHash;
 
 /// typedef that represents dictionary entries ( key  , value )
 typedef QHash<QString, QVariant> mafEventHash;

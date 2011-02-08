@@ -18,7 +18,7 @@
 
 namespace mafEventBus {
 
-class mafNetworkConnector;
+class ctkNetworkConnector;
 
 /**
  Class name: mafEventDispatcherRemote
@@ -38,24 +38,24 @@ public:
     /*virtual*/ void notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
 
     /// Set the active server side network connector type.
-    void setNetworkConnectorServer(mafNetworkConnector *connector);
+    void setNetworkConnectorServer(ctkNetworkConnector *connector);
 
     /// return the current instantiated server side network connector.
-    mafNetworkConnector *networkConnectorServer();
+    ctkNetworkConnector *networkConnectorServer();
 
     /// Set the active client side network connector type.
-    void setNetworkConnectorClient(mafNetworkConnector *connector);
+    void setNetworkConnectorClient(ctkNetworkConnector *connector);
 
     /// return the current instantiated client side network connector.
-    mafNetworkConnector *networkConnectorClient();
+    ctkNetworkConnector *networkConnectorClient();
 
 protected:
     /// Register MAF global events
     /*virtual*/ void initializeGlobalEvents();
 
 private:
-    mafNetworkConnector *m_NetworkConnectorServer; ///< Class used to manage the communication with the remote event bus.
-    mafNetworkConnector *m_NetworkConnectorClient; ///< Class used to manage the communication with the remote event bus.
+    ctkNetworkConnector *m_NetworkConnectorServer; ///< Class used to manage the communication with the remote event bus.
+    ctkNetworkConnector *m_NetworkConnectorClient; ///< Class used to manage the communication with the remote event bus.
 };
 
 

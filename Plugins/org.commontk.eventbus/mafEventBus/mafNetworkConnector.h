@@ -1,5 +1,5 @@
 /*
- *  mafNetworkConnector.h
+ *  ctkNetworkConnector.h
  *  mafEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
@@ -18,17 +18,17 @@
 namespace mafEventBus {
 
 /**
- Class name: mafNetworkConnector
+ Class name: ctkNetworkConnector
  This class is the interface class for client/server objects that works over network.
  */
-class MAFEVENTBUSSHARED_EXPORT mafNetworkConnector : public QObject {
+class MAFEVENTBUSSHARED_EXPORT ctkNetworkConnector : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(QString protocol READ protocol);
 
 public:
     /// object constructor.
-    mafNetworkConnector();
+    ctkNetworkConnector();
 
     /// create the unique instance of the client.
     virtual void createClient(const QString hostName, const unsigned int port) = 0;
@@ -43,7 +43,7 @@ public:
     virtual void send(const QString event_id, mafEventArgumentsList *argList) = 0;
 
     /// retrieve an instance of the object
-    virtual mafNetworkConnector *clone() = 0;
+    virtual ctkNetworkConnector *clone() = 0;
 
     /// retrieve the protocol type of the connector
     QString protocol();

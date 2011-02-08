@@ -26,11 +26,11 @@ mafEventDispatcherRemote::~mafEventDispatcherRemote() {
     m_NetworkConnectorClient = NULL;
 }
 
-mafNetworkConnector *mafEventDispatcherRemote::networkConnectorServer() {
+ctkNetworkConnector *mafEventDispatcherRemote::networkConnectorServer() {
     return m_NetworkConnectorServer;
 }
 
-mafNetworkConnector *mafEventDispatcherRemote::networkConnectorClient() {
+ctkNetworkConnector *mafEventDispatcherRemote::networkConnectorClient() {
     return m_NetworkConnectorClient;
 }
 
@@ -51,7 +51,7 @@ void mafEventDispatcherRemote::initializeGlobalEvents() {
     // through the event bus manager while the remote notification (mafEventTypeRemote) uses the network connector.
 }
 
-void mafEventDispatcherRemote::setNetworkConnectorServer(mafNetworkConnector *connector) {
+void mafEventDispatcherRemote::setNetworkConnectorServer(ctkNetworkConnector *connector) {
     if(m_NetworkConnectorServer == NULL) {
         m_NetworkConnectorServer = connector->clone();
         m_NetworkConnectorServer->initializeForEventBus();
@@ -64,7 +64,7 @@ void mafEventDispatcherRemote::setNetworkConnectorServer(mafNetworkConnector *co
    }
 }
 
-void mafEventDispatcherRemote::setNetworkConnectorClient(mafNetworkConnector *connector) {
+void mafEventDispatcherRemote::setNetworkConnectorClient(ctkNetworkConnector *connector) {
      if(m_NetworkConnectorClient == NULL) {
          m_NetworkConnectorClient = connector->clone();
          m_NetworkConnectorClient->initializeForEventBus();

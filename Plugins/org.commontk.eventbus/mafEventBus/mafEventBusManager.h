@@ -78,8 +78,8 @@ public:
     /// Retrieve if the signal has been registered previously.
     bool isLocalSignalPresent(const QString topic) const;
 
-    /// Plug a new network connector into the connector hash for the given network protocol (protocol eg. "XMLRPC") (connector_type eg. "mafEventBus::mafNetworkConnectorQXMLRPC").
-    void plugNetworkConnector(const QString &protocol, mafNetworkConnector *connector);
+    /// Plug a new network connector into the connector hash for the given network protocol (protocol eg. "XMLRPC") (connector_type eg. "mafEventBus::ctkNetworkConnectorQXMLRPC").
+    void plugNetworkConnector(const QString &protocol, ctkNetworkConnector *connector);
 
     /// Create the server for remote communication according to the given protocol and listen port.
     bool createServer(const QString &communication_protocol, unsigned int listen_port);
@@ -106,7 +106,7 @@ private:
 
     bool m_EnableEventLogging; ///< Flag to enable/disable logging for event sent.
     QString m_LogEventTopic; ///< Store the current Event_Id to track through the logger.
-    mafNetworkConnectorHash m_NetworkConnectorHash; ///< Hash table used to store the association of network protocols and network connector types.
+    ctkNetworkConnectorHash m_NetworkConnectorHash; ///< Hash table used to store the association of network protocols and network connector types.
 
     bool m_SkipDetach; ///< lifesafe variable to avoid the detach from eventbus.
 

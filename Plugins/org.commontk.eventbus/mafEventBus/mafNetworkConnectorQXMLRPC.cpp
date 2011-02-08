@@ -1,5 +1,5 @@
 /*
- *  mafNetworkConnectorQXMLRPC.cpp
+ *  ctkNetworkConnectorQXMLRPC.cpp
  *  mafEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
@@ -16,7 +16,7 @@
 
 using namespace mafEventBus;
 
-mafNetworkConnectorQXMLRPC::mafNetworkConnectorQXMLRPC() : mafNetworkConnector(), m_Client(NULL), m_Server(NULL), m_RequestId(0) {
+ctkNetworkConnectorQXMLRPC::ctkNetworkConnectorQXMLRPC() : ctkNetworkConnector(), m_Client(NULL), m_Server(NULL), m_RequestId(0) {
     //generate remote signal, this signal must map in the
     //possible connection with the remote server.
     //Server, in this case XMLRPC, will register a method with id REMOTE_COMMUNICATION
@@ -25,12 +25,12 @@ mafNetworkConnectorQXMLRPC::mafNetworkConnectorQXMLRPC() : mafNetworkConnector()
     m_Protocol = "XMLRPC";
 }
 
-void mafNetworkConnectorQXMLRPC::initializeForEventBus() {
+void ctkNetworkConnectorQXMLRPC::initializeForEventBus() {
     mafRegisterRemoteSignal("maf.remote.eventBus.comunication.send.xmlrpc", this, "remoteCommunication(const QString, mafEventArgumentsList *)");
     mafRegisterRemoteCallback("maf.remote.eventBus.comunication.send.xmlrpc", this, "send(const QString, mafEventArgumentsList *)");
 }
 
-mafNetworkConnectorQXMLRPC::~mafNetworkConnectorQXMLRPC() {
+ctkNetworkConnectorQXMLRPC::~ctkNetworkConnectorQXMLRPC() {
     if(m_Client) {
         delete m_Client;
         m_Client = NULL;
@@ -41,12 +41,12 @@ mafNetworkConnectorQXMLRPC::~mafNetworkConnectorQXMLRPC() {
 }
 
 //retrieve an instance of the object
-mafNetworkConnector *mafNetworkConnectorQXMLRPC::clone() {
-    mafNetworkConnectorQXMLRPC *copy = new mafNetworkConnectorQXMLRPC();
+ctkNetworkConnector *ctkNetworkConnectorQXMLRPC::clone() {
+    ctkNetworkConnectorQXMLRPC *copy = new ctkNetworkConnectorQXMLRPC();
     return copy;
 }
 
-void mafNetworkConnectorQXMLRPC::createClient(const QString hostName, const unsigned int port) {
+void ctkNetworkConnectorQXMLRPC::createClient(const QString hostName, const unsigned int port) {
     bool result(false);
     if(m_Client == NULL) {
         m_Client = new xmlrpc::Client(NULL);
@@ -58,7 +58,7 @@ void mafNetworkConnectorQXMLRPC::createClient(const QString hostName, const unsi
     m_Client->setHost( hostName, port );
 }
 
-void mafNetworkConnectorQXMLRPC::createServer(const unsigned int port) {
+void ctkNetworkConnectorQXMLRPC::createServer(const unsigned int port) {
     if(m_Server != NULL) {
         unsigned int p = m_Server->property("port").toUInt();
         if(p != port) {
@@ -91,7 +91,7 @@ void mafNetworkConnectorQXMLRPC::createServer(const unsigned int port) {
     // the registration of function with QVariantList parameter.
 }
 
-void mafNetworkConnectorQXMLRPC::stopServer() {
+void ctkNetworkConnectorQXMLRPC::stopServer() {
     unsigned int p = m_Server->property("port").toUInt();
     if(p != 0) {
         // get the ID for the previous server;
@@ -110,7 +110,7 @@ void mafNetworkConnectorQXMLRPC::stopServer() {
     }
 }
 
-void mafNetworkConnectorQXMLRPC::registerServerMethod(mafRegisterMethodsMap registerMethodsList) {
+void ctkNetworkConnectorQXMLRPC::registerServerMethod(mafRegisterMethodsMap registerMethodsList) {
     if(m_Server->isListening()) {
         qDebug("%s", tr("Server is already listening on port %1").arg(m_Server->property("port").toUInt()).toAscii().data());
         return;
@@ -140,7 +140,7 @@ void mafNetworkConnectorQXMLRPC::registerServerMethod(mafRegisterMethodsMap regi
     }
 }
 
-void mafNetworkConnectorQXMLRPC::startListen() {
+void ctkNetworkConnectorQXMLRPC::startListen() {
     connect( m_Server, SIGNAL(incomingRequest( int, QString, QList<xmlrpc::Variant>)),
                  this, SLOT(processRequest( int, QString, QList<xmlrpc::Variant>)));
 
@@ -152,7 +152,7 @@ void mafNetworkConnectorQXMLRPC::startListen() {
     }
 }
 
-void mafNetworkConnectorQXMLRPC::send(const QString event_id, mafEventArgumentsList *argList) {
+void ctkNetworkConnectorQXMLRPC::send(const QString event_id, mafEventArgumentsList *argList) {
     QList<xmlrpc::Variant> *vl = NULL;
     if(argList != NULL) {
         vl = new QList<xmlrpc::Variant>();
@@ -186,7 +186,7 @@ void mafNetworkConnectorQXMLRPC::send(const QString event_id, mafEventArgumentsL
    delete vl;
 }
 
-void mafNetworkConnectorQXMLRPC::xmlrpcSend(const QString &methodName, QList<xmlrpc::Variant> parameters) {
+void ctkNetworkConnectorQXMLRPC::xmlrpcSend(const QString &methodName, QList<xmlrpc::Variant> parameters) {
     const unsigned int parametersNumber = parameters.count();
     switch(parametersNumber) {
     case 1:
@@ -206,20 +206,20 @@ void mafNetworkConnectorQXMLRPC::xmlrpcSend(const QString &methodName, QList<xml
     }
 }
 
-void mafNetworkConnectorQXMLRPC::processReturnValue( int requestId, QVariant value ) {
+void ctkNetworkConnectorQXMLRPC::processReturnValue( int requestId, QVariant value ) {
     Q_UNUSED( requestId );
     Q_ASSERT( value.canConvert( QVariant::String ) );
     qDebug("%s", value.toString().toAscii().data());
     mafEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", mafEventTypeLocal);
 }
 
-void mafNetworkConnectorQXMLRPC::processFault( int requestId, int errorCode, QString errorString ) {
+void ctkNetworkConnectorQXMLRPC::processFault( int requestId, int errorCode, QString errorString ) {
     // Log the error.
     qDebug("%s", tr("Process Fault for requestID %1 with error %2 - %3").arg(QString::number(requestId), QString::number(errorCode), errorString).toAscii().data());
     mafEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", mafEventTypeLocal);
 }
 
-void mafNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodName, QList<xmlrpc::Variant> parameters ) {
+void ctkNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodName, QList<xmlrpc::Variant> parameters ) {
     Q_UNUSED( methodName );
 
     //first parameter is mafEventBus message

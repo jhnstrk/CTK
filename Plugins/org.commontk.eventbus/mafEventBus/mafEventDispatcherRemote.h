@@ -16,7 +16,7 @@
 #include "mafEventDefinitions.h"
 #include "mafEventDispatcher.h"
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
 class ctkNetworkConnector;
 
@@ -59,7 +59,7 @@ private:
 };
 
 
-} //namespace mafEventBus
+} //namespace ctkEventBus
 
 Q_DECLARE_METATYPE(QVariantList);
 

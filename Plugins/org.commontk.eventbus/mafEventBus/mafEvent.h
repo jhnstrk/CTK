@@ -14,7 +14,7 @@
 
 #include "mafEventDefinitions.h"
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
  /**
 Class name: mafEvent
@@ -67,8 +67,8 @@ private:
 
 typedef mafEvent * mafEventPointer;
 
-} // namespace mafEventBus
+} // namespace ctkEventBus
 
-Q_DECLARE_METATYPE(mafEventBus::mafEventPointer);
+Q_DECLARE_METATYPE(ctkEventBus::mafEventPointer);
 
 #endif // MAFEVENT_H

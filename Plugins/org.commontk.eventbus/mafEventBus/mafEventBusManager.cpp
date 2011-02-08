@@ -13,7 +13,7 @@
 #include "mafNetworkConnectorQtSoap.h"
 #include "mafNetworkConnectorQXMLRPC.h"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 
 ctkEventBusManager::ctkEventBusManager() : m_EnableEventLogging(false), m_LogEventTopic("*"), m_SkipDetach(false) {
@@ -61,7 +61,7 @@ ctkEventBusManager* ctkEventBusManager::instance() {
 }
 
 void ctkEventBusManager::shutdown() {
-    mafEventBus::ctkTopicRegistry::instance()->shutdown();
+    ctkEventBus::ctkTopicRegistry::instance()->shutdown();
 }
 
 void ctkEventBusManager::initializeNetworkConnectors() {
@@ -80,7 +80,7 @@ bool ctkEventBusManager::addEventProperty(const mafEvent &props) const {
             result = m_LocalDispatcher->addObserver(props);
         } else {
             //Add topic to the ctkTopicRegistry
-            result = mafEventBus::ctkTopicRegistry::instance()->registerTopic(topic, obj);
+            result = ctkEventBus::ctkTopicRegistry::instance()->registerTopic(topic, obj);
             if(!result) {
                 return result;
             }
@@ -92,7 +92,7 @@ bool ctkEventBusManager::addEventProperty(const mafEvent &props) const {
             result = m_RemoteDispatcher->addObserver(props);
         } else {
             //Add topic to the ctkTopicRegistry
-            result = mafEventBus::ctkTopicRegistry::instance()->registerTopic(topic, obj);
+            result = ctkEventBus::ctkTopicRegistry::instance()->registerTopic(topic, obj);
             if(!result) {
                 return result;
             }
@@ -127,7 +127,7 @@ void ctkEventBusManager::removeSignal(const QObject *obj, QString topic, bool qt
         return;
     }
     //remove topic from the ctkTopicRegistry
-    bool result = mafEventBus::ctkTopicRegistry::instance()->unregisterTopic(topic);
+    bool result = ctkEventBus::ctkTopicRegistry::instance()->unregisterTopic(topic);
     if(result) {
         return;
     }
@@ -163,7 +163,7 @@ void ctkEventBusManager::notifyEvent(const QString topic, mafEventType ev_type, 
     }
 
     //event dispatched in local channel
-    mafEvent *event_dic = new mafEventBus::mafEvent;
+    mafEvent *event_dic = new ctkEventBus::mafEvent;
     (*event_dic)[TOPIC] = topic;
     (*event_dic)[TYPE] = static_cast<int>(ev_type);
     notifyEvent(*event_dic, argList, returnArg);

@@ -18,7 +18,7 @@
 #include "mafEventDispatcherRemote.h"
 #include "mafEvent.h"
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
 // Class forwarding list
 
@@ -112,6 +112,6 @@ private:
 
 };
 
-} // namespace mafEventBus
+} // namespace ctkEventBus
 
 #endif // CTKEVENTBUSMANAGER

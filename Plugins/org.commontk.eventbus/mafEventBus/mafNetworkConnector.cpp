@@ -11,7 +11,7 @@
 
 #include "mafNetworkConnector.h"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 ctkNetworkConnector::ctkNetworkConnector() {
 

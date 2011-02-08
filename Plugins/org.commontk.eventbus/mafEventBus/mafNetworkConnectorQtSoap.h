@@ -18,7 +18,7 @@
 // Foundation Library include list
 #include <qtsoap.h>
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
 /**
  Class name: ctkNetworkConnectorQtSoap
@@ -121,6 +121,6 @@ inline void ctkNetworkConnectorQtSoap::registerNamespace(QString prefix, QString
     m_Request.useNamespace(prefix, namespaceURI);
 }
 
-} //namespace mafEventBus
+} //namespace ctkEventBus
 
 #endif // CTKNETWORKCONNECTORQTSOAP_H

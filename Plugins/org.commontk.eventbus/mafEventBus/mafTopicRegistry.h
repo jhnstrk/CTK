@@ -15,7 +15,7 @@
 // Includes list
 #include "mafEventDefinitions.h"
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
 /**
   Class name: ctkTopicRegistry

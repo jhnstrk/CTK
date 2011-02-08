@@ -14,7 +14,7 @@
 
 #include "mafEvent.h"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 ctkNetworkConnectorQtSoap::ctkNetworkConnectorQtSoap() : ctkNetworkConnector(), m_Http(NULL), m_WSDLUrl(""),m_Response(NULL) {
     m_Protocol = "SOAP";

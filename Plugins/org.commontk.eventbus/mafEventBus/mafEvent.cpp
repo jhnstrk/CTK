@@ -11,7 +11,7 @@
 
 #include "mafEvent.h"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 mafEvent::mafEvent() {
     m_EventHash = new mafEventHash();

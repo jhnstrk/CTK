@@ -37,8 +37,8 @@
 
 #define mafRegisterLocalSignal(topic, sender, signature) \
     {\
-        mafEventBus::mafEvent *properties = new mafEventBus::mafEvent(topic, mafEventBus::mafEventTypeLocal, mafEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
-        bool ok = mafEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
+        ctkEventBus::mafEvent *properties = new ctkEventBus::mafEvent(topic, ctkEventBus::mafEventTypeLocal, ctkEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
+        bool ok = ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the signal registration with ID '%1'.").arg(topic).toAscii().data());\
             if(properties) {delete properties; properties = NULL;} \
@@ -47,8 +47,8 @@
 
 #define mafRegisterRemoteSignal(topic, sender, signature) \
     {\
-        mafEventBus::mafEvent *properties = new mafEventBus::mafEvent(topic, mafEventBus::mafEventTypeRemote, mafEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
-        bool ok =  mafEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
+        ctkEventBus::mafEvent *properties = new ctkEventBus::mafEvent(topic, ctkEventBus::mafEventTypeRemote, ctkEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
+        bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the signal registration with ID '%1'.").arg(topic).toAscii().data());\
             if(properties) {delete properties; properties = NULL;} \
@@ -57,8 +57,8 @@
 
 #define mafRegisterLocalCallback(topic, observer, signature) \
     {\
-        mafEventBus::mafEvent *properties = new mafEventBus::mafEvent(topic, mafEventBus::mafEventTypeLocal, mafEventBus::mafSignatureTypeCallback, static_cast<QObject*>(observer), signature); \
-        bool ok =  mafEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
+        ctkEventBus::mafEvent *properties = new ctkEventBus::mafEvent(topic, ctkEventBus::mafEventTypeLocal, ctkEventBus::mafSignatureTypeCallback, static_cast<QObject*>(observer), signature); \
+        bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the callback registration with ID '%1'.").arg(topic).toAscii().data());\
             if(properties) {delete properties; properties = NULL;} \
@@ -67,8 +67,8 @@
 
 #define mafRegisterRemoteCallback(topic, sender, signature) \
     {\
-        mafEventBus::mafEvent *properties = new mafEventBus::mafEvent(topic, mafEventBus::mafEventTypeRemote, mafEventBus::mafSignatureTypeCallback, static_cast<QObject*>(sender), signature); \
-        bool ok =  mafEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
+        ctkEventBus::mafEvent *properties = new ctkEventBus::mafEvent(topic, ctkEventBus::mafEventTypeRemote, ctkEventBus::mafSignatureTypeCallback, static_cast<QObject*>(sender), signature); \
+        bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
         if(!ok) {\
             qWarning("%s", tr("Some problem occourred during the callback registration with ID '%1'.").arg(topic).toAscii().data());\
             if(properties) {delete properties; properties = NULL;} \
@@ -76,11 +76,11 @@
     }
 
 
-namespace mafEventBus {
+namespace ctkEventBus {
 //forward classes
 class ctkNetworkConnector;
 
-/// Hash table that associate the communication protocol with the corresponding network connector class (Eg. XMLRPC, mafEventBus::ctkNetworkConnectorQXMLRPC)
+/// Hash table that associate the communication protocol with the corresponding network connector class (Eg. XMLRPC, ctkEventBus::ctkNetworkConnectorQXMLRPC)
 typedef QHash<QString, ctkNetworkConnector *> ctkNetworkConnectorHash;
 
 /// typedef that represents dictionary entries ( key  , value )
@@ -116,10 +116,10 @@ typedef QList<mafEvent *> mafEventItemListType;
 /// map which represent list of function to be registered in the server, with parameters
 typedef QMap<QString, QList<QVariant::Type> >  mafRegisterMethodsMap;
 
-} // namespace mafEventBus
+} // namespace ctkEventBus
 
 
-Q_DECLARE_METATYPE(mafEventBus::mafEventArgumentsListPointer);
-Q_DECLARE_METATYPE(mafEventBus::mafRegisterMethodsMap);
+Q_DECLARE_METATYPE(ctkEventBus::mafEventArgumentsListPointer);
+Q_DECLARE_METATYPE(ctkEventBus::mafRegisterMethodsMap);
 
 #endif // CTKEVENTDEFINITIONS_H

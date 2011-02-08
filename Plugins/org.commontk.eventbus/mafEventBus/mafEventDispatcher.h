@@ -14,7 +14,7 @@
 
 #include "mafEventDefinitions.h"
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
 /**
  Class name: ctkEventDispatcher
@@ -108,6 +108,6 @@ inline mafEventItemListType ctkEventDispatcher::signalItemProperty(const QString
     return m_SignalsHash.values(topic);
 }
 
-} // namespace mafEventBus
+} // namespace ctkEventBus
 
 #endif // CTKEVENTDISPATCHER_H

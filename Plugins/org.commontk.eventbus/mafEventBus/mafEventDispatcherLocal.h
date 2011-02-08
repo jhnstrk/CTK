@@ -15,7 +15,7 @@
 #include "mafEventDefinitions.h"
 #include "mafEventDispatcher.h"
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
 /**
  Class name: ctkEventDispatcherLocal

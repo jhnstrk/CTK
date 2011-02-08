@@ -14,7 +14,7 @@
 
 #include "mafEvent.h"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 ctkNetworkConnectorQXMLRPC::ctkNetworkConnectorQXMLRPC() : ctkNetworkConnector(), m_Client(NULL), m_Server(NULL), m_RequestId(0) {
     //generate remote signal, this signal must map in the

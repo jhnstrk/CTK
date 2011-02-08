@@ -15,7 +15,7 @@
 //include list
 #include "mafEventDefinitions.h"
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
 /**
  Class name: ctkNetworkConnector
@@ -59,6 +59,6 @@ protected:
     QString m_Protocol; ///< define the protocol of the connector (xmlrpc, soap, etc...)
 };
 
-} //namespace mafEventBus
+} //namespace ctkEventBus
 
 #endif // CTKNETWORKCONNECTOR_H

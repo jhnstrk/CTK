@@ -19,7 +19,7 @@
 #include <client.h>
 #include <server.h>
 
-namespace mafEventBus {
+namespace ctkEventBus {
 
 /**
  Class name: ctkNetworkConnectorQXMLRPC
@@ -90,7 +90,7 @@ private:
     int m_RequestId; ///< id test for a specific (experimental) request
 };
 
-} //namespace mafEventBus
+} //namespace ctkEventBus
 
 Q_DECLARE_METATYPE(xmlrpc::Variant);
 

@@ -16,7 +16,7 @@
 #define CALLBACK_SIGNATURE "1"
 #define SIGNAL_SIGNATURE   "2"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 ctkEventDispatcher::ctkEventDispatcher() {
 

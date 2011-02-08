@@ -84,7 +84,7 @@ protected:
 private:
 
 
-  mafEventBus::ctkEventBusManager *m_EventBusManager;
+  ctkEventBus::ctkEventBusManager *m_EventBusManager;
 };
 
 #endif // CTKEVENTBUSIMPL_H

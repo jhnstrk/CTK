@@ -13,7 +13,7 @@
 #include "mafEvent.h"
 #include "mafNetworkConnector.h"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 ctkEventDispatcherRemote::ctkEventDispatcherRemote() : ctkEventDispatcher(), m_NetworkConnectorServer(NULL), m_NetworkConnectorClient(NULL) {
     this->initializeGlobalEvents();

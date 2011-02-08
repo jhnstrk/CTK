@@ -11,7 +11,7 @@
 
 #include "mafTopicRegistry.h"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 ctkTopicRegistry* ctkTopicRegistry::instance() {
     static ctkTopicRegistry instanceTopicRegistry;

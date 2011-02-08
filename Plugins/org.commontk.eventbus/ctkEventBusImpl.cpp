@@ -29,7 +29,7 @@
 #define ctkEventArgument(type,data) QArgument<type >(#type, data)
 
 //using namespace mafCore;
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 /*ctkEventBusImpl* ctkEventBusImpl::instance()
 {

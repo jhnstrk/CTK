@@ -4,7 +4,7 @@
  *
  *  Created by Paolo Quadrani on 27/03/09.
  *  Copyright 2009 B3C. All rights reserved.
- *
+ *namespace ctkEventBus
  *  See Licence at: http://tiny.cc/QXJ4D
  *
  */
@@ -12,7 +12,7 @@
 #include "mafEventDispatcherLocal.h"
 #include "mafEvent.h"
 
-using namespace mafEventBus;
+using namespace ctkEventBus;
 
 ctkEventDispatcherLocal::ctkEventDispatcherLocal() : ctkEventDispatcher() {
     this->initializeGlobalEvents();

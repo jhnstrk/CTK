@@ -80,11 +80,9 @@ void MainWindow::updateMessage(QString message) {
 
 void MainWindow::connectClient() {
     bool result, resultClient, resultServer;
-    qDebug() << "QUI";
     resultClient = m_EventBus->createServer("XMLRPC", ui->portLineEdit->text().toInt());
     m_EventBus->startListen();
     resultServer = m_EventBus->createClient("XMLRPC", ui->hostLineEdit->text(), ui->portLineEdit->text().toInt());
-    qDebug() << "QUI";
     result = resultClient && resultServer;
     if(result) {
         ui->hostLineEdit->setEnabled(false);

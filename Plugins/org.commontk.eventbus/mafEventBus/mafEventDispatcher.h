@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef MAFEVENTDISPATCHER_H
-#define MAFEVENTDISPATCHER_H
+#ifndef CTKEVENTDISPATCHER_H
+#define CTKEVENTDISPATCHER_H
 
 #include "mafEventDefinitions.h"
 
@@ -20,7 +20,7 @@ namespace mafEventBus {
  Class name: ctkEventDispatcher
  This allows dispatching events coming from local application to attached observers.
  */
-class MAFEVENTBUSSHARED_EXPORT ctkEventDispatcher : public QObject {
+class CTKEVENTBUSSHARED_EXPORT ctkEventDispatcher : public QObject {
     Q_OBJECT
 
 public:
@@ -110,4 +110,4 @@ inline mafEventItemListType ctkEventDispatcher::signalItemProperty(const QString
 
 } // namespace mafEventBus
 
-#endif // MAFEVENTDISPATCHER_H
+#endif // CTKEVENTDISPATCHER_H

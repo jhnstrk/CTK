@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef MAFEVENTBUS_H
-#define MAFEVENTBUS_H
+#ifndef CTKEVENTBUSMANAGER_H
+#define CTKEVENTBUSMANAGER_H
 
 // Includes list
 #include "mafEventDefinitions.h"
@@ -27,7 +27,7 @@ namespace mafEventBus {
  This singletone provides the access point of the Communication Bus for MAF3 framework.
  ctkEventBusManager defines also the mafId maf.local.eventBus.globalUpdate to be used as generic update notification mechanism that the event bus can send to all the observers.
  */
-class MAFEVENTBUSSHARED_EXPORT ctkEventBusManager : public QObject {
+class CTKEVENTBUSSHARED_EXPORT ctkEventBusManager : public QObject {
     Q_OBJECT
 
 public:
@@ -114,4 +114,4 @@ private:
 
 } // namespace mafEventBus
 
-#endif // MAFEVENTBUS_H
+#endif // CTKEVENTBUSMANAGER

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef MAFNETWORKCONNECTOR_H
-#define MAFNETWORKCONNECTOR_H
+#ifndef CTKNETWORKCONNECTOR_H
+#define CTKNETWORKCONNECTOR_H
 
 //include list
 #include "mafEventDefinitions.h"
@@ -21,7 +21,7 @@ namespace mafEventBus {
  Class name: ctkNetworkConnector
  This class is the interface class for client/server objects that works over network.
  */
-class MAFEVENTBUSSHARED_EXPORT ctkNetworkConnector : public QObject {
+class CTKEVENTBUSSHARED_EXPORT ctkNetworkConnector : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(QString protocol READ protocol);
@@ -61,4 +61,4 @@ protected:
 
 } //namespace mafEventBus
 
-#endif // MAFNETWORKCONNECTOR_H
+#endif // CTKNETWORKCONNECTOR_H

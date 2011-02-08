@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef MAFNETWORKCONNECTORQTSOAP_H
-#define MAFNETWORKCONNECTORQTSOAP_H
+#ifndef CTKNETWORKCONNECTORQTSOAP_H
+#define CTKNETWORKCONNECTORQTSOAP_H
 
 // include list
 #include "mafNetworkConnector.h"
@@ -25,7 +25,7 @@ namespace mafEventBus {
  This class is the implementation class for client/server objects that works over network
  with soap protocol. It has been implemented only client side.
  */
-class MAFEVENTBUSSHARED_EXPORT ctkNetworkConnectorQtSoap : public ctkNetworkConnector {
+class CTKEVENTBUSSHARED_EXPORT ctkNetworkConnectorQtSoap : public ctkNetworkConnector {
     Q_OBJECT
 
 public:
@@ -123,4 +123,4 @@ inline void ctkNetworkConnectorQtSoap::registerNamespace(QString prefix, QString
 
 } //namespace mafEventBus
 
-#endif // MAFNETWORKCONNECTORQTSOAP_H
+#endif // CTKNETWORKCONNECTORQTSOAP_H

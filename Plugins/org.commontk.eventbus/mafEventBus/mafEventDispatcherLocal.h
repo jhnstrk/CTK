@@ -1,6 +1,6 @@
 /*
  *  ctkEventDispatcherLocal.h
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
  *  Copyright 2009 B3C. All rights reserved.
@@ -29,7 +29,7 @@ public:
     ctkEventDispatcherLocal();
 
     /// Emit event corresponding to the given id locally to the application.
-    virtual void notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    virtual void notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
 
 protected:
     /// Register MAF global events

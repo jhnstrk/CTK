@@ -1,6 +1,6 @@
 /*
  *  ctkEventDispatcher.cpp
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
  *  Copyright 2009 B3C. All rights reserved.
@@ -32,7 +32,7 @@ bool ctkEventDispatcher::isLocalSignalPresent(const QString topic) const {
 
 void ctkEventDispatcher::resetHashes() {
     // delete all lists present into the hash.
-    QHash<QString, mafEvent *>::iterator i;
+    QHash<QString, ctkEvent *>::iterator i;
     for (i = m_CallbacksHash.begin(); i != m_CallbacksHash.end(); ++i) {
         delete i.value();
     }
@@ -45,11 +45,11 @@ void ctkEventDispatcher::resetHashes() {
 }
 
 void ctkEventDispatcher::initializeGlobalEvents() {
-    mafEvent *remote_done = new mafEvent();
+    ctkEvent *remote_done = new ctkEvent();
     QString eventId = "maf.local.eventBus.remoteCommunicationDone";
 
     (*remote_done)[TOPIC] = eventId;
-    (*remote_done)[TYPE] = mafEventTypeLocal;
+    (*remote_done)[TYPE] = ctkEventTypeLocal;
     (*remote_done)[SIGTYPE] = mafSignatureTypeSignal;
     QVariant var;
     var.setValue((QObject*)this);
@@ -57,9 +57,9 @@ void ctkEventDispatcher::initializeGlobalEvents() {
     (*remote_done)[SIGNATURE] = "remoteCommunicationDone()";
     this->registerSignal(*remote_done);
 
-    mafEvent *remote_failed = new mafEvent();
+    ctkEvent *remote_failed = new ctkEvent();
     (*remote_failed)[TOPIC] = "maf.local.eventBus.remoteCommunicationFailed";
-    (*remote_failed)[TYPE] = mafEventTypeLocal;
+    (*remote_failed)[TYPE] = ctkEventTypeLocal;
     (*remote_failed)[SIGTYPE] = mafSignatureTypeSignal;
     var.setValue((QObject*)this);
     (*remote_failed)[OBJECT] = var;
@@ -67,10 +67,10 @@ void ctkEventDispatcher::initializeGlobalEvents() {
     this->registerSignal(*remote_failed);
 }
 
-bool ctkEventDispatcher::isSignaturePresent(const mafEvent &props) const {
+bool ctkEventDispatcher::isSignaturePresent(const ctkEvent &props) const {
     QString topic = props[TOPIC].toString();
-    mafEventItemListType itemEventPropList;
-    mafEvent *itemEventProp;
+    ctkEventItemListType itemEventPropList;
+    ctkEvent *itemEventProp;
     if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
         itemEventPropList = m_CallbacksHash.values(topic);
     } else {
@@ -87,7 +87,7 @@ bool ctkEventDispatcher::isSignaturePresent(const mafEvent &props) const {
     return false;
 }
 
-bool ctkEventDispatcher::disconnectSignal(const mafEvent &props) {
+bool ctkEventDispatcher::disconnectSignal(const ctkEvent &props) {
     QObject *obj_signal = props[OBJECT].value<QObject*>();
     QString sig = props[SIGNATURE].toString();
     QString event_sig = SIGNAL_SIGNATURE;
@@ -96,12 +96,12 @@ bool ctkEventDispatcher::disconnectSignal(const mafEvent &props) {
     return result;
 }
 
-bool ctkEventDispatcher::disconnectCallback(const mafEvent &props) {
+bool ctkEventDispatcher::disconnectCallback(const ctkEvent &props) {
     //need to disconnect observer from the signal
     QString observer_sig = CALLBACK_SIGNATURE;
     observer_sig.append(props[SIGNATURE].toString());
 
-    mafEvent *itemSignal = m_SignalsHash.value(props[TOPIC].toString());
+    ctkEvent *itemSignal = m_SignalsHash.value(props[TOPIC].toString());
     QString event_sig = SIGNAL_SIGNATURE;
     event_sig.append((*itemSignal)[SIGNATURE].toString());
 
@@ -111,15 +111,15 @@ bool ctkEventDispatcher::disconnectCallback(const mafEvent &props) {
     return disconnect(objSignal, event_sig.toAscii(), objSlot, observer_sig.toAscii());
 }
 
-bool ctkEventDispatcher::removeEventItem(const mafEvent &props) {
+bool ctkEventDispatcher::removeEventItem(const ctkEvent &props) {
     bool isDisconnected = false;
     bool isPresent = isSignaturePresent(props);
     if(isPresent == true) {
-        //mafEventItemListType itemEventPropList;
+        //ctkEventItemListType itemEventPropList;
         if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
             isDisconnected = disconnectCallback(props);
             //iterator for erasing hash entry
-            mafEventsHashType::iterator i = m_CallbacksHash.find(props[TOPIC].toString());
+            ctkEventsHashType::iterator i = m_CallbacksHash.find(props[TOPIC].toString());
             while (i != m_CallbacksHash.end() && i.key() == props[TOPIC]) {
                 QObject *obj = (*(i.value()))[OBJECT].value<QObject *>();
                 QObject *objCheck = props[OBJECT].value<QObject *>();
@@ -133,7 +133,7 @@ bool ctkEventDispatcher::removeEventItem(const mafEvent &props) {
         } else {
             //itemEventPropList = m_SignalsHash.values();
             isDisconnected = disconnectSignal(props);
-            mafEventsHashType::iterator i = m_CallbacksHash.find(props[TOPIC].toString());
+            ctkEventsHashType::iterator i = m_CallbacksHash.find(props[TOPIC].toString());
             while (i != m_CallbacksHash.end() && i.key() == props[TOPIC].toString()) {
                 delete i.value();
                 i++;
@@ -152,7 +152,7 @@ bool ctkEventDispatcher::removeEventItem(const mafEvent &props) {
     return isDisconnected;
 }
 
-bool ctkEventDispatcher::addObserver(const mafEvent &props) {
+bool ctkEventDispatcher::addObserver(const ctkEvent &props) {
     QString topic = props[TOPIC].toString();
     // check if the object has been already registered with the same signature to avoid duplicates.
     if(m_CallbacksHash.contains(topic) && this->isSignaturePresent(props) == true) {
@@ -166,13 +166,13 @@ bool ctkEventDispatcher::addObserver(const mafEvent &props) {
 
     if(sig.length() > 0 && objSlot != NULL) {
 
-        mafEvent *itemEventProp;
+        ctkEvent *itemEventProp;
         //bool testRes = this->isLocalSignalPresent(topic);
         itemEventProp = m_SignalsHash.value(topic);
         if(itemEventProp == NULL) {
             qDebug() << tr("Signal not present for topic %1, create only the entry in CallbacksHash").arg(topic);
 
-            mafEvent *dict = const_cast<mafEvent *>(&props);
+            ctkEvent *dict = const_cast<ctkEvent *>(&props);
             this->m_CallbacksHash.insertMulti(topic, dict);
 
             return true;
@@ -185,7 +185,7 @@ bool ctkEventDispatcher::addObserver(const mafEvent &props) {
         event_sig.append((*itemEventProp)[SIGNATURE].toString());
         
         // Add the new observer to the Hash.
-        mafEvent *dict = const_cast<mafEvent *>(&props);
+        ctkEvent *dict = const_cast<ctkEvent *>(&props);
         this->m_CallbacksHash.insertMulti(topic, dict);
         QObject *objSignal = (*itemEventProp)[OBJECT].value<QObject *>();
 
@@ -215,15 +215,15 @@ bool ctkEventDispatcher::removeSignal(const QObject *obj, const QString topic, b
     return removeFromHash(&m_SignalsHash, obj, topic, qt_disconnect);
 }
 
-bool ctkEventDispatcher::removeFromHash(mafEventsHashType *hash, const QObject *obj, const QString topic, bool qt_disconnect) {
+bool ctkEventDispatcher::removeFromHash(ctkEventsHashType *hash, const QObject *obj, const QString topic, bool qt_disconnect) {
     bool disconnectItem = true;
     if(topic.length() > 0 && hash->contains(topic)) {
         // Remove the observer from the given topic.
-        mafEventsHashType::iterator i = hash->find(topic);
+        ctkEventsHashType::iterator i = hash->find(topic);
         while(i != hash->end() && i.key() == topic) {
             QObject *item = (*(i.value()))[OBJECT].value<QObject *>();
             if(item == obj) {
-                mafEvent *prop = i.value();
+                ctkEvent *prop = i.value();
                 bool currentDisconnetFlag = false;
                 if(qt_disconnect) {
                     if(*hash == m_CallbacksHash) {
@@ -250,11 +250,11 @@ bool ctkEventDispatcher::removeFromHash(mafEventsHashType *hash, const QObject *
     }
 
     if(topic.isEmpty()) {
-        mafEventsHashType::iterator i = hash->begin();
+        ctkEventsHashType::iterator i = hash->begin();
         while(i != hash->end()) {
             QObject *item = (*(i.value()))[OBJECT].value<QObject *>();
             if(item == obj) {
-                mafEvent *prop = i.value();
+                ctkEvent *prop = i.value();
                 bool currentDisconnetFlag = false;
                 if(qt_disconnect) {
                     if(*hash == m_CallbacksHash) {
@@ -283,11 +283,11 @@ bool ctkEventDispatcher::removeFromHash(mafEventsHashType *hash, const QObject *
     return false; //need to enter in one of the conditions
 }
 
-bool ctkEventDispatcher::removeObserver(const mafEvent &props) {
+bool ctkEventDispatcher::removeObserver(const ctkEvent &props) {
     return removeEventItem(props);
 }
 
-bool ctkEventDispatcher::registerSignal(const mafEvent &props) {
+bool ctkEventDispatcher::registerSignal(const ctkEvent &props) {
     // check if the object has been already registered with the same signature to avoid duplicates.
     if(props["Signature"].toString().length() == 0) {
         QVariant var;
@@ -310,13 +310,13 @@ bool ctkEventDispatcher::registerSignal(const mafEvent &props) {
     }
 
 
-    mafEventItemListType itemEventPropList;
+    ctkEventItemListType itemEventPropList;
     itemEventPropList = m_CallbacksHash.values(topic);
     if(itemEventPropList.count() == 0) {
         qDebug() << tr("Callbacks not present for topic %1, create only the entry in SignalsHash").arg(topic);
 
         // Add the new signal to the Hash.
-        mafEvent *dict = const_cast<mafEvent *>(&props);
+        ctkEvent *dict = const_cast<ctkEvent *>(&props);
         this->m_SignalsHash.insert(topic, dict);
         return true;
     }
@@ -325,7 +325,7 @@ bool ctkEventDispatcher::registerSignal(const mafEvent &props) {
     QVariant sigVariant = props[SIGNATURE];
     QString sig = sigVariant.toString();
 
-    mafEvent *currentEvent;
+    ctkEvent *currentEvent;
     bool cumulativeConnect = true;
      if(sig.length() > 0 && objSignal != NULL) {
          foreach(currentEvent, itemEventPropList) {
@@ -339,18 +339,18 @@ bool ctkEventDispatcher::registerSignal(const mafEvent &props) {
              QObject *objSlot = (*currentEvent)[OBJECT].value<QObject *>();
              cumulativeConnect = cumulativeConnect && connect(objSignal, event_sig.toAscii(), objSlot, observer_sig.toAscii());
          }
-         mafEvent *dict = const_cast<mafEvent *>(&props);
+         ctkEvent *dict = const_cast<ctkEvent *>(&props);
          this->m_SignalsHash.insert(topic, dict);
     }
 
     return cumulativeConnect;
 }
 
-bool ctkEventDispatcher::removeSignal(const mafEvent &props) {
+bool ctkEventDispatcher::removeSignal(const ctkEvent &props) {
     return removeEventItem(props);
 }
 
-void ctkEventDispatcher::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcher::notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     Q_UNUSED(event_dictionary);
     Q_UNUSED(argList);
     Q_UNUSED(returnArg);

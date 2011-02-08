@@ -1,6 +1,6 @@
 /*
- *  mafEventBus_global.h
- *  mafEventBus
+ *  ctkEventBus_global.h
+ *  ctkEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
  *  Copyright 2009 B3C. All rights reserved.

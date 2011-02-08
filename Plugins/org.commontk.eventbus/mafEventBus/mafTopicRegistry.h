@@ -1,6 +1,6 @@
 /*
  *  ctkTopicRegistry.h
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Roberto Mucci on 26/01/11.
  *  Copyright 2011 B3C. All rights reserved.
@@ -51,6 +51,6 @@ private:
     QHash<QString, const QObject*> m_TopicHash; ///< Hash containing pairs (topic,owner).
 };
 
-} //nameSpace mafEventBus
+} //nameSpace ctkEventBus
 
 #endif // MAFTOPICREGISTRY_H

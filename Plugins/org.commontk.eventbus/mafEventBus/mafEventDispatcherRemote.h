@@ -1,6 +1,6 @@
 /*
  *  ctkEventDispatcherRemote.h
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
  *  Copyright 2009 B3C. All rights reserved.
@@ -35,7 +35,7 @@ public:
     /*virtual*/ ~ctkEventDispatcherRemote();
 
     /// Emit event corresponding to the given id (present into the event_dictionary) locally to the application.
-    /*virtual*/ void notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    /*virtual*/ void notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
 
     /// Set the active server side network connector type.
     void setNetworkConnectorServer(ctkNetworkConnector *connector);

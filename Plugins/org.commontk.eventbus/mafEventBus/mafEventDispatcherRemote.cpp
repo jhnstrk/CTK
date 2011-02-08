@@ -1,6 +1,6 @@
 /*
  *  ctkEventDispatcherRemote.cpp
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
  *  Copyright 2009 B3C. All rights reserved.
@@ -35,10 +35,10 @@ ctkNetworkConnector *ctkEventDispatcherRemote::networkConnectorClient() {
 }
 
 void ctkEventDispatcherRemote::initializeGlobalEvents() {
-    mafEvent *properties = new mafEvent();
+    ctkEvent *properties = new ctkEvent();
     QString topic = "maf.remote.eventBus.globalUpdate";
     (*properties)[TOPIC] = topic;
-    (*properties)[TYPE] = mafEventTypeRemote;
+    (*properties)[TYPE] = ctkEventTypeRemote;
     QVariant var;
     var.setValue((QObject*)this);
     (*properties)[OBJECT] = var;
@@ -48,7 +48,7 @@ void ctkEventDispatcherRemote::initializeGlobalEvents() {
 
     // events like remoteCommunicationDone or failed represents th bridge events between a remote communication
     // and the possibility to call local slots. The notifyEvent local sends events inside the local objects registered as observers
-    // through the event bus manager while the remote notification (mafEventTypeRemote) uses the network connector.
+    // through the event bus manager while the remote notification (ctkEventTypeRemote) uses the network connector.
 }
 
 void ctkEventDispatcherRemote::setNetworkConnectorServer(ctkNetworkConnector *connector) {
@@ -77,7 +77,7 @@ void ctkEventDispatcherRemote::setNetworkConnectorClient(ctkNetworkConnector *co
     }
 }
 
-void ctkEventDispatcherRemote::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcherRemote::notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     //Q_UNUSED(event_dictionary);
     //Q_UNUSED(argList);
     Q_UNUSED(returnArg);

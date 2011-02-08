@@ -1,6 +1,6 @@
 /*
  *  ctkNetworkConnectorQtSoap.cpp
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Daniele Giunchi on 14/07/10.
  *  Copyright 2009 B3C. All rights reserved.
@@ -32,8 +32,8 @@ ctkNetworkConnector *ctkNetworkConnectorQtSoap::clone() {
 }
 
 void ctkNetworkConnectorQtSoap::initializeForEventBus() {
-    mafRegisterRemoteSignal("maf.remote.eventBus.comunication.soap", this, "remoteCommunication(const QString, mafEventArgumentsList *)");
-    mafRegisterRemoteCallback("maf.remote.eventBus.comunication.soap", this, "send(const QString, mafEventArgumentsList *)");
+    mafRegisterRemoteSignal("maf.remote.eventBus.comunication.soap", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
+    mafRegisterRemoteCallback("maf.remote.eventBus.comunication.soap", this, "send(const QString, ctkEventArgumentsList *)");
 }
 
 
@@ -211,19 +211,19 @@ QtSoapType *ctkNetworkConnectorQtSoap::marshall(const QString name, const QVaria
     return returnValue;
 }
 
-void ctkNetworkConnectorQtSoap::send(const QString methodName, mafEventArgumentsList *argList) {
+void ctkNetworkConnectorQtSoap::send(const QString methodName, ctkEventArgumentsList *argList) {
     //REQUIRE(!params->at(0).isNull());
     //REQUIRE(params->at(0).canConvert(QVariant::Hash) == true);
 
     QString type = argList->at(0).name();
-    if(argList == NULL || type != "mafEventHash") {
+    if(argList == NULL || type != "ctkEventHash") {
         qDebug() << "NULL or invalid argument, nothing to send!";
         return;
     }
     m_Request.clear();
     m_Request.setMethod(methodName);
-    mafEventHash *values;
-    values = reinterpret_cast<mafEventHash *> (argList->at(0).data());
+    ctkEventHash *values;
+    values = reinterpret_cast<ctkEventHash *> (argList->at(0).data());
     int i = 0, size = values->size();
     for(;i<size;i++) {
         m_Request.addMethodArgument(marshall(values->keys().at(i), values->values().at(i)));
@@ -259,19 +259,19 @@ void ctkNetworkConnectorQtSoap::processReturnValue( int requestId, QVariant valu
     Q_UNUSED( requestId );
     Q_ASSERT( value.canConvert( QVariant::String ) );
     qDebug("%s", value.toString().toAscii().data());
-    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", mafEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", ctkEventTypeLocal);
 }
 
 void ctkNetworkConnectorQtSoap::processFault( int requestId, int errorCode, QString errorString ) {
     // Log the error.
     qDebug("%s", tr("Process Fault for requestID %1 with error %2 - %3").arg(QString::number(requestId), QString::number(errorCode), errorString).toAscii().data());
-    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", mafEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", ctkEventTypeLocal);
 }
 
 void ctkNetworkConnectorQtSoap::processRequest( int requestId, QString methodName, QList<xmlrpc::Variant> parameters ) {
     Q_UNUSED( methodName );
     REQUIRE(parameters.count() >= 2);
-    //first parameter is mafEventBus message
+    //first parameter is ctkEventBus message
     enum {
       EVENT_PARAMETERS,
       DATA_PARAMETERS,
@@ -296,18 +296,18 @@ void ctkNetworkConnectorQtSoap::processRequest( int requestId, QString methodNam
 
     int size = parameters.count();
 
-    mafEventArgumentsList *argList = NULL;
+    ctkEventArgumentsList *argList = NULL;
     mafList<QVariant> *p = & (parameters.at(1).value< mafList<QVariant> >());
     if(size > 1 && p->count() != 0) {
-        argList = new mafEventArgumentsList();
+        argList = new ctkEventArgumentsList();
         argList->push_back(Q_ARG(mafList<QVariant>, *p));
     }
 
     if ( ctkEventBusManager::instance()->isLocalSignalPresent(id_name) ) {
-        mafEvent dictionary;
+        ctkEvent dictionary;
         mafCore::mafId id = mafCore::mafIdProvider::instance()->idValue(id_name);
         dictionary.setEventId(id);
-        dictionary.setEventType(mafEventTypeLocal);
+        dictionary.setEventType(ctkEventTypeLocal);
         ctkEventBusManager::instance()->notifyEvent(dictionary, argList);
         m_Server->sendReturnValue( requestId, QString("OK") );
     } else {

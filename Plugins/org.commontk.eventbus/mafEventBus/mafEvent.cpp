@@ -1,6 +1,6 @@
 /*
- *  mafEvent.cpp
- *  mafEventBus
+ *  ctkEvent.cpp
+ *  ctkEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
  *  Copyright 2009 B3C. All rights reserved.
@@ -13,13 +13,13 @@
 
 using namespace ctkEventBus;
 
-mafEvent::mafEvent() {
-    m_EventHash = new mafEventHash();
+ctkEvent::ctkEvent() {
+    m_EventHash = new ctkEventHash();
 }
 
 /// Overload object constructor.
-mafEvent::mafEvent(QString topic, mafEventType event_type, mafSignatureType signature_type, QObject *objectPointer, QString signature) {
-    m_EventHash = new mafEventHash();
+ctkEvent::ctkEvent(QString topic, ctkEventType event_type, mafSignatureType signature_type, QObject *objectPointer, QString signature) {
+    m_EventHash = new ctkEventHash();
     entries()->insert(TOPIC, topic);
     entries()->insert(TYPE, static_cast<int>(event_type));
     entries()->insert(SIGTYPE, static_cast<int>(signature_type));
@@ -29,45 +29,45 @@ mafEvent::mafEvent(QString topic, mafEventType event_type, mafSignatureType sign
     entries()->insert(SIGNATURE, signature);
 }
 
-mafEvent::~mafEvent() {
+ctkEvent::~ctkEvent() {
     m_EventHash->clear();
     delete m_EventHash;
 }
 
-mafEventHash *mafEvent::entries() {
+ctkEventHash *ctkEvent::entries() {
     return m_EventHash;
 }
 
-mafEventHash *mafEvent::entries() const {
+ctkEventHash *ctkEvent::entries() const {
     return m_EventHash;
 }
 
-QVariant &mafEvent::operator[](QString key) const{
+QVariant &ctkEvent::operator[](QString key) const{
     return (*m_EventHash)[key];
 }
 
-mafEventType mafEvent::eventType() const {
-    return static_cast<mafEventType>(entries()->value(TYPE).toInt());
+ctkEventType ctkEvent::eventType() const {
+    return static_cast<ctkEventType>(entries()->value(TYPE).toInt());
 }
 
-QString mafEvent::eventTopic() const {
+QString ctkEvent::eventTopic() const {
     return entries()->value(TOPIC).toString();
 }
 
-bool mafEvent::isEventLocal() const {
+bool ctkEvent::isEventLocal() const {
     int et = entries()->value(TYPE).toInt();
-    return et == mafEventTypeLocal;
+    return et == ctkEventTypeLocal;
 }
 
-void mafEvent::setEventType(mafEventType et) {
+void ctkEvent::setEventType(ctkEventType et) {
     entries()->insert(TYPE, static_cast<int>(et));
 }
 
-void mafEvent::setEventTopic(QString topic) {
+void ctkEvent::setEventTopic(QString topic) {
     entries()->insert(TOPIC, topic);
 }
 
-/*QString mafEvent::eventIdName() const {
+/*QString ctkEvent::eventIdName() const {
     mafId id = eventId();
     return mafIdProvider::instance()->idName(id);
 }*/

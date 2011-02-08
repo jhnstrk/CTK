@@ -1,6 +1,6 @@
 /*
  *  ctkEventDispatcher.h
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
  *  Copyright 2009 B3C. All rights reserved.
@@ -33,10 +33,10 @@ public:
     /// Add the observer to the events.
     /** Return true if observer has beed added correctly, false otherwise.
     This method check before adding a new observer that it has not already been inserted into the events' Hash with the same id and callback signature.*/
-    bool addObserver(const mafEvent &props);
+    bool addObserver(const ctkEvent &props);
 
     /// remove the callback from the observer's hash.
-    bool removeObserver(const mafEvent &props);
+    bool removeObserver(const ctkEvent &props);
 
     /// remove the callback from the observer's hash.
     bool removeObserver(const QObject *obj, const QString topic, bool qt_disconnect = true);
@@ -48,16 +48,16 @@ public:
     /** Return true if signal has beed added correctly, false otherwise.
     This method check before adding a new signal that it has not already been inserted into the events' Hash with the same id and signal signature.
     WARNING: due to Qt limitation you cannot use the same signal in different Topics.*/
-    bool registerSignal(const mafEvent &props);
+    bool registerSignal(const ctkEvent &props);
 
     /// Remove the signal from the signal's hash.
-    bool removeSignal(const mafEvent &props);
+    bool removeSignal(const ctkEvent &props);
 
     /// method used to check if the given signal has been already registered for the given id.
     bool isLocalSignalPresent(const QString topic) const;
 
     /// Emit event corresponding to the given id (present into the event_dictionary) locally to the application.
-    virtual void notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    virtual void notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
 
     /// clean the signal and callback hashes.
     /** This method is used when the destructor is called. The destructor of the dispatcher is called by the ctkEventBusManager destructor.*/
@@ -77,34 +77,34 @@ protected:
     virtual void initializeGlobalEvents();
 
     /// Interanl method used to remove the given event property.
-    bool removeEventItem(const mafEvent &props);
+    bool removeEventItem(const ctkEvent &props);
 
     /// Return the signal item property associated to the given ID.
-    mafEventItemListType signalItemProperty(const QString topic) const;
+    ctkEventItemListType signalItemProperty(const QString topic) const;
 
 private:
     /// method used to check if the given object has been already registered for the given id and signature.
-    bool isSignaturePresent(const mafEvent &props) const;
+    bool isSignaturePresent(const ctkEvent &props) const;
 
     /// disconnection signal/observer.
     /** This function disconnects the signal and all the observers. */
-    bool disconnectSignal(const mafEvent &props);
+    bool disconnectSignal(const ctkEvent &props);
 
     /// This function disconnects observer from signal.
-    bool disconnectCallback(const mafEvent &props);
+    bool disconnectCallback(const ctkEvent &props);
 
     /// Remove the given object from the has passed as argument
-    bool removeFromHash(mafEventsHashType *hash, const QObject *obj, const QString topic, bool qt_disconnect = true);
+    bool removeFromHash(ctkEventsHashType *hash, const QObject *obj, const QString topic, bool qt_disconnect = true);
 
-    mafEventsHashType m_CallbacksHash; ///< Callbacks' hash for receiving events like updates or refreshes.
-    mafEventsHashType m_SignalsHash; ///< Signals' hash for sending events.
+    ctkEventsHashType m_CallbacksHash; ///< Callbacks' hash for receiving events like updates or refreshes.
+    ctkEventsHashType m_SignalsHash; ///< Signals' hash for sending events.
 };
 
 /////////////////////////////////////////////////////////////
 // Inline methods
 /////////////////////////////////////////////////////////////
 
-inline mafEventItemListType ctkEventDispatcher::signalItemProperty(const QString topic) const {
+inline ctkEventItemListType ctkEventDispatcher::signalItemProperty(const QString topic) const {
     return m_SignalsHash.values(topic);
 }
 

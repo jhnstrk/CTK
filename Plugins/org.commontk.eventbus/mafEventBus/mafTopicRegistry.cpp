@@ -1,6 +1,6 @@
 /*
  *  ctkTopicRegistry.cpp
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Roberto Mucci on 26/01/11.
  *  Copyright 2011 B3C. All rights reserved.

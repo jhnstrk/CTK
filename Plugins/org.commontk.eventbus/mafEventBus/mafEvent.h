@@ -1,6 +1,6 @@
 /*
- *  mafEvent.h
- *  mafEventBus
+ *  ctkEvent.h
+ *  ctkEventBus
  *
  *  Created by Daniele Giunchi on 10/05/10.
  *  Copyright 2009-2010 B3C. All rights reserved.
@@ -9,36 +9,36 @@
  *
  */
 
-#ifndef MAFEVENT_H
-#define MAFEVENT_H
+#ifndef CTKEVENTHEADER_H
+#define CTKEVENTHEADER_H
 
 #include "mafEventDefinitions.h"
 
 namespace ctkEventBus {
 
  /**
-Class name: mafEvent
+Class name: ctkEvent
 This class defines the MAF3 Event which inherit from mafDictionary, and contains
 constructor for rapid dictionary creation.
 @sa mafDictionary
 */
-class CTKEVENTBUSSHARED_EXPORT mafEvent : public QObject {
+class CTKEVENTBUSSHARED_EXPORT ctkEvent : public QObject {
 
 public:
     /// Object constructor.
-    mafEvent();
+    ctkEvent();
 
     /// Object destructor.
-    ~mafEvent();
+    ~ctkEvent();
 
     /// Overload object constructor.
-    mafEvent(QString topic, mafEventType event_type, mafSignatureType signature_type, QObject *objectPointer, QString signature);
+    ctkEvent(QString topic, ctkEventType event_type, mafSignatureType signature_type, QObject *objectPointer, QString signature);
 
-    /// Allow to assign the event type: mafEventTypeLocal or mafEventTypeRemote.
-    void setEventType(mafEventType et);
+    /// Allow to assign the event type: ctkEventTypeLocal or ctkEventTypeRemote.
+    void setEventType(ctkEventType et);
 
-    /// Return the type of the event: mafEventTypeLocal or mafEventTypeRemote.
-    mafEventType eventType() const;
+    /// Return the type of the event: ctkEventTypeLocal or ctkEventTypeRemote.
+    ctkEventType eventType() const;
 
     /// Check if the event is local or not.
     bool isEventLocal() const;
@@ -53,22 +53,22 @@ public:
     //QString eventIdName() const;
 
     /// Redefined operator to have access to the entries owned.
-    mafEventHash *entries();
+    ctkEventHash *entries();
 
     /// Redefined operator to have access to the entries owned.
-    mafEventHash *entries() const;
+    ctkEventHash *entries() const;
 
     /// Overload operator for rapid access to mafDictionaryEntries
     QVariant &operator[](QString key) const;
 
 private:
-    mafEventHash *m_EventHash;
+    ctkEventHash *m_EventHash;
 };
 
-typedef mafEvent * mafEventPointer;
+typedef ctkEvent * ctkEventPointer;
 
 } // namespace ctkEventBus
 
-Q_DECLARE_METATYPE(ctkEventBus::mafEventPointer);
+Q_DECLARE_METATYPE(ctkEventBus::ctkEventPointer);
 
-#endif // MAFEVENT_H
+#endif // CTKEVENTHEADER_H

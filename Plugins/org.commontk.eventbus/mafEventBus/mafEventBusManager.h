@@ -1,6 +1,6 @@
 /*
  *  ctkEventBusManager.h
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
  *  Copyright 2010 B3C. All rights reserved.
@@ -37,10 +37,10 @@ public:
     /// Add a new event property (observer or event) to the event bus hash.
     /** Return true if observer has beed added correctly, false otherwise.
     This method check before adding a new observer that it has not already been inserted into the events' Hash with the same id and callback signature.*/
-    bool addEventProperty(const mafEvent &props) const;
+    bool addEventProperty(const ctkEvent &props) const;
 
     /// Remove the event property from the event bus hash.
-    bool removeEventProperty(const mafEvent &props) const;
+    bool removeEventProperty(const ctkEvent &props) const;
 
     /// Remove the object passed as argument from the observer's hash.
     /** This method allows to remove from the observer's hash the object
@@ -55,10 +55,10 @@ public:
     void removeSignal(const QObject *obj, QString topic = "", bool qt_disconnect = true);
 
     /// Notify events associated to the given id locally to the application.
-    void notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    void notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
 
     /// Notify event associated to the given id locally to the application.
-    void notifyEvent(const QString topic, mafEventType ev_type = mafEventTypeLocal, mafEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    void notifyEvent(const QString topic, ctkEventType ev_type = ctkEventTypeLocal, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
 
     /// Enable/Disable event logging to allow dumping events notification into the selected logging output stream.
     void enableEventLogging(bool enable = true);
@@ -78,7 +78,7 @@ public:
     /// Retrieve if the signal has been registered previously.
     bool isLocalSignalPresent(const QString topic) const;
 
-    /// Plug a new network connector into the connector hash for the given network protocol (protocol eg. "XMLRPC") (connector_type eg. "mafEventBus::ctkNetworkConnectorQXMLRPC").
+    /// Plug a new network connector into the connector hash for the given network protocol (protocol eg. "XMLRPC") (connector_type eg. "ctkEventBus::ctkNetworkConnectorQXMLRPC").
     void plugNetworkConnector(const QString &protocol, ctkNetworkConnector *connector);
 
     /// Create the server for remote communication according to the given protocol and listen port.

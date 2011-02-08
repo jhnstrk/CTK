@@ -1,6 +1,6 @@
 /*
  *  ctkNetworkConnectorQXMLRPC.h
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
  *  Copyright 2009 B3C. All rights reserved.
@@ -64,7 +64,7 @@ public slots:
 
     /// Allow to send a network request.
     /** Contains the conversion between maf datatypes and qxmlrpc datatype based both on QVariant. */
-    /*virtual*/ void send(const QString event_id, mafEventArgumentsList *argList);
+    /*virtual*/ void send(const QString event_id, ctkEventArgumentsList *argList);
 
 private slots:
     /// callback for the client which retrieve the variable from the server

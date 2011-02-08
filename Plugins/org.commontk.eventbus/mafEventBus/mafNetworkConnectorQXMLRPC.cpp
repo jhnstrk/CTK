@@ -1,6 +1,6 @@
 /*
  *  ctkNetworkConnectorQXMLRPC.cpp
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
  *  Copyright 2009 B3C. All rights reserved.
@@ -26,8 +26,8 @@ ctkNetworkConnectorQXMLRPC::ctkNetworkConnectorQXMLRPC() : ctkNetworkConnector()
 }
 
 void ctkNetworkConnectorQXMLRPC::initializeForEventBus() {
-    mafRegisterRemoteSignal("maf.remote.eventBus.comunication.send.xmlrpc", this, "remoteCommunication(const QString, mafEventArgumentsList *)");
-    mafRegisterRemoteCallback("maf.remote.eventBus.comunication.send.xmlrpc", this, "send(const QString, mafEventArgumentsList *)");
+    mafRegisterRemoteSignal("maf.remote.eventBus.comunication.send.xmlrpc", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
+    mafRegisterRemoteCallback("maf.remote.eventBus.comunication.send.xmlrpc", this, "send(const QString, ctkEventArgumentsList *)");
 }
 
 ctkNetworkConnectorQXMLRPC::~ctkNetworkConnectorQXMLRPC() {
@@ -87,7 +87,7 @@ void ctkNetworkConnectorQXMLRPC::createServer(const unsigned int port) {
     methodsMapping.insert("maf.remote.eventBus.comunication.send.xmlrpc", parametersForRegisterteredFunction);
     registerServerMethod(methodsMapping);
 
-    //if a user want to register another method, it is important to know that mafEventDispatcherRemote allows
+    //if a user want to register another method, it is important to know that ctkEventDispatcherRemote allows
     // the registration of function with QVariantList parameter.
 }
 
@@ -97,9 +97,9 @@ void ctkNetworkConnectorQXMLRPC::stopServer() {
         // get the ID for the previous server;
         /*QString old_id_name(tr("maf.remote.eventbus.communication.send.xmlrpc.serverMethods%1").arg(p));
         // Remove the old signal.
-        mafEvent props;
+        ctkEvent props;
         props[TOPIC] = old_id_name;
-        props[TYPE] = mafEventTypeRemote;
+        props[TYPE] = ctkEventTypeRemote;
         props[SIGNATURE] = "registerMethodsServer(mafRegisterMethodsMap)";
         ctkEventBusManager::instance()->removeEventProperty(props);*/
         // Delete (and stop) the previous instance of the server.
@@ -152,7 +152,7 @@ void ctkNetworkConnectorQXMLRPC::startListen() {
     }
 }
 
-void ctkNetworkConnectorQXMLRPC::send(const QString event_id, mafEventArgumentsList *argList) {
+void ctkNetworkConnectorQXMLRPC::send(const QString event_id, ctkEventArgumentsList *argList) {
     QList<xmlrpc::Variant> *vl = NULL;
     if(argList != NULL) {
         vl = new QList<xmlrpc::Variant>();
@@ -210,19 +210,19 @@ void ctkNetworkConnectorQXMLRPC::processReturnValue( int requestId, QVariant val
     Q_UNUSED( requestId );
     Q_ASSERT( value.canConvert( QVariant::String ) );
     qDebug("%s", value.toString().toAscii().data());
-    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", mafEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", ctkEventTypeLocal);
 }
 
 void ctkNetworkConnectorQXMLRPC::processFault( int requestId, int errorCode, QString errorString ) {
     // Log the error.
     qDebug("%s", tr("Process Fault for requestID %1 with error %2 - %3").arg(QString::number(requestId), QString::number(errorCode), errorString).toAscii().data());
-    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", mafEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", ctkEventTypeLocal);
 }
 
 void ctkNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodName, QList<xmlrpc::Variant> parameters ) {
     Q_UNUSED( methodName );
 
-    //first parameter is mafEventBus message
+    //first parameter is ctkEventBus message
     enum {
       EVENT_PARAMETERS,
       DATA_PARAMETERS,
@@ -246,18 +246,18 @@ void ctkNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodNa
 
     int size = parameters.count();
 
-    mafEventArgumentsList *argList = NULL;
+    ctkEventArgumentsList *argList = NULL;
     QVariantList p;
     p.append((parameters.at(1).value< QVariantList >()));
     if(size > 1 && p.count() != 0) {
-        argList = new mafEventArgumentsList();
+        argList = new ctkEventArgumentsList();
         argList->push_back(Q_ARG(QVariantList, p));
     }
 
     if ( ctkEventBusManager::instance()->isLocalSignalPresent(id_name) ) {
-        mafEvent dictionary;
+        ctkEvent dictionary;
         dictionary.setEventTopic(id_name);
-        dictionary.setEventType(mafEventTypeLocal);
+        dictionary.setEventType(ctkEventTypeLocal);
         ctkEventBusManager::instance()->notifyEvent(dictionary, argList);
         m_Server->sendReturnValue( requestId, QString("OK") );
     } else {

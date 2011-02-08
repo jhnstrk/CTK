@@ -1,6 +1,6 @@
 /*
  *  ctkNetworkConnectorQtSoap.h
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Daniele Giunchi on 14/07/10.
  *  Copyright 2010 B3C. All rights reserved.
@@ -58,7 +58,7 @@ public:
 
     /// Allow to send a network request.
     /** Need to convert the parameter list into another list of basic type to string which are used in QtSoap.*/
-    /*virtual*/ void send(const QString methodName, mafEventArgumentsList *argList);
+    /*virtual*/ void send(const QString methodName, ctkEventArgumentsList *argList);
 
     /// Marshalling of the datatypes
     QtSoapType *marshall(const QString name, const QVariant &parameter);

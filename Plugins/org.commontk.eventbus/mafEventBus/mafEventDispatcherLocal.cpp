@@ -1,6 +1,6 @@
 /*
  *  ctkEventDispatcherLocal.cpp
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.
  *  Copyright 2009 B3C. All rights reserved.
@@ -19,10 +19,10 @@ ctkEventDispatcherLocal::ctkEventDispatcherLocal() : ctkEventDispatcher() {
 }
 
 void ctkEventDispatcherLocal::initializeGlobalEvents() {
-    mafEvent *properties = new mafEvent();
+    ctkEvent *properties = new ctkEvent();
     QString topic = "maf.local.eventBus.globalUpdate";
     (*properties)[TOPIC] =  topic;
-    (*properties)[TYPE] = mafEventTypeLocal;
+    (*properties)[TYPE] = ctkEventTypeLocal;
     (*properties)[SIGTYPE] = mafSignatureTypeSignal;
     QVariant var;
     var.setValue((QObject*)this);
@@ -33,10 +33,10 @@ void ctkEventDispatcherLocal::initializeGlobalEvents() {
     ctkEventDispatcher::initializeGlobalEvents();
 }
 
-void ctkEventDispatcherLocal::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcherLocal::notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     QString topic = event_dictionary[TOPIC].toString();
-    mafEventItemListType items = signalItemProperty(topic);
-    mafEvent *itemEventProp;
+    ctkEventItemListType items = signalItemProperty(topic);
+    ctkEvent *itemEventProp;
     foreach(itemEventProp, items) {
         if((*itemEventProp)[SIGNATURE].toString().length() != 0) {
             QString signal_to_emit = (*itemEventProp)[SIGNATURE].toString().split("(")[0];

@@ -1,6 +1,6 @@
 /*
  *  ctkNetworkConnector.h
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Daniele Giunchi on 11/04/10.
  *  Copyright 2009 B3C. All rights reserved.
@@ -40,7 +40,7 @@ public:
     virtual void startListen() = 0;
 
     /// Allow to send a network request.
-    virtual void send(const QString event_id, mafEventArgumentsList *argList) = 0;
+    virtual void send(const QString event_id, ctkEventArgumentsList *argList) = 0;
 
     /// retrieve an instance of the object
     virtual ctkNetworkConnector *clone() = 0;
@@ -53,7 +53,7 @@ public:
 
 signals:
     /// signal for send a message to through network
-    void remoteCommunication(const QString event_id, mafEventArgumentsList *argList);
+    void remoteCommunication(const QString event_id, ctkEventArgumentsList *argList);
 
 protected:
     QString m_Protocol; ///< define the protocol of the connector (xmlrpc, soap, etc...)

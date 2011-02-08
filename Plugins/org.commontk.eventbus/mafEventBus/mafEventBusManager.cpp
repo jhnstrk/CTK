@@ -1,6 +1,6 @@
 /*
  *  ctkEventBusManager.cpp
- *  mafEventBus
+ *  ctkEventBus
  *
  *  Created by Paolo Quadrani on 27/03/09.ctkEventBusManager *  Copyright 2010 B3C. All rights reserved.
  *
@@ -69,12 +69,12 @@ void ctkEventBusManager::initializeNetworkConnectors() {
     plugNetworkConnector("XMLRPC", new ctkNetworkConnectorQXMLRPC());
 }
 
-bool ctkEventBusManager::addEventProperty(const mafEvent &props) const {
+bool ctkEventBusManager::addEventProperty(const ctkEvent &props) const {
     bool result(false);
     QString topic = props[TOPIC].toString();
     QObject *obj = props[OBJECT].value<QObject*>();
 
-    if(props[TYPE].toInt() == mafEventTypeLocal) {
+    if(props[TYPE].toInt() == ctkEventTypeLocal) {
         // Local event dispatching.
         if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
             result = m_LocalDispatcher->addObserver(props);
@@ -136,8 +136,8 @@ void ctkEventBusManager::removeSignal(const QObject *obj, QString topic, bool qt
     m_RemoteDispatcher->removeSignal(obj, topic, qt_disconnect);
 }
 
-bool ctkEventBusManager::removeEventProperty(const mafEvent &props) const {
-    if(props.eventType() == mafEventTypeLocal) {
+bool ctkEventBusManager::removeEventProperty(const ctkEvent &props) const {
+    if(props.eventType() == ctkEventTypeLocal) {
         // Local event dispatching.
         if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
             return m_LocalDispatcher->removeObserver(props);
@@ -155,7 +155,7 @@ bool ctkEventBusManager::removeEventProperty(const mafEvent &props) const {
     return false;
 }
 
-void ctkEventBusManager::notifyEvent(const QString topic, mafEventType ev_type, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventBusManager::notifyEvent(const QString topic, ctkEventType ev_type, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     if(m_EnableEventLogging) {
         if(m_LogEventTopic == "*" || m_LogEventTopic == topic) {
             qDebug() << tr("Event notification for TOPIC: %1").arg(topic);
@@ -163,16 +163,16 @@ void ctkEventBusManager::notifyEvent(const QString topic, mafEventType ev_type, 
     }
 
     //event dispatched in local channel
-    mafEvent *event_dic = new ctkEventBus::mafEvent;
+    ctkEvent *event_dic = new ctkEventBus::ctkEvent;
     (*event_dic)[TOPIC] = topic;
     (*event_dic)[TYPE] = static_cast<int>(ev_type);
     notifyEvent(*event_dic, argList, returnArg);
     delete event_dic;
 }
 
-void ctkEventBusManager::notifyEvent(const mafEvent &event_dictionary, mafEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventBusManager::notifyEvent(const ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     //event dispatched in remote channel
-    if(event_dictionary[TYPE].toInt() == mafEventTypeLocal) {
+    if(event_dictionary[TYPE].toInt() == ctkEventTypeLocal) {
         m_LocalDispatcher->notifyEvent(event_dictionary, argList, returnArg);
     } else {
         m_RemoteDispatcher->notifyEvent(event_dictionary, argList);

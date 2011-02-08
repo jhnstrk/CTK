@@ -27,7 +27,7 @@ SET(KIT_resources
 
 # Target libraries - See CMake/ctkMacroGetTargetLibraries.cmake
 # The following macro will read the target libraries from the file 'target_libraries.cmake'
-ctkMacroGetTargetLibraries(KIT_target_libraries)
+ctkFunctionGetTargetLibraries(KIT_target_libraries)
 
 # Additional directories to include - Note that CTK_INCLUDE_LIBRARIES is already included
 SET(KIT_include_directories

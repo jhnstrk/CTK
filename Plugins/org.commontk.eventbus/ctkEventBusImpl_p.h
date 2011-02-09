@@ -52,8 +52,8 @@ public:
 
   void publishSignal(const QObject* publisher, const char* signal, Qt::ConnectionType type = Qt::QueuedConnection);
 
-  QString subscribeSlot(const QObject* subscriber, const char* member, const QString& topic,const ctkDictionary& properties);
-
+  //QString subscribeSlot(const QObject* subscriber, const char* member, const QString& topic,const ctkDictionary& properties);
+  qlonglong subscribeSlot(const QObject* subscriber, const char* member, const ctkDictionary& properties);
   virtual void unsubscribeSlot(const QString& topic);
 
   virtual bool updateProperties(const QString& topic, const ctkDictionary& properties);

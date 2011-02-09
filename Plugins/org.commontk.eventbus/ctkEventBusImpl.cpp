@@ -64,12 +64,13 @@ void ctkEventBusImpl::publishSignal(const QObject* publisher, const char* signal
     qDebug() << "Not implemented in this class";
 }
 
-QString ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* member, const QString& topic, const ctkDictionary& properties)
+qlonglong ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* member, const ctkDictionary& properties)
 {
+    QString topic = properties.value("EventTopic").toString();
     ctkEvent *mesbEvent = new ctkEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeCallback, const_cast<QObject *>(subscriber), member);
     m_EventBusManager->addEventProperty(*mesbEvent);
 
-    return QString();
+    return topic.toLongLong();
 
   /*ctkEventHandlerWrapper* wrapper = new ctkEventHandlerWrapper(subscriber, member, properties);
   if (wrapper->init())

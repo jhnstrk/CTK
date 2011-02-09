@@ -33,6 +33,13 @@
  */
 struct ctkEventAdminBus : public ctkEventAdmin
 {
+
+  virtual void unsubscribeSlot(qlonglong subscriptionId) {};
+  virtual void unsubscribeSlot(const QString& topic) = 0;
+
+  virtual bool updateProperties(qlonglong subscriptionId, const ctkDictionary& properties){return false;}
+  virtual bool updateProperties(const QString& topic, const ctkDictionary& properties) = 0;
+
   /// @@@ WRITE DOC!
   virtual bool createServer(const QString &communication_protocol, unsigned int listen_port) = 0;
 

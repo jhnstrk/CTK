@@ -304,7 +304,7 @@ void ctkNetworkConnectorQtSoap::processRequest( int requestId, QString methodNam
     }
 
     if ( ctkEventBusManager::instance()->isLocalSignalPresent(id_name) ) {
-        ctkEvent dictionary;
+        ctkBusEvent dictionary;
         mafCore::mafId id = mafCore::mafIdProvider::instance()->idValue(id_name);
         dictionary.setEventId(id);
         dictionary.setEventType(ctkEventTypeLocal);

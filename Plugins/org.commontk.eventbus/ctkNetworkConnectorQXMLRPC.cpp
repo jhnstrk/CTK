@@ -97,7 +97,7 @@ void ctkNetworkConnectorQXMLRPC::stopServer() {
         // get the ID for the previous server;
         /*QString old_id_name(tr("maf.remote.eventbus.communication.send.xmlrpc.serverMethods%1").arg(p));
         // Remove the old signal.
-        ctkEvent props;
+        ctkBusEvent props;
         props[TOPIC] = old_id_name;
         props[TYPE] = ctkEventTypeRemote;
         props[SIGNATURE] = "registerMethodsServer(mafRegisterMethodsMap)";
@@ -255,7 +255,7 @@ void ctkNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodNa
     }
 
     if ( ctkEventBusManager::instance()->isLocalSignalPresent(id_name) ) {
-        ctkEvent dictionary(id_name,ctkEventTypeLocal,0,NULL,"");
+        ctkBusEvent dictionary(id_name,ctkEventTypeLocal,0,NULL,"");
         /*dictionary.setEventTopic(id_name);
         dictionary.setEventType(ctkEventTypeLocal);*/
         ctkEventBusManager::instance()->notifyEvent(dictionary, argList);

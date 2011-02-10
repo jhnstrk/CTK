@@ -69,7 +69,7 @@ void ctkEventBusManager::initializeNetworkConnectors() {
     plugNetworkConnector("XMLRPC", new ctkNetworkConnectorQXMLRPC());
 }
 
-bool ctkEventBusManager::addEventProperty(ctkEvent &props) const {
+bool ctkEventBusManager::addEventProperty(ctkBusEvent &props) const {
     bool result(false);
     QString topic = props[TOPIC].toString();
     QObject *obj = props[OBJECT].value<QObject*>();
@@ -136,7 +136,7 @@ void ctkEventBusManager::removeSignal(const QObject *obj, QString topic, bool qt
     m_RemoteDispatcher->removeSignal(obj, topic, qt_disconnect);
 }
 
-bool ctkEventBusManager::removeEventProperty(ctkEvent &props) const {
+bool ctkEventBusManager::removeEventProperty(ctkBusEvent &props) const {
     if(props.eventType() == ctkEventTypeLocal) {
         // Local event dispatching.
         if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
@@ -163,14 +163,14 @@ void ctkEventBusManager::notifyEvent(const QString topic, ctkEventType ev_type, 
     }
 
     //event dispatched in local channel
-    ctkEvent *event_dic = new ctkEvent(topic, ev_type, 0, NULL, "");
+    ctkBusEvent *event_dic = new ctkBusEvent(topic, ev_type, 0, NULL, "");
     /*(*event_dic)[TOPIC] = topic;
     (*event_dic)[TYPE] = static_cast<int>(ev_type);*/
     notifyEvent(*event_dic, argList, returnArg);
     delete event_dic;
 }
 
-void ctkEventBusManager::notifyEvent(ctkEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventBusManager::notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
     //event dispatched in remote channel
     if(event_dictionary[TYPE].toInt() == ctkEventTypeLocal) {
         m_LocalDispatcher->notifyEvent(event_dictionary, argList, returnArg);

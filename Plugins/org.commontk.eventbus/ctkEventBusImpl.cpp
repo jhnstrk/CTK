@@ -25,6 +25,7 @@
 
 #include "ctkEventHandlerWrapper_p.h"
 #include "ctkBusEvent.h"
+#include "ctkEventDefinitions.h"
 
 #define ctkEventArgument(type,data) QArgument<type >(#type, data)
 
@@ -57,8 +58,16 @@ void ctkEventBusImpl::publishSignal(const QObject* publisher, const char* signal
 
 qlonglong ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* member, const ctkDictionary& properties)
 {
-    QString topic = properties.value("EventTopic").toString();
-    ctkBusEvent *mesbEvent = new ctkBusEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeCallback, const_cast<QObject *>(subscriber), member);
+    ctkDictionary toSend(properties);
+    QString topic = properties.value(TOPIC).toString();
+    toSend.insert(TOPIC, topic);
+    toSend.insert(TYPE, ctkEventBus::ctkEventTypeLocal);
+    toSend.insert(SIGTYPE, ctkEventBus::mafSignatureTypeCallback);
+    QVariant var;
+    var.setValue(const_cast<QObject *>(subscriber));
+    toSend.insert(OBJECT, var);
+    toSend.insert(SIGNATURE,member);
+    ctkBusEvent *mesbEvent = new ctkBusEvent(topic, toSend);
     m_EventBusManager->addEventProperty(*mesbEvent);
 
     return topic.toLongLong();
@@ -87,16 +96,15 @@ bool ctkEventBusImpl::updateProperties(const QString& topic, const ctkDictionary
 void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
 {
   Q_UNUSED(isAsync)
-
-  QString topic = event.getTopic(); //may contains widlcards
-
-  ctkBusEvent *mebEvent = new ctkBusEvent(topic,ctkEventBus::ctkEventTypeLocal,ctkEventBus::mafSignatureTypeSignal, this, "no");
+  ctkBusEvent *mebEvent = new ctkBusEvent("",ctkEventBus::ctkEventTypeRemote,ctkEventBus::mafSignatureTypeSignal, this, "no");
   //cycle for all other elements
-
-  mebEvent->setEventTopic(topic);
-  mebEvent->setEventType(ctkEventBus::ctkEventTypeLocal);
-  //mebEvent->setEventFilter(NULL);
-  //need to think about the arguments inside the event
+  QStringList keyList = event.getPropertyNames();
+  QStringList::const_iterator constIterator;
+  for (constIterator = keyList.constBegin(); constIterator != keyList.constEnd(); ++constIterator) {
+      QVariant value = event.getProperty((*constIterator));
+      //qDebug() << (*constIterator) << " " << value.toString();
+      (*mebEvent)[(*constIterator)] = event.getProperty((*constIterator));
+  }
 
   typedef QList<QGenericArgument> ctkEventArgumentList;
 
@@ -104,8 +112,7 @@ void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
   list.append(Q_ARG(QVariantList,event.getProperty("localEvent").toList()));
   list.append(Q_ARG(QVariantList,event.getProperty("localData").toList()));
 
-  m_EventBusManager->notifyEvent(topic, ctkEventBus::ctkEventTypeRemote, &list);
-  m_EventBusManager->notifyEvent(*mebEvent);
+  m_EventBusManager->notifyEvent(*mebEvent, &list);
 }
 
 void ctkEventBusImpl::bucket(ctkEventHandlerWrapper* wrapper)

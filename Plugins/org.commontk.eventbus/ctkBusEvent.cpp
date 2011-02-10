@@ -20,6 +20,7 @@
 =============================================================================*/
 
 #include "ctkBusEvent.h"
+#include "ctkEventDefinitions.h"
 #include <stdexcept>
 
 class ctkBusEventData : public QSharedData
@@ -30,19 +31,19 @@ public:
   ctkBusEventData(const QString& topic, const ctkDictionary& properties)
     : topic(topic), properties(properties)
   {
-    this->properties.insert("EventTopic", topic);
+    this->properties.insert(TOPIC, topic);
   }
 
   ctkBusEventData(QString topic, int event_type, int signature_type, QObject *objectPointer, QString signature)
     : topic(topic)
   {
-      properties.insert("EventTopic", topic);
-      properties.insert("EventType", static_cast<int>(event_type));
-      properties.insert("SignatureType", static_cast<int>(signature_type));
+      properties.insert(TOPIC, topic);
+      properties.insert(TYPE, static_cast<int>(event_type));
+      properties.insert(SIGTYPE, static_cast<int>(signature_type));
       QVariant var;
       var.setValue(objectPointer);
-      properties.insert("ObjectPointer", var);
-      properties.insert("Signature", signature);
+      properties.insert(OBJECT, var);
+      properties.insert(SIGNATURE, signature);
   }
 
   static void validateTopicName(const QString& topic)
@@ -120,18 +121,18 @@ int ctkBusEvent::eventType() const {
 }
 
 QString ctkBusEvent::eventTopic() const {
-    return (d->properties).value("EventTopic").toString();
+    return (d->properties).value(TOPIC).toString();
 }
 
 bool ctkBusEvent::isEventLocal() const {
-    int et = (d->properties).value("EventType").toInt();
+    int et = (d->properties).value(TYPE).toInt();
     return et == 0; //is local
 }
 
 void ctkBusEvent::setEventType(int et) {
-    (d->properties).insert("EventType", static_cast<int>(et));
+    (d->properties).insert(TYPE, static_cast<int>(et));
 }
 
 void ctkBusEvent::setEventTopic(QString topic) {
-    (d->properties).insert("EventTopic", topic);
+    (d->properties).insert(TOPIC, topic);
 }

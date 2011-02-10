@@ -34,7 +34,7 @@ void MainWindow::connectEvents() {
     qDebug() << "connectEvents";
     m_EventBus->publishSignal(handler, "receiveEventSignal(QVariantList)", "ctk/remote/eventBus/comunication/receive/xmlrpc");
     ctkDictionary dic;
-    dic.insert("EventTopic","ctk/remote/eventBus/comunication/receive/xmlrpc");
+    dic.insert("event.topics","ctk/remote/eventBus/comunication/receive/xmlrpc");
     m_EventBus->subscribeSlot(handler, "receiveEvent(QVariantList)", dic);
 }
 

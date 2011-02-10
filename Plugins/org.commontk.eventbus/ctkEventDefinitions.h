@@ -29,7 +29,7 @@
 
 //defines
 
-#define TOPIC "EventTopic"
+#define TOPIC "event.topics"
 #define TYPE "EventType"
 #define SIGTYPE "SignatureType"
 #define OBJECT "ObjectPointer"

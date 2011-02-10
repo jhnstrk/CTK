@@ -60,22 +60,30 @@ public:
   ctkBusEvent(const ctkBusEvent& event);
   ctkBusEvent(QString topic, int event_type, int signature_type, QObject *objectPointer, QString signature);
 
-  /// Allow to assign the event type: ctkEventTypeLocal or ctkEventTypeRemote.
+  /**
+   * accessor for eventtype
+   *
+   * @param et The eventtype can be local(ctkEventTypeLocal) or remote(ctkEventTypeRemote)
+   */
   void setEventType(int et);
-
-  /// Return the type of the event: ctkEventTypeLocal or ctkEventTypeRemote.
   int eventType() const;
-
-  /// Check if the event is local or not.
   bool isEventLocal() const;
 
-  /// Allow to set or modify the event ID
+  /**
+   * accessor for topic
+   *
+   * @param topic Represents the topic of the message
+   */
+
   void setEventTopic(QString topic);
 
-  /// Return the Id associated with the event.
   QString eventTopic() const;
 
-  /// Overload operator for rapid access to mafDictionaryEntries
+  /**
+   * quick accessor for all the items
+   *
+   * @param key Represents the key associated to the value
+   */
   QVariant &operator[](QString key);
 };
 

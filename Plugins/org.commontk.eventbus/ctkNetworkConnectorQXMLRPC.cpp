@@ -26,8 +26,8 @@ ctkNetworkConnectorQXMLRPC::ctkNetworkConnectorQXMLRPC() : ctkNetworkConnector()
 }
 
 void ctkNetworkConnectorQXMLRPC::initializeForEventBus() {
-    mafRegisterRemoteSignal("maf.remote.eventBus.comunication.send.xmlrpc", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
-    mafRegisterRemoteCallback("maf.remote.eventBus.comunication.send.xmlrpc", this, "send(const QString, ctkEventArgumentsList *)");
+    mafRegisterRemoteSignal("ctk/remote/eventBus/comunication/send/xmlrpc", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
+    mafRegisterRemoteCallback("ctk/remote/eventBus/comunication/send/xmlrpc", this, "send(const QString, ctkEventArgumentsList *)");
 }
 
 ctkNetworkConnectorQXMLRPC::~ctkNetworkConnectorQXMLRPC() {
@@ -69,7 +69,7 @@ void ctkNetworkConnectorQXMLRPC::createServer(const unsigned int port) {
     m_Server->setProperty("port", port);
 
     // Create a new ID to allow methods registration on new server instance.
-    QString id_name(tr("maf.remote.eventbus.communication.send.xmlrpc.serverMethods%1").arg(port));
+    QString id_name(tr("ctk/remote/eventbus/communication/send/xmlrpc/serverMethods%1").arg(port));
 
     // Register the signal to the event bus.
     /*mafRegisterRemoteSignal(id_name, this, "registerMethodsServer(mafRegisterMethodsMap)");
@@ -84,7 +84,7 @@ void ctkNetworkConnectorQXMLRPC::createServer(const unsigned int port) {
     //registration of the method maf.remote.eventBus.comunication.xmlrpc at XMLRPC level
     // the connect uses function name ad signature defined by parametersForRegisterteredFunction
     mafRegisterMethodsMap methodsMapping;
-    methodsMapping.insert("maf.remote.eventBus.comunication.send.xmlrpc", parametersForRegisterteredFunction);
+    methodsMapping.insert("ctk/remote/eventBus/comunication/send/xmlrpc", parametersForRegisterteredFunction);
     registerServerMethod(methodsMapping);
 
     //if a user want to register another method, it is important to know that ctkEventDispatcherRemote allows
@@ -95,7 +95,7 @@ void ctkNetworkConnectorQXMLRPC::stopServer() {
     unsigned int p = m_Server->property("port").toUInt();
     if(p != 0) {
         // get the ID for the previous server;
-        /*QString old_id_name(tr("maf.remote.eventbus.communication.send.xmlrpc.serverMethods%1").arg(p));
+        /*QString old_id_name(tr("ctk/remote/eventbus/communication/send/xmlrpc/serverMethods%1").arg(p));
         // Remove the old signal.
         ctkBusEvent props;
         props[TOPIC] = old_id_name;
@@ -210,13 +210,13 @@ void ctkNetworkConnectorQXMLRPC::processReturnValue( int requestId, QVariant val
     Q_UNUSED( requestId );
     Q_ASSERT( value.canConvert( QVariant::String ) );
     qDebug("%s", value.toString().toAscii().data());
-    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", ctkEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("ctk/local/eventBus/remoteCommunicationDone", ctkEventTypeLocal);
 }
 
 void ctkNetworkConnectorQXMLRPC::processFault( int requestId, int errorCode, QString errorString ) {
     // Log the error.
     qDebug("%s", tr("Process Fault for requestID %1 with error %2 - %3").arg(QString::number(requestId), QString::number(errorCode), errorString).toAscii().data());
-    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", ctkEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("ctk/local/eventBus/remoteCommunicationFailed", ctkEventTypeLocal);
 }
 
 void ctkNetworkConnectorQXMLRPC::processRequest( int requestId, QString methodName, QList<xmlrpc::Variant> parameters ) {

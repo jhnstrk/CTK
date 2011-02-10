@@ -32,8 +32,8 @@ ctkNetworkConnector *ctkNetworkConnectorQtSoap::clone() {
 }
 
 void ctkNetworkConnectorQtSoap::initializeForEventBus() {
-    mafRegisterRemoteSignal("maf.remote.eventBus.comunication.soap", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
-    mafRegisterRemoteCallback("maf.remote.eventBus.comunication.soap", this, "send(const QString, ctkEventArgumentsList *)");
+    mafRegisterRemoteSignal("ctk/remote/eventBus/comunication/soap", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
+    mafRegisterRemoteCallback("ctk/remote/eventBus/comunication/soap", this, "send(const QString, ctkEventArgumentsList *)");
 }
 
 
@@ -259,13 +259,13 @@ void ctkNetworkConnectorQtSoap::processReturnValue( int requestId, QVariant valu
     Q_UNUSED( requestId );
     Q_ASSERT( value.canConvert( QVariant::String ) );
     qDebug("%s", value.toString().toAscii().data());
-    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationDone", ctkEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("ctk/local/eventBus/remoteCommunicationDone", ctkEventTypeLocal);
 }
 
 void ctkNetworkConnectorQtSoap::processFault( int requestId, int errorCode, QString errorString ) {
     // Log the error.
     qDebug("%s", tr("Process Fault for requestID %1 with error %2 - %3").arg(QString::number(requestId), QString::number(errorCode), errorString).toAscii().data());
-    ctkEventBusManager::instance()->notifyEvent("maf.local.eventBus.remoteCommunicationFailed", ctkEventTypeLocal);
+    ctkEventBusManager::instance()->notifyEvent("ctk/local/eventBus/remoteCommunicationFailed", ctkEventTypeLocal);
 }
 
 void ctkNetworkConnectorQtSoap::processRequest( int requestId, QString methodName, QList<xmlrpc::Variant> parameters ) {

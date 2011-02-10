@@ -32,9 +32,9 @@ void MainWindow::connectEvents() {
     connect(ui->connectButton, SIGNAL(released()), this, SLOT(connectClient()));
 
     qDebug() << "connectEvents";
-    m_EventBus->publishSignal(handler, "receiveEventSignal(QVariantList)", "maf.remote.eventBus.comunication.receive.xmlrpc");
+    m_EventBus->publishSignal(handler, "receiveEventSignal(QVariantList)", "ctk/remote/eventBus/comunication/receive/xmlrpc");
     ctkDictionary dic;
-    dic.insert("EventTopic","maf.remote.eventBus.comunication.receive.xmlrpc");
+    dic.insert("EventTopic","ctk/remote/eventBus/comunication/receive/xmlrpc");
     m_EventBus->subscribeSlot(handler, "receiveEvent(QVariantList)", dic);
 }
 
@@ -47,7 +47,7 @@ void MainWindow::sendEvent() {
     // event bus starts here
 
     QVariantList localEventList;
-    localEventList.append("maf.remote.eventBus.comunication.receive.xmlrpc");
+    localEventList.append("ctk/remote/eventBus/comunication/receive/xmlrpc");
 
     QVariantList dataList;
     dataList.append("myUser");
@@ -58,7 +58,7 @@ void MainWindow::sendEvent() {
     dic.insert("localEvent",localEventList);
     dic.insert("localData",dataList);
 
-    QString value = "maf.remote.eventBus.comunication.send.xmlrpc";
+    QString value = "ctk/remote/eventBus/comunication/send/xmlrpc";
     ctkEvent event(value,dic);
 
     m_EventBus->sendEvent(event);

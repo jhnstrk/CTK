@@ -19,8 +19,8 @@ ctkEventDispatcherLocal::ctkEventDispatcherLocal() : ctkEventDispatcher() {
 }
 
 void ctkEventDispatcherLocal::initializeGlobalEvents() {
-    ctkBusEvent *properties = new ctkBusEvent("maf.local.eventBus.globalUpdate",ctkEventTypeLocal,mafSignatureTypeSignal, this, "notifyDefaultEvent()");
-    /*QString topic = "maf.local.eventBus.globalUpdate";
+    ctkBusEvent *properties = new ctkBusEvent("ctk/local/eventBus/globalUpdate",ctkEventTypeLocal,mafSignatureTypeSignal, this, "notifyDefaultEvent()");
+    /*QString topic = "ctk/local/eventBus/globalUpdate";
     (*properties)[TOPIC] =  topic;
     (*properties)[TYPE] = ctkEventTypeLocal;
     (*properties)[SIGTYPE] = mafSignatureTypeSignal;

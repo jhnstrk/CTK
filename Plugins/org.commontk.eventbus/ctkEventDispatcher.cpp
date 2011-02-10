@@ -45,8 +45,8 @@ void ctkEventDispatcher::resetHashes() {
 }
 
 void ctkEventDispatcher::initializeGlobalEvents() {
-    ctkBusEvent *remote_done = new ctkBusEvent("maf.local.eventBus.remoteCommunicationDone",ctkEventTypeLocal,mafSignatureTypeSignal,this,"remoteCommunicationDone()");
-    /*QString eventId = "maf.local.eventBus.remoteCommunicationDone";
+    ctkBusEvent *remote_done = new ctkBusEvent("ctk/local/eventBus/remoteCommunicationDone",ctkEventTypeLocal,mafSignatureTypeSignal,this,"remoteCommunicationDone()");
+    /*QString eventId = "ctk/local/eventBus/remoteCommunicationDone";
 
     (*remote_done)[TOPIC] = eventId;
     (*remote_done)[TYPE] = ctkEventTypeLocal;
@@ -57,8 +57,8 @@ void ctkEventDispatcher::initializeGlobalEvents() {
     (*remote_done)[SIGNATURE] = "remoteCommunicationDone()";*/
     this->registerSignal(*remote_done);
 
-    ctkBusEvent *remote_failed = new ctkBusEvent("maf.local.eventBus.remoteCommunicationFailed",ctkEventTypeLocal,mafSignatureTypeSignal,this, "remoteCommunicationFailed()");
-    /*(*remote_failed)[TOPIC] = "maf.local.eventBus.remoteCommunicationFailed";
+    ctkBusEvent *remote_failed = new ctkBusEvent("ctk/local/eventBus/remoteCommunicationFailed",ctkEventTypeLocal,mafSignatureTypeSignal,this, "remoteCommunicationFailed()");
+    /*(*remote_failed)[TOPIC] = "ctk/local/eventBus/remoteCommunicationFailed";
     (*remote_failed)[TYPE] = ctkEventTypeLocal;
     (*remote_failed)[SIGTYPE] = mafSignatureTypeSignal;
     var.setValue((QObject*)this);

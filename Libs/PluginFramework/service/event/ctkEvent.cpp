@@ -33,7 +33,7 @@ public:
   ctkEventData(const QString& topic, const ctkDictionary& properties)
     : topic(topic), properties(properties)
   {
-    //validateTopicName(topic);
+    validateTopicName(topic);
     this->properties.insert(ctkEventConstants::EVENT_TOPIC, topic);
   }
 

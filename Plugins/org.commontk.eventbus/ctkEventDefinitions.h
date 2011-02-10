@@ -37,7 +37,7 @@
 
 class ctkBusEvent;
 
-#define mafRegisterLocalSignal(topic, sender, signature) \
+#define ctkRegisterLocalSignal(topic, sender, signature) \
     {\
         ctkBusEvent *properties = new ctkBusEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
         bool ok = ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
@@ -47,7 +47,7 @@ class ctkBusEvent;
             }\
     }
 
-#define mafRegisterRemoteSignal(topic, sender, signature) \
+#define ctkRegisterRemoteSignal(topic, sender, signature) \
     {\
         ctkBusEvent *properties = new ctkBusEvent(topic, ctkEventBus::ctkEventTypeRemote, ctkEventBus::mafSignatureTypeSignal, static_cast<QObject*>(sender), signature); \
         bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
@@ -57,7 +57,7 @@ class ctkBusEvent;
         }\
     }
 
-#define mafRegisterLocalCallback(topic, observer, signature) \
+#define ctkRegisterLocalCallback(topic, observer, signature) \
     {\
         ctkBusEvent *properties = new ctkBusEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeCallback, static_cast<QObject*>(observer), signature); \
         bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\
@@ -67,7 +67,7 @@ class ctkBusEvent;
         }\
     }
 
-#define mafRegisterRemoteCallback(topic, sender, signature) \
+#define ctkRegisterRemoteCallback(topic, sender, signature) \
     {\
         ctkBusEvent *properties = new ctkBusEvent(topic, ctkEventBus::ctkEventTypeRemote, ctkEventBus::mafSignatureTypeCallback, static_cast<QObject*>(sender), signature); \
         bool ok =  ctkEventBus::ctkEventBusManager::instance()->addEventProperty(*properties);\

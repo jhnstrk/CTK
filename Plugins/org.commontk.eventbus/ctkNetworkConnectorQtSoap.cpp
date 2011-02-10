@@ -32,8 +32,8 @@ ctkNetworkConnector *ctkNetworkConnectorQtSoap::clone() {
 }
 
 void ctkNetworkConnectorQtSoap::initializeForEventBus() {
-    mafRegisterRemoteSignal("ctk/remote/eventBus/comunication/soap", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
-    mafRegisterRemoteCallback("ctk/remote/eventBus/comunication/soap", this, "send(const QString, ctkEventArgumentsList *)");
+    ctkRegisterRemoteSignal("ctk/remote/eventBus/comunication/soap", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
+    ctkRegisterRemoteCallback("ctk/remote/eventBus/comunication/soap", this, "send(const QString, ctkEventArgumentsList *)");
 }
 
 

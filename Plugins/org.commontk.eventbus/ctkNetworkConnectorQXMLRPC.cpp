@@ -26,8 +26,8 @@ ctkNetworkConnectorQXMLRPC::ctkNetworkConnectorQXMLRPC() : ctkNetworkConnector()
 }
 
 void ctkNetworkConnectorQXMLRPC::initializeForEventBus() {
-    mafRegisterRemoteSignal("ctk/remote/eventBus/comunication/send/xmlrpc", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
-    mafRegisterRemoteCallback("ctk/remote/eventBus/comunication/send/xmlrpc", this, "send(const QString, ctkEventArgumentsList *)");
+    ctkRegisterRemoteSignal("ctk/remote/eventBus/comunication/send/xmlrpc", this, "remoteCommunication(const QString, ctkEventArgumentsList *)");
+    ctkRegisterRemoteCallback("ctk/remote/eventBus/comunication/send/xmlrpc", this, "send(const QString, ctkEventArgumentsList *)");
 }
 
 ctkNetworkConnectorQXMLRPC::~ctkNetworkConnectorQXMLRPC() {

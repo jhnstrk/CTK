@@ -28,15 +28,6 @@
 
 #define ctkEventArgument(type,data) QArgument<type >(#type, data)
 
-//using namespace mafCore;
-//using namespace ctkEventBus;
-
-/*ctkEventBusImpl* ctkEventBusImpl::instance()
-{
-  static ctkEventBusImpl inst;
-  return &inst;
-}*/
-
 ctkEventBusImpl::ctkEventBusImpl()
 {
     m_EventBusManager = ctkEventBus::ctkEventBusManager::instance();
@@ -100,6 +91,8 @@ void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
   QString topic = event.getTopic(); //may contains widlcards
 
   ctkBusEvent *mebEvent = new ctkBusEvent(topic,ctkEventBus::ctkEventTypeLocal,ctkEventBus::mafSignatureTypeSignal, this, "no");
+  //cycle for all other elements
+
   mebEvent->setEventTopic(topic);
   mebEvent->setEventType(ctkEventBus::ctkEventTypeLocal);
   //mebEvent->setEventFilter(NULL);

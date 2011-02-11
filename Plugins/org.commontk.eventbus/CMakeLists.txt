@@ -1,75 +1,72 @@
 PROJECT(org_commontk_eventbus)
 
 SET(PLUGIN_export_directive "org_commontk_eventbus_EXPORT")
-FILE(GLOB include_ctkEventBus_file_list "${PROJECT_SOURCE_DIR}/*.h")
-FILE(GLOB implementation_ctkEventBus_file_list "${PROJECT_SOURCE_DIR}/*.cpp")
-FILE(GLOB templete_ctkEventBus_file_list1 "${PROJECT_SOURCE_DIR}/*.txx")
-FILE(GLOB templete_ctkEventBus_file_list2 "${PROJECT_SOURCE_DIR}/*.tpp")
-
-FIND_PACKAGE(QtSOAP)
-IF(NOT QtSOAP_FOUND)
-  MESSAGE(FATAL_ERROR "error: QtSOAP package is required to build ${PROJECT_NAME}" )
-ENDIF()
-
-FIND_PACKAGE(qxmlrpc)
-IF(NOT qxmlrpc_FOUND)
-  MESSAGE(FATAL_ERROR "error: qxmlrpc package is required to build ${PROJECT_NAME}" )
-ENDIF()
-
-# TODO: Fix this after discussing include dependencies with Jc
-SET(CTK_BASE_INCLUDE_DIRS ${CTK_BASE_INCLUDE_DIRS} ${QTSOAP_INCLUDE_DIR}  ${qxmlrpc_INCLUDE_DIR} CACHE INTERNAL "CTK includes" FORCE)
-
-# Additional directories to include
-SET(PLUGIN_include_directories
-    ${CTK_BASE_INCLUDE_DIRS}
-)
-
-
 
 SET(PLUGIN_SRCS
+  ctkBusEvent.cpp
+  ctkBusEvent.h
+  ctkEventAdminBus.h
+  ctkEventBus_global.h
   ctkEventBusImpl.cpp
-  
-  ${implementation_ctkEventBus_file_list}
-  ${templete_ctkEventBus_file_list1}
-  ${templete_ctkEventBus_file_list2}
+  ctkEventBusImpl_p.h
+  ctkEventBusManager.cpp
+  ctkEventBusManager.h
   ctkEventBusPlugin.cpp
-)
+  ctkEventBusPlugin_p.h
+  ctkEventDefinitions.h
+  ctkEventDispatcher.cpp
+  ctkEventDispatcher.h
+  ctkEventDispatcherLocal.cpp
+  ctkEventDispatcherLocal.h
+  ctkEventDispatcherRemote.cpp
+  ctkEventDispatcherRemote.h
+  ctkEventHandlerWrapper_p.h
+  ctkNetworkConnector.cpp
+  ctkNetworkConnector.h
+  ctkNetworkConnectorQtSoap.cpp
+  ctkNetworkConnectorQtSoap.h
+  ctkNetworkConnectorQXMLRPC.cpp
+  ctkNetworkConnectorQXMLRPC.h
+  ctkNetworkConnectorZeroMQ.cpp
+  ctkNetworkConnectorZeroMQ.h
+  ctkTopicRegistry.cpp
+  ctkTopicRegistry.h
+  )
 
 SET(PLUGIN_MOC_SRCS
-  ctkEventBusImpl_p.h
   ctkEventBusPlugin_p.h
-  
-  ${include_ctkEventBus_file_list}
+  ctkEventDispatcherLocal.h
+  ctkEventBusManager.h
   ctkEventHandlerWrapper_p.h
-)
+  ctkEventDispatcher.h
+  ctkNetworkConnectorQXMLRPC.h
+  ctkNetworkConnector.h
+  ctkEventDispatcherRemote.h
+  ctkNetworkConnectorZeroMQ.h
+  ctkNetworkConnectorQtSoap.h
+  ctkEventBusImpl_p.h
+  )
+
 SET(PLUGIN_UI_FORMS
  
- )
-
+  )
 
 SET(PLUGIN_resources
   #org_commontk_eventbus.qrc
 )
 
-#SET(PLUGIN_CACHED_RESOURCEFILES
-#  servicedescriptor.xml
-#)
-
 ctkFunctionGetTargetLibraries(PLUGIN_target_libraries)
 
 ctkMacroBuildPlugin(
-  INCLUDE_DIRECTORIES ${PLUGIN_include_directories}
   EXPORT_DIRECTIVE ${PLUGIN_export_directive}
   SRCS ${PLUGIN_SRCS}
   UI_FORMS ${PLUGIN_UI_FORMS}
   MOC_SRCS ${PLUGIN_MOC_SRCS}
   RESOURCES ${PLUGIN_resources}
-
   TARGET_LIBRARIES ${PLUGIN_target_libraries}
 )
-#CACHED_RESOURCEFILES ${PLUGIN_CACHED_RESOURCEFILES}
 
 # Testing
 IF(BUILD_TESTING)
   ADD_SUBDIRECTORY(Testing)
-ENDIF(BUILD_TESTING)
+ENDIF()

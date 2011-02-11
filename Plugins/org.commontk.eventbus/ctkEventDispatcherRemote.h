@@ -24,7 +24,7 @@ class ctkNetworkConnector;
  Class name: ctkEventDispatcherRemote
  This allows dispatching events coming from local application to attached observers.
  */
-class CTKEVENTBUSSHARED_EXPORT ctkEventDispatcherRemote : public ctkEventDispatcher {
+class org_commontk_eventbus_EXPORT ctkEventDispatcherRemote : public ctkEventDispatcher {
     Q_OBJECT
 
 public:
@@ -35,7 +35,7 @@ public:
     /*virtual*/ ~ctkEventDispatcherRemote();
 
     /// Emit event corresponding to the given id (present into the event_dictionary) locally to the application.
-    /*virtual*/ void notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    /*virtual*/ void notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, ctkGenericReturnArgument *returnArg = NULL) const;
 
     /// Set the active server side network connector type.
     void setNetworkConnectorServer(ctkNetworkConnector *connector);

@@ -35,7 +35,7 @@ ctkNetworkConnector *ctkEventDispatcherRemote::networkConnectorClient() {
 }
 
 void ctkEventDispatcherRemote::initializeGlobalEvents() {
-    ctkBusEvent *properties = new ctkBusEvent("ctk/remote/eventBus/globalUpdate",ctkEventTypeRemote,mafSignatureTypeSignal,this,"notifyDefaultEvent()");
+    ctkBusEvent *properties = new ctkBusEvent("ctk/remote/eventBus/globalUpdate",ctkEventTypeRemote,ctkSignatureTypeSignal,this,"notifyDefaultEvent()");
     this->registerSignal(*properties);
 
     // events like remoteCommunicationDone or failed represents th bridge events between a remote communication
@@ -69,7 +69,7 @@ void ctkEventDispatcherRemote::setNetworkConnectorClient(ctkNetworkConnector *co
     }
 }
 
-void ctkEventDispatcherRemote::notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcherRemote::notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList, ctkGenericReturnArgument *returnArg) const {
     //Q_UNUSED(event_dictionary);
     //Q_UNUSED(argList);
     Q_UNUSED(returnArg);

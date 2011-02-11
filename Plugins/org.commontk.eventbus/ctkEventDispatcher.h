@@ -20,7 +20,7 @@ namespace ctkEventBus {
  Class name: ctkEventDispatcher
  This allows dispatching events coming from local application to attached observers.
  */
-class CTKEVENTBUSSHARED_EXPORT ctkEventDispatcher : public QObject {
+class org_commontk_eventbus_EXPORT ctkEventDispatcher : public QObject {
     Q_OBJECT
 
 public:
@@ -57,7 +57,7 @@ public:
     bool isLocalSignalPresent(const QString topic) const;
 
     /// Emit event corresponding to the given id (present into the event_dictionary) locally to the application.
-    virtual void notifyEvent(const ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    virtual void notifyEvent(const ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, ctkGenericReturnArgument *returnArg = NULL) const;
 
     /// clean the signal and callback hashes.
     /** This method is used when the destructor is called. The destructor of the dispatcher is called by the ctkEventBusManager destructor.*/

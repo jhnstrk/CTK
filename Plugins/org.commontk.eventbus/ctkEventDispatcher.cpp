@@ -45,7 +45,7 @@ void ctkEventDispatcher::resetHashes() {
 }
 
 void ctkEventDispatcher::initializeGlobalEvents() {
-    ctkBusEvent *remote_done = new ctkBusEvent("ctk/local/eventBus/remoteCommunicationDone",ctkEventTypeLocal,mafSignatureTypeSignal,this,"remoteCommunicationDone()");
+    ctkBusEvent *remote_done = new ctkBusEvent("ctk/local/eventBus/remoteCommunicationDone",ctkEventTypeLocal,ctkSignatureTypeSignal,this,"remoteCommunicationDone()");
     /*QString eventId = "ctk/local/eventBus/remoteCommunicationDone";
 
     (*remote_done)[TOPIC] = eventId;
@@ -57,7 +57,7 @@ void ctkEventDispatcher::initializeGlobalEvents() {
     (*remote_done)[SIGNATURE] = "remoteCommunicationDone()";*/
     this->registerSignal(*remote_done);
 
-    ctkBusEvent *remote_failed = new ctkBusEvent("ctk/local/eventBus/remoteCommunicationFailed",ctkEventTypeLocal,mafSignatureTypeSignal,this, "remoteCommunicationFailed()");
+    ctkBusEvent *remote_failed = new ctkBusEvent("ctk/local/eventBus/remoteCommunicationFailed",ctkEventTypeLocal,ctkSignatureTypeSignal,this, "remoteCommunicationFailed()");
     /*(*remote_failed)[TOPIC] = "ctk/local/eventBus/remoteCommunicationFailed";
     (*remote_failed)[TYPE] = ctkEventTypeLocal;
     (*remote_failed)[SIGTYPE] = mafSignatureTypeSignal;
@@ -71,7 +71,7 @@ bool ctkEventDispatcher::isSignaturePresent(ctkBusEvent &props) const {
     QString topic = props[TOPIC].toString();
     ctkEventItemListType itemEventPropList;
     ctkBusEvent *itemEventProp;
-    if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
+    if(props[SIGTYPE].toInt() == ctkSignatureTypeCallback) {
         itemEventPropList = m_CallbacksHash.values(topic);
     } else {
         itemEventPropList = m_SignalsHash.values(topic);
@@ -116,7 +116,7 @@ bool ctkEventDispatcher::removeEventItem(ctkBusEvent &props) {
     bool isPresent = isSignaturePresent(props);
     if(isPresent == true) {
         //ctkEventItemListType itemEventPropList;
-        if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
+        if(props[SIGTYPE].toInt() == ctkSignatureTypeCallback) {
             isDisconnected = disconnectCallback(props);
             //iterator for erasing hash entry
             ctkEventsHashType::iterator i = m_CallbacksHash.find(props[TOPIC].toString());
@@ -351,7 +351,7 @@ bool ctkEventDispatcher::removeSignal(ctkBusEvent &props) {
     return removeEventItem(props);
 }
 
-void ctkEventDispatcher::notifyEvent(const ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventDispatcher::notifyEvent(const ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList, ctkGenericReturnArgument *returnArg) const {
     Q_UNUSED(event_dictionary);
     Q_UNUSED(argList);
     Q_UNUSED(returnArg);

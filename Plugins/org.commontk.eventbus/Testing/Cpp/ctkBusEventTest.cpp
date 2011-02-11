@@ -35,7 +35,7 @@ class ctkBusEventTest : public QObject {
 private slots:
     /// Initialize test variables
     void initTestCase() {
-        m_Event = new ctkBusEvent();
+        m_Event = new ctkBusEvent("", ctkDictionary());
     }
 
     /// Cleanup test variables memory allocation.
@@ -58,7 +58,7 @@ void ctkBusEventTest::ctkEventAllocationTest() {
 }
 
 void ctkBusEventTest::ctkEventAccessorsTest() {
-    /*m_Event->setEventType(ctkEventTypeRemote);
+    m_Event->setEventType(ctkEventTypeRemote);
     QVERIFY(m_Event->eventType() == ctkEventTypeRemote);
     QVERIFY(m_Event->isEventLocal() != true);
 
@@ -66,20 +66,14 @@ void ctkBusEventTest::ctkEventAccessorsTest() {
     m_Event->setEventTopic(topic);
     QCOMPARE(m_Event->eventTopic(), topic);
 
-    const ctkEventHash *cdict = m_Event->entries(); //const metod
-    QVERIFY(cdict != NULL);
-
-    ctkEventHash *dict = m_Event->entries();
-    QVERIFY(dict != NULL);
-
-    mafVariant var = (*m_Event)[TOPIC];
+    QVariant var = (*m_Event)[TOPIC];
     QString check = var.toString();
     QCOMPARE(check, topic);
 
     delete m_Event;
-    topic = "maf.lev1.lev2.lev3";
-    m_Event = new ctkBusEvent(topic, mafEventTypeLocal, mafSignatureTypeSignal, this, "testmethod");
-    QCOMPARE(m_Event->eventTopic(), topic);*/
+    topic = "ctk/lev1/lev2/lev3";
+    m_Event = new ctkBusEvent(topic, ctkEventTypeLocal, ctkSignatureTypeSignal, this, "testmethod");
+    QCOMPARE(m_Event->eventTopic(), topic);
 }
 
 

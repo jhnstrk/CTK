@@ -28,7 +28,7 @@ namespace ctkEventBus {
  (where the XXX is the port on which run the server) that allows you to register your own remote
  callbacks. The library used is qxmlrpc.
  */
-class CTKEVENTBUSSHARED_EXPORT ctkNetworkConnectorQXMLRPC : public ctkNetworkConnector {
+class org_commontk_eventbus_EXPORT ctkNetworkConnectorQXMLRPC : public ctkNetworkConnector {
     Q_OBJECT
 
 

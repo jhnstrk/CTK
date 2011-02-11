@@ -25,7 +25,7 @@ namespace ctkEventBus {
  This class is the implementation class for client/server objects that works over network
  with soap protocol. It has been implemented only client side.
  */
-class CTKEVENTBUSSHARED_EXPORT ctkNetworkConnectorQtSoap : public ctkNetworkConnector {
+class org_commontk_eventbus_EXPORT ctkNetworkConnectorQtSoap : public ctkNetworkConnector {
     Q_OBJECT
 
 public:

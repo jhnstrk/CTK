@@ -21,7 +21,7 @@ namespace ctkEventBus {
  Class name: ctkNetworkConnector
  This class is the interface class for client/server objects that works over network.
  */
-class CTKEVENTBUSSHARED_EXPORT ctkNetworkConnector : public QObject {
+class org_commontk_eventbus_EXPORT ctkNetworkConnector : public QObject {
     Q_OBJECT
 
     Q_PROPERTY(QString protocol READ protocol);

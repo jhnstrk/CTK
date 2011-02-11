@@ -27,7 +27,7 @@ namespace ctkEventBus {
  This singletone provides the access point of the Communication Bus for MAF3 framework.
  ctkEventBusManager defines also the mafId maf.local.eventBus.globalUpdate to be used as generic update notification mechanism that the event bus can send to all the observers.
  */
-class CTKEVENTBUSSHARED_EXPORT ctkEventBusManager : public QObject {
+class org_commontk_eventbus_EXPORT ctkEventBusManager : public QObject {
     Q_OBJECT
 
 public:
@@ -55,10 +55,10 @@ public:
     void removeSignal(const QObject *obj, QString topic = "", bool qt_disconnect = true);
 
     /// Notify events associated to the given id locally to the application.
-    void notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    void notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, ctkGenericReturnArgument *returnArg = NULL) const;
 
     /// Notify event associated to the given id locally to the application.
-    void notifyEvent(const QString topic, ctkEventType ev_type = ctkEventTypeLocal, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    void notifyEvent(const QString topic, ctkEventType ev_type = ctkEventTypeLocal, ctkEventArgumentsList *argList = NULL, ctkGenericReturnArgument *returnArg = NULL) const;
 
     /// Enable/Disable event logging to allow dumping events notification into the selected logging output stream.
     void enableEventLogging(bool enable = true);

@@ -348,7 +348,7 @@ void ctkEventBusManagerTest::plugNetworkConnectorTest() {
 }
 
 void ctkEventBusManagerTest::isLocalSignalPresentTest() {
-    QVERIFY(m_EventBus->isLocalSignalPresent("ctk.invalid.signal") == false);
+    QVERIFY(m_EventBus->isLocalSignalPresent("ctk/invalid/signal") == false);
 }
 
 void ctkEventBusManagerTest::reverseOrderRegistrationTest() {

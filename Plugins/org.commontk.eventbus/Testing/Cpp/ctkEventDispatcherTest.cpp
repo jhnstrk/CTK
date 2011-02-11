@@ -177,13 +177,13 @@ void ctkEventDispatcherTest::ctkEventDispatcherRegisterAndRemoveSignalAndNotifyE
 }
 
 void ctkEventDispatcherTest::isSignalPresentTest() {
-    QString updateID = "ctk/local/dispatcherTest.update";
+    QString updateID = "ctk/local/dispatcherTest/update";
     // Register the callback to update the object custom:
     QVERIFY(m_EventDispatcher->isLocalSignalPresent(updateID));
 }
 
 void ctkEventDispatcherTest::removeObserverTest() {
-    QString updateID = "ctk/local/dispatcherTest.update";
+    QString updateID = "ctk/local/dispatcherTest/update";
 
     // remove the observer from the updateID topics...
     QVERIFY(m_EventDispatcher->removeObserver(m_ObjTestObserver, updateID));
@@ -234,7 +234,7 @@ void ctkEventDispatcherTest::removeItemTest() {
 }
 
 void ctkEventDispatcherTest::removeSignalTest() {
-    QString updateID = "ctk/local/dispatcherTest.update";
+    QString updateID = "ctk/local/dispatcherTest/update";
 
     // remove the signal from the updateID topics...
     // ...but don't need to make a qt disconnect because all observer has been disconnected already on previous test case.
@@ -254,7 +254,7 @@ void ctkEventDispatcherTest::removeSignalTest() {
 
 
 void ctkEventDispatcherTest::reverseOrderRegistrationTest() {
-    QString updateID = "ctk/local/dispatcherTest.custom";
+    QString updateID = "ctk/local/dispatcherTest/custom";
 
     // Register the callback to update the object custom:
     ctkBusEvent *propCallback = new ctkBusEvent(updateID, ctkDictionary());
@@ -277,8 +277,8 @@ void ctkEventDispatcherTest::reverseOrderRegistrationTest() {
 }
 
 void ctkEventDispatcherTest::isLocalSignalPresentTest() {
-    QVERIFY(m_EventDispatcher->isLocalSignalPresent("ctk/wrong.topic") == false);
+    QVERIFY(m_EventDispatcher->isLocalSignalPresent("ctk/wrong/topic") == false);
 }
 
-CTK_REGISTER_TEST(ctkEventDispatcherTest);
+//CTK_REGISTER_TEST(ctkEventDispatcherTest);
 #include "ctkEventDispatcherTest.moc"

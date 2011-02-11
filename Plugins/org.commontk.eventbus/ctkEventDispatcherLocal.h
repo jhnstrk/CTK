@@ -21,7 +21,7 @@ namespace ctkEventBus {
  Class name: ctkEventDispatcherLocal
  This allows dispatching events coming from local application to attached observers.
  */
-class CTKEVENTBUSSHARED_EXPORT ctkEventDispatcherLocal : public ctkEventDispatcher {
+class org_commontk_eventbus_EXPORT ctkEventDispatcherLocal : public ctkEventDispatcher {
     Q_OBJECT
 
 public:
@@ -29,7 +29,7 @@ public:
     ctkEventDispatcherLocal();
 
     /// Emit event corresponding to the given id locally to the application.
-    virtual void notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, mafGenericReturnArgument *returnArg = NULL) const;
+    virtual void notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList = NULL, ctkGenericReturnArgument *returnArg = NULL) const;
 
 protected:
     /// Register MAF global events

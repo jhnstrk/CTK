@@ -27,8 +27,8 @@ void ctkEventDispatcherLocal::initializeGlobalEvents() {
     QVariant var;
     var.setValue((QObject*)this);
     (*properties)[OBJECT] = var;
-    (*properties)[SIGNATURE] = "notifyDefaultEvent()";
-    registerSignal(*properties);*/
+    (*properties)[SIGNATURE] = "notifyDefaultEvent()";*/
+    registerSignal(*properties);
 
     ctkEventDispatcher::initializeGlobalEvents();
 }

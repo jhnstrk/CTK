@@ -21,6 +21,7 @@
 #ifndef CTKBUSEVENT_H
 #define CTKBUSEVENT_H
 
+#include "org_commontk_eventbus_Export.h"
 #include "ctkPluginFrameworkExport.h"
 #include <service/event/ctkEvent.h>
 
@@ -36,7 +37,7 @@ class ctkBusEventData;
  * <code>ctkEvent</code> objects are delivered to <code>ctkEventHandler</code>
  * or Qt slots which subscribe to the topic of the event.
  */
-class CTK_PLUGINFW_EXPORT ctkBusEvent : public ctkEvent
+class org_commontk_eventbus_EXPORT ctkBusEvent : public ctkEvent
 {
    QSharedDataPointer<ctkBusEventData> d;
    
@@ -86,6 +87,5 @@ public:
    */
   QVariant &operator[](QString key);
 };
-
 
 #endif // CTKBUSEVENT_H

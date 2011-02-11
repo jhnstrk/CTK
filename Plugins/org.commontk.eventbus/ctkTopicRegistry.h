@@ -21,7 +21,7 @@ namespace ctkEventBus {
   Class name: ctkTopicRegistry
   This singletone provides the registration of topic and topic owner in a hash.
 */
-class CTKEVENTBUSSHARED_EXPORT ctkTopicRegistry {
+class org_commontk_eventbus_EXPORT ctkTopicRegistry {
 public:
     /// Return an instance of the event bus.
     static ctkTopicRegistry *instance();

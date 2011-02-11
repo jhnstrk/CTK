@@ -102,7 +102,7 @@ ctkBusEvent::ctkBusEvent(QString topic, int event_type, int signature_type, QObj
  * This is fast thanks to implicit sharing
  */
 ctkBusEvent::ctkBusEvent(const ctkBusEvent &event)
-  : d(event.d)
+  : ctkEvent(event), d(event.d)
 {
 
 }

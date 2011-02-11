@@ -76,7 +76,7 @@ bool ctkEventBusManager::addEventProperty(ctkBusEvent &props) const {
 
     if(props[TYPE].toInt() == ctkEventTypeLocal) {
         // Local event dispatching.
-        if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
+        if(props[SIGTYPE].toInt() == ctkSignatureTypeCallback) {
             result = m_LocalDispatcher->addObserver(props);
         } else {
             //Add topic to the ctkTopicRegistry
@@ -88,7 +88,7 @@ bool ctkEventBusManager::addEventProperty(ctkBusEvent &props) const {
         }
     } else {
         // Remote event dispatching.
-        if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
+        if(props[SIGTYPE].toInt() == ctkSignatureTypeCallback) {
             result = m_RemoteDispatcher->addObserver(props);
         } else {
             //Add topic to the ctkTopicRegistry
@@ -139,14 +139,14 @@ void ctkEventBusManager::removeSignal(const QObject *obj, QString topic, bool qt
 bool ctkEventBusManager::removeEventProperty(ctkBusEvent &props) const {
     if(props.eventType() == ctkEventTypeLocal) {
         // Local event dispatching.
-        if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
+        if(props[SIGTYPE].toInt() == ctkSignatureTypeCallback) {
             return m_LocalDispatcher->removeObserver(props);
         } else {
             return m_LocalDispatcher->removeSignal(props);
         }
     } else {
         // Remote event dispatching.
-        if(props[SIGTYPE].toInt() == mafSignatureTypeCallback) {
+        if(props[SIGTYPE].toInt() == ctkSignatureTypeCallback) {
             return m_RemoteDispatcher->removeObserver(props);
         } else {
             return m_RemoteDispatcher->removeSignal(props);
@@ -155,7 +155,7 @@ bool ctkEventBusManager::removeEventProperty(ctkBusEvent &props) const {
     return false;
 }
 
-void ctkEventBusManager::notifyEvent(const QString topic, ctkEventType ev_type, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventBusManager::notifyEvent(const QString topic, ctkEventType ev_type, ctkEventArgumentsList *argList, ctkGenericReturnArgument *returnArg) const {
     if(m_EnableEventLogging) {
         if(m_LogEventTopic == "*" || m_LogEventTopic == topic) {
             qDebug() << tr("Event notification for TOPIC: %1").arg(topic);
@@ -170,7 +170,7 @@ void ctkEventBusManager::notifyEvent(const QString topic, ctkEventType ev_type, 
     delete event_dic;
 }
 
-void ctkEventBusManager::notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList, mafGenericReturnArgument *returnArg) const {
+void ctkEventBusManager::notifyEvent(ctkBusEvent &event_dictionary, ctkEventArgumentsList *argList, ctkGenericReturnArgument *returnArg) const {
     //event dispatched in remote channel
     if(event_dictionary[TYPE].toInt() == ctkEventTypeLocal) {
         m_LocalDispatcher->notifyEvent(event_dictionary, argList, returnArg);

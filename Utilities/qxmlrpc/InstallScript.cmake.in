@@ -1,8 +1,0 @@
-set(work_dir @ep_source_dir@)
-set(proj_dir ${work_dir}/@proj@)
-
-SET(_qxmlrpc_lib_dir "${proj_dir}/")
-SET(_qxmlrpc_include_dir "${proj_dir}/xmlrpc/")
-
-CONFIGURE_FILE("@CTK_SOURCE_DIR@/Utilities/qxmlrpc/qxmlrpcConfig.cmake.in"
-               "@CTK_BINARY_DIR@/Utilities/qxmlrpc/qxmlrpcConfig.cmake" @ONLY)

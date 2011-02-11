@@ -10,7 +10,7 @@
  */
 
 #include "ctkTestSuite.h"
-#include <ctkEventDispatcherlocal.h>
+#include <ctkEventDispatcherLocal.h>
 #include <ctkBusEvent.h>
 
 using namespace ctkEventBus;

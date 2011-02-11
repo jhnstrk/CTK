@@ -190,6 +190,7 @@ void ctkEventDispatcherLocalTest::notifyEventWithoutReturnValueTest() {
     ctkBusEvent *propSignal10 = new ctkBusEvent(topic10, ctkEventTypeLocal, ctkSignatureTypeSignal, m_ObjTest, "signalSetObjectValue10(int,int,int,int,int,int,int,int,int,int)");
     m_EventDispatcherLocal->registerSignal(*propSignal10);
 
+
     //callback
     ctkBusEvent *propCallback0 = new ctkBusEvent(topic0, ctkEventTypeLocal, ctkSignatureTypeCallback, m_ObjTest, "setObjectValue0()");
     m_EventDispatcherLocal->addObserver(*propCallback0);
@@ -230,22 +231,21 @@ void ctkEventDispatcherLocalTest::notifyEventWithoutReturnValueTest() {
     m_EventDispatcherLocal->notifyEvent(*propSignal0);
     m_EventDispatcherLocal->notifyEvent(*propSignal0, &argList);
 
+
     int argCounter=1;
     for( ; argCounter <= 10; argCounter++) {
         if(argCounter != 0) {
             argList.append(ctkEventArgument(int, argCounter));
         }
-
-        ctkBusEvent *notEvent = new ctkBusEvent();
         QString topicToNotify = "ctk/local/setObjectValue";
         topicToNotify.append(QString::number(argCounter));
-        notEvent->setEventTopic(topicToNotify);
+        ctkBusEvent *notEvent = new ctkBusEvent(topicToNotify, ctkDictionary());
+
 
         m_EventDispatcherLocal->notifyEvent(*notEvent, &argList);
 
         delete notEvent;
     }
-
 
     //delete all events
     delete propSignal0;
@@ -370,12 +370,10 @@ void ctkEventDispatcherLocalTest::notifyEventWitReturnValueTest() {
         if(argCounter != 0) { 
             argList.append(ctkEventArgument(int, *toAppend));
         }
-
-        ctkBusEvent *notEvent = new ctkBusEvent();
         QString topicToNotify = "ctk/local/setObjectValue";
         topicToNotify.append(QString::number(argCounter));
         topicToNotify.append("WithReturnValue");
-        notEvent->setEventTopic(topicToNotify);
+        ctkBusEvent *notEvent = new ctkBusEvent(topicToNotify, ctkDictionary());
 
         m_EventDispatcherLocal->notifyEvent(*notEvent, &argList, &ret_val);
         int c = 0, size = argList.count(), tempSum = 0;

@@ -60,26 +60,15 @@ MACRO(ctkMacroInitProject test)
 
 ENDMACRO()
 
+SET(test_executable ${PROJECT_NAME}CppTests)
+
 PROJECT(org_commontk_eventbustest)
-
-## #################################################################
-## Init Project
-## #################################################################
-
 ctkMacroInitProject(1)
-
-## #################################################################
-## Build rules
-## #################################################################
-
-# Create the executable.
-
-SET(test_executable ${PROJECT_NAME})
 
 ADD_EXECUTABLE(${test_executable} ${PROJECT_SRCS})
 ADD_TEST(${PROJECT_NAME} ${CPP_TEST_PATH}/${test_executable})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${PROJECT_LIBS})
+TARGET_LINK_LIBRARIES(${test_executable} ${PROJECT_LIBS})
 LINK_LIBRARIES(${PROJECT_LIBS})
-ADD_DEPENDENCIES(${PROJECT_NAME} ${PROJECT_NAME} ${eventbus_test})
+ADD_DEPENDENCIES(${test_executable} ${PROJECT_NAME} ${eventbus_test})
 

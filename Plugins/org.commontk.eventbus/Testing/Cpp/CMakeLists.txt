@@ -94,7 +94,6 @@ MACRO(mafMacroInitProject test)
 
 ENDMACRO()
 
-
 PROJECT(org_commontk_eventbustest)
 
 ## #################################################################

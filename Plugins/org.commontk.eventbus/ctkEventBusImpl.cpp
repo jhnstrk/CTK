@@ -27,6 +27,7 @@
 #include "ctkBusEvent.h"
 #include "ctkEventDefinitions.h"
 
+
 #define ctkEventArgument(type,data) QArgument<type >(#type, data)
 
 ctkEventBusImpl::ctkEventBusImpl()
@@ -47,7 +48,7 @@ void ctkEventBusImpl::sendEvent(const ::ctkEvent& event)
 void ctkEventBusImpl::publishSignal(const QObject* publisher, const char* signal, const QString& topic,
                                     Qt::ConnectionType type)
 {
-    ctkBusEvent *mesbEvent = new ctkBusEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::mafSignatureTypeSignal, const_cast<QObject *>(publisher), signal);
+    ctkBusEvent *mesbEvent = new ctkBusEvent(topic, ctkEventBus::ctkEventTypeLocal, ctkEventBus::ctkSignatureTypeSignal, const_cast<QObject *>(publisher), signal);
     m_EventBusManager->addEventProperty(*mesbEvent);
 }
 
@@ -62,7 +63,7 @@ qlonglong ctkEventBusImpl::subscribeSlot(const QObject* subscriber, const char* 
     QString topic = properties.value(TOPIC).toString();
     toSend.insert(TOPIC, topic);
     toSend.insert(TYPE, ctkEventBus::ctkEventTypeLocal);
-    toSend.insert(SIGTYPE, ctkEventBus::mafSignatureTypeCallback);
+    toSend.insert(SIGTYPE, ctkEventBus::ctkSignatureTypeCallback);
     QVariant var;
     var.setValue(const_cast<QObject *>(subscriber));
     toSend.insert(OBJECT, var);
@@ -96,7 +97,7 @@ bool ctkEventBusImpl::updateProperties(const QString& topic, const ctkDictionary
 void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)
 {
   Q_UNUSED(isAsync)
-  ctkBusEvent *mebEvent = new ctkBusEvent("",ctkEventBus::ctkEventTypeRemote,ctkEventBus::mafSignatureTypeSignal, this, "no");
+  ctkBusEvent *mebEvent = new ctkBusEvent("",ctkEventBus::ctkEventTypeRemote,ctkEventBus::ctkSignatureTypeSignal, this, "no");
   //cycle for all other elements
   QStringList keyList = event.getPropertyNames();
   QStringList::const_iterator constIterator;

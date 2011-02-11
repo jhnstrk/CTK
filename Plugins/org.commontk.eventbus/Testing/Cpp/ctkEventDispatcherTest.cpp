@@ -132,8 +132,7 @@ void ctkEventDispatcherTest::ctkEventDispatcherAddAndRemoveObserverAndNotifyEven
     // Create new Event ID used for callback and event notification.
     QString updateID = "ctk/local/dispatcherTest/update";
 
-    ctkBusEvent *properties = new ctkBusEvent;
-    (*properties)[TOPIC] =  updateID;
+    ctkBusEvent *properties = new ctkBusEvent(updateID, ctkDictionary());
     (*properties)[TYPE] = ctkEventTypeLocal;
     (*properties)[SIGTYPE] = ctkSignatureTypeSignal;
     QVariant var;
@@ -142,8 +141,7 @@ void ctkEventDispatcherTest::ctkEventDispatcherAddAndRemoveObserverAndNotifyEven
     (*properties)[SIGNATURE] = "objectModify()";
     QVERIFY(m_EventDispatcher->registerSignal(*properties));
 
-    ctkBusEvent *propCallback = new ctkBusEvent;
-    (*propCallback)[TOPIC] =  updateID;
+    ctkBusEvent *propCallback = new ctkBusEvent(updateID, ctkDictionary());
     (*propCallback)[TYPE] = ctkEventTypeLocal;
     (*propCallback)[SIGTYPE] = ctkSignatureTypeCallback;
     QVariant varobserver;
@@ -156,8 +154,7 @@ void ctkEventDispatcherTest::ctkEventDispatcherAddAndRemoveObserverAndNotifyEven
 void ctkEventDispatcherTest::ctkEventDispatcherRegisterAndRemoveSignalAndNotifyEventTest() {
     QString updateID = "ctk/local/dispatcherTest/update";
 
-    ctkBusEvent *properties = new ctkBusEvent;
-    (*properties)[TOPIC] =  updateID;
+    ctkBusEvent *properties = new ctkBusEvent(updateID, ctkDictionary());
     (*properties)[TYPE] = ctkEventTypeLocal;
     (*properties)[SIGTYPE] = ctkSignatureTypeSignal;
     QVariant var;
@@ -169,8 +166,7 @@ void ctkEventDispatcherTest::ctkEventDispatcherRegisterAndRemoveSignalAndNotifyE
     QVERIFY(m_EventDispatcher->registerSignal(*properties));
 
     // Register the callback to update the object custom:
-    ctkBusEvent *propCallback = new ctkBusEvent;
-    (*propCallback)[TOPIC] =  updateID;
+    ctkBusEvent *propCallback = new ctkBusEvent(updateID, ctkDictionary());
     (*propCallback)[TYPE] = ctkEventTypeLocal;
     (*propCallback)[SIGTYPE] = ctkSignatureTypeCallback;
     QVariant varobserver;
@@ -193,8 +189,7 @@ void ctkEventDispatcherTest::removeObserverTest() {
     QVERIFY(m_EventDispatcher->removeObserver(m_ObjTestObserver, updateID));
 
     // Add again the test object as observer...
-    ctkBusEvent *propCallback = new ctkBusEvent;
-    (*propCallback)[TOPIC] =  updateID;
+    ctkBusEvent *propCallback = new ctkBusEvent(updateID, ctkDictionary());
     (*propCallback)[TYPE] = ctkEventTypeLocal;
     (*propCallback)[SIGTYPE] = ctkSignatureTypeCallback;
     QVariant varobserver;
@@ -208,12 +203,11 @@ void ctkEventDispatcherTest::removeObserverTest() {
 }
 
 void ctkEventDispatcherTest::removeItemTest() {
-    QString updateID = "ctk/local/dispatcherTest.update";
+    QString updateID = "ctk/local/dispatcherTest/update";
 
 
     // Add again the test object as observer...
-    ctkBusEvent *propCallback = new ctkBusEvent;
-    (*propCallback)[TOPIC] =  updateID;
+    ctkBusEvent *propCallback = new ctkBusEvent(updateID, ctkDictionary());
     (*propCallback)[TYPE] = ctkEventTypeLocal;
     (*propCallback)[SIGTYPE] = ctkSignatureTypeCallback;
     QVariant varobserver;
@@ -224,8 +218,7 @@ void ctkEventDispatcherTest::removeItemTest() {
 
     // remove the observer from all the topics...
 
-    ctkBusEvent *propCallback2 = new ctkBusEvent;
-    (*propCallback2)[TOPIC] =  updateID;
+    ctkBusEvent *propCallback2 = new ctkBusEvent(updateID, ctkDictionary());
     (*propCallback2)[TYPE] = ctkEventTypeLocal;
     (*propCallback2)[SIGTYPE] = ctkSignatureTypeCallback;
     (*propCallback2)[OBJECT] = varobserver;
@@ -247,8 +240,7 @@ void ctkEventDispatcherTest::removeSignalTest() {
     // ...but don't need to make a qt disconnect because all observer has been disconnected already on previous test case.
     QVERIFY(m_EventDispatcher->removeSignal(m_ObjTestObserver, updateID, false));
 
-    ctkBusEvent *properties = new ctkBusEvent;
-    (*properties)[TOPIC] =  updateID;
+    ctkBusEvent *properties = new ctkBusEvent(updateID, ctkDictionary());
     (*properties)[TYPE] = ctkEventTypeLocal;
     (*properties)[SIGTYPE] = ctkSignatureTypeSignal;
     QVariant var;
@@ -265,8 +257,7 @@ void ctkEventDispatcherTest::reverseOrderRegistrationTest() {
     QString updateID = "ctk/local/dispatcherTest.custom";
 
     // Register the callback to update the object custom:
-    ctkBusEvent *propCallback = new ctkBusEvent;
-    (*propCallback)[TOPIC] =  updateID;
+    ctkBusEvent *propCallback = new ctkBusEvent(updateID, ctkDictionary());
     (*propCallback)[TYPE] = ctkEventTypeLocal;
     (*propCallback)[SIGTYPE] = ctkSignatureTypeCallback;
     QVariant varobserver;
@@ -275,8 +266,7 @@ void ctkEventDispatcherTest::reverseOrderRegistrationTest() {
     (*propCallback)[SIGNATURE] = "updateObject()";
     QVERIFY(m_EventDispatcher->addObserver(*propCallback));
 
-    ctkBusEvent *properties = new ctkBusEvent;
-    (*properties)[TOPIC] =  updateID;
+    ctkBusEvent *properties = new ctkBusEvent(updateID, ctkDictionary());
     (*properties)[TYPE] = ctkEventTypeLocal;
     (*properties)[SIGTYPE] = ctkSignatureTypeSignal;
     QVariant var;

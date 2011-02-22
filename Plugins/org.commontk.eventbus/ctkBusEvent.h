@@ -61,6 +61,8 @@ public:
   ctkBusEvent(const ctkBusEvent& event);
   ctkBusEvent(QString topic, int event_type, int signature_type, QObject *objectPointer, QString signature);
 
+  ctkBusEvent& operator=(const ctkBusEvent& event);
+
   /**
    * accessor for eventtype
    *

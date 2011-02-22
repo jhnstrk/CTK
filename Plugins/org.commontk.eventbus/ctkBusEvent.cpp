@@ -111,6 +111,11 @@ ctkBusEvent::~ctkBusEvent()
 {
 }
 
+ctkBusEvent& ctkBusEvent::operator=(const ctkBusEvent& event)
+{
+  d = event.d;
+  return *this;
+}
 
 QVariant &ctkBusEvent::operator[](QString key) {
     return (d->properties)[key];

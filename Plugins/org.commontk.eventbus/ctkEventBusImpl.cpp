@@ -92,6 +92,7 @@ bool ctkEventBusImpl::updateProperties(const QString& topic, const ctkDictionary
   Q_UNUSED(topic)
   Q_UNUSED(properties)
   // @@@@to be implemented
+  return false;
 }
 
 void ctkEventBusImpl::dispatchEvent(const ctkEvent& event, bool isAsync)

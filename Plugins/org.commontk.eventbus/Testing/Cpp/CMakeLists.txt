@@ -1,17 +1,17 @@
 MACRO(ctkMacroInitProject test)
 
   # Extract current directory name to use as project name
-  file(GLOB CUR_FILE "CMakeLists.txt")
-  get_filename_component(CUR_ABSOLUTE_DIR ${CUR_FILE} PATH)
-  get_filename_component(DIR_NAME ${CUR_ABSOLUTE_DIR} NAME)
-  PROJECT(${DIR_NAME})
+  #file(GLOB CUR_FILE "CMakeLists.txt")
+  #get_filename_component(CUR_ABSOLUTE_DIR ${CUR_FILE} PATH)
+  #get_filename_component(DIR_NAME ${CUR_ABSOLUTE_DIR} NAME)
+  #PROJECT(${DIR_NAME})
 
-  FILE(GLOB include_file_list "${PROJECT_SOURCE_DIR}/*.h")
-  FILE(GLOB implementation_file_list "${PROJECT_SOURCE_DIR}/*.cpp")
-  FILE(GLOB templete_file_list1 "${PROJECT_SOURCE_DIR}/*.txx")
-  FILE(GLOB templete_file_list2 "${PROJECT_SOURCE_DIR}/*.tpp")
-  FILE(GLOB resource_file_list "${PROJECT_SOURCE_DIR}/*.qrc")
-  FILE(GLOB ui_file_list "${PROJECT_SOURCE_DIR}/*.ui")
+  FILE(GLOB include_file_list "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+  FILE(GLOB implementation_file_list "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+  FILE(GLOB templete_file_list1 "${CMAKE_CURRENT_SOURCE_DIR}/*.txx")
+  FILE(GLOB templete_file_list2 "${CMAKE_CURRENT_SOURCE_DIR}/*.tpp")
+  FILE(GLOB resource_file_list "${CMAKE_CURRENT_SOURCE_DIR}/*.qrc")
+  FILE(GLOB ui_file_list "${CMAKE_CURRENT_SOURCE_DIR}/*.ui")
 
   # Set your list of sources here.
   SET(PROJECT_SRCS
@@ -24,7 +24,7 @@ MACRO(ctkMacroInitProject test)
   )
 
   ## Add the project binary dir as include dir for the .moc files.
-  INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
+  INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
 
   set(MY_MOC_CXX )
   if(${test})
@@ -37,7 +37,7 @@ MACRO(ctkMacroInitProject test)
         ## Assign the moc custom filename
         set(MOC_FILE "${FILE_NAME}.moc")
         QT4_GENERATE_MOC(${FILE_NAME_ABS} ${MOC_FILE})
-        LIST(APPEND MY_MOC_CXX "${PROJECT_BINARY_DIR}/${MOC_FILE}")
+        LIST(APPEND MY_MOC_CXX "${CMAKE_CURRENT_BINARY_DIR}/${MOC_FILE}")
       endif(NOT ${FILE_NAME} STREQUAL "main")
     endforeach()
   else(${test})
@@ -62,13 +62,11 @@ ENDMACRO()
 
 SET(test_executable ${PROJECT_NAME}CppTests)
 
-PROJECT(org_commontk_eventbustest)
 ctkMacroInitProject(1)
 
 ADD_EXECUTABLE(${test_executable} ${PROJECT_SRCS})
-ADD_TEST(${PROJECT_NAME} ${CPP_TEST_PATH}/${test_executable})
-
 TARGET_LINK_LIBRARIES(${test_executable} ${PROJECT_LIBS})
-LINK_LIBRARIES(${PROJECT_LIBS})
-ADD_DEPENDENCIES(${test_executable} ${PROJECT_NAME} ${eventbus_test})
 
+ADD_TEST(${PROJECT_NAME}Tests ${CPP_TEST_PATH}/${test_executable})
+
+#LINK_LIBRARIES(${PROJECT_LIBS})

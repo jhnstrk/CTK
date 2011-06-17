@@ -247,8 +247,8 @@ bool ctkDICOMQuery::query(ctkDICOMDatabase& database )
     d->Query->remove ( 0ul );
     }
   d->Query->insertEmptyElement ( DCM_PatientID );
-  d->Query->insertEmptyElement ( DCM_PatientsName );
-  d->Query->insertEmptyElement ( DCM_PatientsBirthDate );
+  d->Query->insertEmptyElement ( DCM_PatientName );
+  d->Query->insertEmptyElement ( DCM_PatientBirthDate );
   d->Query->insertEmptyElement ( DCM_StudyID );
   d->Query->insertEmptyElement ( DCM_StudyInstanceUID );
   d->Query->insertEmptyElement ( DCM_StudyDescription );
@@ -273,7 +273,7 @@ bool ctkDICOMQuery::query(ctkDICOMDatabase& database )
     if ( key == QString("Name") )
       {
       // make the filter a wildcard in dicom style
-      d->Query->putAndInsertString( DCM_PatientsName,
+      d->Query->putAndInsertString( DCM_PatientName,
         (QString("*") + d->Filters[key].toString() + QString("*")).toAscii().data());
       }
     if ( key == QString("Study") )
@@ -349,7 +349,7 @@ bool ctkDICOMQuery::query(ctkDICOMDatabase& database )
     {
     logger.error ( "Find failed" );
     emit progress("Find failed");
-    d->SCU.closeAssociation ( DUL_PEERREQUESTEDRELEASE );
+    d->SCU.closeAssociation ( DCMSCU_PEER_REQUESTED_RELEASE );
     emit progress(100);
     return false;
     }
@@ -404,7 +404,7 @@ bool ctkDICOMQuery::query(ctkDICOMDatabase& database )
     emit progress(50 + (progressRatio * i++));
     delete responses;
     }
-  d->SCU.closeAssociation ( DUL_PEERREQUESTEDRELEASE );
+  d->SCU.closeAssociation ( DCMSCU_PEER_REQUESTED_RELEASE );
   emit progress(100);
   return true;
 }

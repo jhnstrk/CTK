@@ -25,8 +25,8 @@ IF(${add_project})
       SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}
       BINARY_DIR ${proj}-build
       PREFIX ${proj}${ep_suffix}
-      GIT_REPOSITORY "${git_protocol}://github.com/commontk/DCMTK.git"
-      GIT_TAG "origin/patched"
+      GIT_REPOSITORY "${git_protocol}://github.com/nolden/DCMTK.git"
+      GIT_TAG "origin/dcmtk-3.6.0"
       CMAKE_GENERATOR ${gen}
       BUILD_COMMAND ""
       CMAKE_ARGS

@@ -15,10 +15,6 @@
 // include list
 #include "ctkNetworkConnector.h"
 
-// Foundation Library include list
-#include <xmlrpc/client.h>
-#include <xmlrpc/server.h>
-
 namespace ctkEventBus {
 
 /**

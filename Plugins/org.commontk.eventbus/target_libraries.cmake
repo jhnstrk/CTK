@@ -8,5 +8,6 @@ SET(target_libraries
   qxmlrpc_LIBRARY
   CTKPluginFramework
   QtSOAP_LIBRARIES
+  qxmlrpc_LIBRARIES
   QT_LIBRARIES
   )

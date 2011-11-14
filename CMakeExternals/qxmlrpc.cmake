@@ -22,6 +22,9 @@ IF(${add_project})
     #MESSAGE(STATUS "Adding project:${proj}")
     
     ExternalProject_Add(${proj}
+      SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}
+      BINARY_DIR ${proj}-build
+      PREFIX ${proj}${ep_suffix}
       GIT_REPOSITORY "${git_protocol}://github.com/commontk/qxmlrpc.git"
       GIT_TAG "origin/patched"
       CMAKE_GENERATOR ${gen}
@@ -32,7 +35,7 @@ IF(${add_project})
       DEPENDS
         ${proj_DEPENDENCIES}
       )
-    SET(qxmlrpc_DIR ${ep_build_dir}/${proj})
+    SET(qxmlrpc_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
     
     # Since qxmlrpc is statically build, there is not need to add its corresponding 
     # library output directory to CTK_EXTERNAL_LIBRARY_DIRS
@@ -41,6 +44,9 @@ IF(${add_project})
     ctkMacroEmptyExternalProject(${proj} "${proj_DEPENDENCIES}")
   ENDIF()
   
+  LIST(APPEND CTK_SUPERBUILD_EP_VARS qxmlrpc_DIR:PATH)
+
+  SET(${qxmlrpc_enabling_variable}_LIBRARY_DIRS qxmlrpc_LIBRARY_DIRS)
   SET(${qxmlrpc_enabling_variable}_INCLUDE_DIRS qxmlrpc_INCLUDE_DIRS)
   SET(${qxmlrpc_enabling_variable}_FIND_PACKAGE_CMD qxmlrpc)
     

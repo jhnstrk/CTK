@@ -57,9 +57,9 @@ int main(int argv, char** argc) {
   }
 
 #ifdef CMAKE_INTDIR
-  QString pluginPath = qApp->applicationDirPath() + "/../plugins/" CMAKE_INTDIR "/";
+  QString pluginPath = qApp->applicationDirPath() + "/../test_plugins/" CMAKE_INTDIR "/";
 #else
-  QString pluginPath = qApp->applicationDirPath() + "/plugins/";
+  QString pluginPath = qApp->applicationDirPath() + "/test_plugins/";
 #endif
 
   qApp->addLibraryPath(pluginPath);
@@ -70,7 +70,7 @@ int main(int argv, char** argc) {
 
   QStringList pluginsToInstall;
   pluginsToInstall << "org_commontk_eventbus";
-
+    qDebug() << pluginPath;
   QList<QSharedPointer<ctkPlugin> > installedPlugins;
   while(dirIter.hasNext())
   {
